@@ -6,7 +6,7 @@ function FormSteps({ currentQuestion, questionnaireSize, changeStep }) {
   };
   return (
     <div className="FormSteps">
-      {currentQuestion > 0 && (
+      {currentQuestion > 1 && (
         <button type="button" onClick={changeQuestion(-1)}>
           Précédent
         </button>
@@ -15,6 +15,9 @@ function FormSteps({ currentQuestion, questionnaireSize, changeStep }) {
         <button type="button" onClick={changeQuestion(1)}>
           Suivant
         </button>
+      )}
+      {currentQuestion === questionnaireSize && (
+        <button type="submit">Valider</button>
       )}
     </div>
   );
