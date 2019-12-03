@@ -14,7 +14,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": ["react-app", "airbnb"],
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+    }
   },
   "browserslist": {
     "production": [
@@ -27,5 +30,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1"
   }
 }
