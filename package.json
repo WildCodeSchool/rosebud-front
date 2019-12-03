@@ -14,9 +14,19 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": ["react-app", "airbnb"],
+    "extends": [
+      "react-app",
+      "airbnb"
+    ],
     "rules": {
-      "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js"
+          ]
+        }
+      ]
     }
   },
   "browserslist": {
