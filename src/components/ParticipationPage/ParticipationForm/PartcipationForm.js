@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './ParticipationForm.css';
 import Uploader from './Uploader/Uploader';
 import FormSteps from './FormSteps/FormSteps';
 import FormPagination from './FormPagination/FormPagination';
@@ -39,27 +40,35 @@ const questionnaireSize = questionnaire.questions.length;
 
 function ParticipationForm({ getParticipation }) {
   const [currentQuestion, changeQuestion] = useState(1);
-  const [comment, getComment] = useState(
-    questionnaire.answers[currentQuestion - 1].comment,
-  );
+
   const submitParticipation = (e) => {
     e.preventDefault();
     getParticipation(questionnaire);
   };
 
+  const [comment, setComment] = useState(
+    questionnaire.answers[currentQuestion - 1].comment,
+  );
+
   return (
     <div className="ParticipationForm">
       <form onSubmit={(e) => submitParticipation(e)}>
         {questionnaire.questions.map(
-          (question) => question.id === currentQuestion && (
-          <div key={question.id}>
-            {question.title}
+          (question, index) => question.id === currentQuestion && (
+          <div className="question__step" key={question.id}>
+            <h3>{question.title}</h3>
             <Uploader />
             <textarea
-              onChange={(e) => getComment(
-                (questionnaire.answers[currentQuestion - 1].comment = e.target.value),
-              )}
-              value={questionnaire.answers[currentQuestion - 1].comment}
+              rows="6"
+              onChange={(e) => {
+                questionnaire.answers[index].comment = e.target.value;
+                setComment(e.target.value);
+              }}
+              value={
+                    comment === questionnaire.answers[index].comment
+                      ? comment
+                      : questionnaire.answers[index].comment
+                  }
             />
           </div>
           ),
