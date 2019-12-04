@@ -83,6 +83,7 @@ function ParticipationForm({ getParticipation }) {
           currentQuestion={currentQuestion}
           questionnaireSize={questionnaireSize}
           changeStep={(step) => changeQuestion(step)}
+          stateButton={answers[currentQuestion - 1].comment}
         />
         <FormPagination
           currentQuestion={currentQuestion}

@@ -1,6 +1,11 @@
 import React from 'react';
 
-function FormSteps({ currentQuestion, questionnaireSize, changeStep }) {
+function FormSteps({
+  currentQuestion,
+  questionnaireSize,
+  changeStep,
+  stateButton,
+}) {
   const changeQuestion = (num) => () => {
     changeStep(currentQuestion + num);
   };
@@ -12,12 +17,18 @@ function FormSteps({ currentQuestion, questionnaireSize, changeStep }) {
         </button>
       )}
       {currentQuestion < questionnaireSize && (
-        <button type="button" onClick={changeQuestion(1)}>
+        <button
+          type="button"
+          onClick={changeQuestion(1)}
+          disabled={!stateButton && 'disabled'}
+        >
           Suivant
         </button>
       )}
       {currentQuestion === questionnaireSize && (
-        <button type="submit">Valider</button>
+        <button type="submit" disabled={!stateButton && 'disabled'}>
+          Valider
+        </button>
       )}
     </div>
   );
