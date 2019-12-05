@@ -1,5 +1,10 @@
-.wrapper {
+.wrapper__content {
   width: 100%;
+  margin-right: 15px;
+}
+
+.wrapper {
+  height: 50vh;
   max-width: 780px;
   margin: 0 auto;
   display: grid;
@@ -11,8 +16,17 @@
 .wrapper img {
   max-height: 100%;
 }
-
+.participation__content {
+  width: 100%;
+  display: flex;
+}
+.participation__infos-personel {
+  width: 30%;
+  align-self: center;
+  padding: 0 20px;
+}/*
 .heading {
+  height: 1px;
   grid-column: 1/5;
   @extend %center;
   font-size: 1.5rem;
@@ -22,6 +36,7 @@
   letter-spacing: 2px;
   margin-top: 3px;
 }
+*/
 
 [class^="item"] {
   overflow: hidden;
@@ -108,7 +123,6 @@
 .item07:hover {
   background-color: rgba(0, 0, 0, 0.9);
 }
-
 
 @keyframes spin {
   from {
