@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './ParticipationForm.css';
 import Uploader from './Uploader/Uploader';
 import FormSteps from './FormSteps/FormSteps';
@@ -7,24 +8,6 @@ import FormPagination from './FormPagination/FormPagination';
 const questionnaires = {
   id: 1,
 };
-
-const questions = [
-  {
-    id: 1,
-    title: 'Lorem ipsum el 1 ?',
-    questionnaire_id: 1,
-  },
-  {
-    id: 2,
-    title: 'Lorem ipsum el 2 ?',
-    questionnaire_id: 1,
-  },
-  {
-    id: 3,
-    title: 'Lorem ipsum el 3 ?',
-    questionnaire_id: 1,
-  },
-];
 
 const answers = [
   {
@@ -42,11 +25,28 @@ const answers = [
     comment: '',
     question_id: 3,
   },
+  {
+    id: 4,
+    comment: '',
+    question_id: 4,
+  },
+  {
+    id: 5,
+    comment: '',
+    question_id: 5,
+  },
 ];
 
-const questionnaireSize = questions.length;
-
 function ParticipationForm({ getParticipation }) {
+  const [questions, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get('/api/v1/questionnaires/1');
+      setData(result.data);
+    };
+    fetchData();
+  }, []);
+
   const [currentQuestion, changeQuestion] = useState(1);
 
   const submitParticipation = (e) => {
@@ -56,6 +56,8 @@ function ParticipationForm({ getParticipation }) {
   };
 
   const [comment, setComment] = useState(answers[currentQuestion - 1].comment);
+
+  const questionnaireSize = questions.length;
 
   return (
     <div className="ParticipationForm">
