@@ -4,7 +4,7 @@
     text-align: center;
 }
 
-.question__step {
+.ParticipationForm__step {
     display: flex;
     flex-direction: column;
 }

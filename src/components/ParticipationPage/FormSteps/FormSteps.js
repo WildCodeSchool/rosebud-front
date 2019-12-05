@@ -4,7 +4,7 @@ function FormSteps({
   currentQuestion,
   questionnaireSize,
   changeStep,
-  stateButton,
+  allowNext,
 }) {
   const changeQuestion = (num) => () => {
     changeStep(currentQuestion + num);
@@ -20,13 +20,13 @@ function FormSteps({
         <button
           type="button"
           onClick={changeQuestion(1)}
-          disabled={!stateButton && 'disabled'}
+          disabled={!allowNext && 'disabled'}
         >
           Suivant
         </button>
       )}
       {currentQuestion === questionnaireSize && (
-        <button type="submit" disabled={!stateButton && 'disabled'}>
+        <button type="submit" disabled={!allowNext && 'disabled'}>
           Valider
         </button>
       )}
