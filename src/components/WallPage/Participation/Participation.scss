@@ -1,12 +1,15 @@
 .wrapper {
   width: 100%;
-  max-width: 680px;
+  max-width: 780px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 80px repeat(3, minmax(10px, 150px));
   grid-gap: 3px;
   counter-reset: grid-item;
+}
+.wrapper img {
+  max-height: 100%;
 }
 
 .heading {
@@ -36,7 +39,7 @@
   height: 100%;
   @extend %center;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 %center {
@@ -83,22 +86,8 @@
 }
 
 .meta .cta-list .cta-item:hover {
-  transform: scale(1.2) rotate(-15deg);
+  transform: scale(1.3) rotate(-15deg);
   cursor: pointer;
-}
-
-.quote {
-  font-size: 2em;
-  color: #efefef;
-  font-style: italic;
-  transition: 0.3s;
-}
-
-.quote::after {
-  content: "~ " attr(cite);
-  font-size: 0.5em;
-  display: block;
-  padding-top: 5px;
 }
 
 .item01 {
@@ -120,9 +109,6 @@
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-.item07:hover .quote {
-  transform: scale(1.05);
-}
 
 @keyframes spin {
   from {

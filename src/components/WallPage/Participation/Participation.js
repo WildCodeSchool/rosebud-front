@@ -4,7 +4,7 @@ import "./Participation.scss";
 const Participation = () => {
   return (
     <div class="wrapper">
-      <header class="heading"></header>
+      <header class="heading">Prénom - Nom - Ville</header>
       <div class="item01">
         <img
           src="https://img4.cdn.cinoche.com/images/2545979f15444781bbd282e6e475feb0.jpg"
@@ -141,14 +141,27 @@ const Participation = () => {
         </div>
       </div>
       <div class="item07">
-        <blockquote class="quote" cite="Radek sam w sobie">
-          Nie chce mi się szukać dennego cytatu, który odmieni moje życie o 360
-          stopni.
-        </blockquote>
         <img
           src="https://static.lexpress.fr/medias_11518/w_1301,h_728,c_crop,x_0,y_169/w_480,h_270,c_fill,g_north/v1497362871/la-momie-d-alex-kurtzman_5897247.jpg"
           alt=""
         />
+        <div class="meta">
+          <h2>Lorem ipsum dolor sit.</h2>
+          <ul class="cta-list">
+            <li class="cta-item">
+              <i class="material-icons">&#xE8DC;</i>
+            </li>
+            <li class="cta-item">
+              <i class="material-icons">&#xE0B9;</i>
+            </li>
+            <li class="cta-item">
+              <i class="material-icons">&#xE80D;</i>
+            </li>
+            <li class="cta-item">
+              <i class="material-icons">&#xE5D4;</i>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
