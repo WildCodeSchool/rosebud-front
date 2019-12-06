@@ -1,8 +1,13 @@
 import React from 'react';
+import './FormPagination.css';
 
-function FormPagination() {
+function FormPagination({ currentQuestion, questions }) {
   return (
-    <div className="FormPagination" />
+    <>
+      <ol className="tunnel">
+        {questions.map((question) => <li key={question.id} className={question.id === currentQuestion && 'is-current'} />)}
+      </ol>
+    </>
   );
 }
 
