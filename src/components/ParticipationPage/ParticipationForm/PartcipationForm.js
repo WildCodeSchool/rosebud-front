@@ -29,6 +29,7 @@ function ParticipationForm() {
   const questionnaireSize = questions.length;
   const [commentRender, setComment] = useState('');
   const [idQuestion, setIdQuestion] = useState('');
+  const [messageSuccess, setMessageSuccess] = useState(false);
 
   const [answers, dispatch] = useReducer(answersReducer, []);
 
@@ -45,6 +46,7 @@ function ParticipationForm() {
     e.preventDefault();
     dispatch({ type: 'CREATE', data: { comment: commentRender, question_id: idQuestion } });
     axios.post('/api/v1/questionnaires/1/participations', { answers });
+    setMessageSuccess(true);
   };
 
   const getParticipation = (value, type) => {
@@ -79,6 +81,13 @@ function ParticipationForm() {
               />
             </div>
           ),
+        )}
+        {messageSuccess && (
+        <p>
+          Réponses envoyées
+          <br />
+          <a href="./">(recharger)</a>
+        </p>
         )}
         <FormSteps
           currentQuestion={currentQuestion}

@@ -17,7 +17,10 @@ function WallPage() {
       <ul>
         {participations.map((participation) => (
           <li key={participation.answer_id}>
+            {participation.question}
+            <br />
             {participation.answer}
+            <hr />
           </li>
         ))}
       </ul>
