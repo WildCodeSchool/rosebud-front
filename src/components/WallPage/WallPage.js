@@ -13,17 +13,20 @@ function WallPage() {
 
   return (
     <div className="WallPage">
-      <h2>Participations :</h2>
-      <ul>
-        {participations.map((participation) => (
-          <li key={participation.answer_id}>
-            {participation.question}
-            <br />
-            {participation.answer}
-            <hr />
-          </li>
-        ))}
-      </ul>
+      {participations.length > 0
+        && (
+        <ul>
+          <h2>Participations :</h2>
+          {participations.map((participation) => (
+            <li key={participation.answer_id}>
+              {participation.question}
+              <br />
+              {participation.answer}
+              <hr />
+            </li>
+          ))}
+        </ul>
+        )}
     </div>
   );
 }
