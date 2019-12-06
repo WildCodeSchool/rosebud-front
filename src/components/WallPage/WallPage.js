@@ -6,9 +6,6 @@ const WallPage = () => {
   return (
     <div className="wallpage__content">
       <Participation />
-      <Participation />
-      <Participation />
-      <Participation />
     </div>
   );
 };
