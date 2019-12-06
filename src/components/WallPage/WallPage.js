@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 import './WallPage.css';
-import Participation from "./Participation/Participation";
+import Participation from './Participation/Participation';
 
-const WallPage = () => {
+function WallPage() {
   return (
-    <div className="wallpage__content">
+    <div className="WallPage">
       <Participation />
       <Participation />
       <Participation />
       <Participation />
     </div>
   );
-};
+}
 
 export default WallPage;

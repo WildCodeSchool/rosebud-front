@@ -1,0 +1,10 @@
+.ParticipationForm {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.ParticipationForm__step {
+    display: flex;
+    flex-direction: column;
+}
