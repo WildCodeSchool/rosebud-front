@@ -28,7 +28,6 @@ function FormSteps({
       {currentQuestion === questionnaireSize && (
         <button
           type="submit"
-          onClick={changeQuestion(0, 'next')}
           disabled={!allowNext && 'disabled'}
         >
           Valider

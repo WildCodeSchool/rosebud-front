@@ -43,6 +43,7 @@ function ParticipationForm() {
 
   const submitParticipation = (e) => {
     e.preventDefault();
+    dispatch({ type: 'CREATE', data: { comment: commentRender, question_id: idQuestion } });
     axios.post('/api/v1/questionnaires/1/participations', { answers });
   };
 
