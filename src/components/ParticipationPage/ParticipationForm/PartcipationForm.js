@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import './ParticipationForm.css';
 import Uploader from '../Uploader/Uploader';
 import FormSteps from '../FormSteps/FormSteps';
 import FormPagination from '../FormPagination/FormPagination';
 
-const answers = [];
+
+const answersReducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE':
+      return [...state, action.data];
+    case 'UPDATE':
+      return state.map((a) => (a.question_id === action.data.question_id ? action.data : a));
+    default:
+      return state;
+  }
+};
 
 function ParticipationForm() {
   const [isFetch, setFetch] = useState(false);
@@ -19,6 +29,8 @@ function ParticipationForm() {
   const questionnaireSize = questions.length;
   const [commentRender, setComment] = useState('');
   const [idQuestion, setIdQuestion] = useState('');
+
+  const [answers, dispatch] = useReducer(answersReducer, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,11 +46,19 @@ function ParticipationForm() {
     axios.post('/api/v1/questionnaires/1/participations', { answers });
   };
 
-  const changeStep = (value) => {
+  const getParticipation = (value, type) => {
     setCurrentQuestion(currentQuestion + value);
     setCurrentId(currentId + value);
-    answers.push({ comment: commentRender, question_id: idQuestion });
-    setComment('');
+    if (type === 'next') {
+      if (answers.length < currentQuestion) {
+        dispatch({ type: 'CREATE', data: { comment: commentRender, question_id: idQuestion } });
+      } else {
+        dispatch({ type: 'UPDATE', data: { comment: commentRender, question_id: idQuestion } });
+      }
+      setComment(answers.length > currentQuestion ? answers[currentQuestion].comment : '');
+    } else {
+      setComment(answers[currentQuestion - 2].comment);
+    }
   };
 
   return (
@@ -62,7 +82,7 @@ function ParticipationForm() {
         <FormSteps
           currentQuestion={currentQuestion}
           questionnaireSize={questionnaireSize}
-          changeStep={(value) => changeStep(value)}
+          changeStep={(value, type) => getParticipation(value, type)}
           allowNext={commentRender}
         />
         <FormPagination
