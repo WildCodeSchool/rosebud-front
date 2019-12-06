@@ -5,7 +5,7 @@ function FormPagination({ currentQuestion, questions }) {
   return (
     <>
       <ol className="tunnel">
-        {questions.map((question) => <li key={question.id} className={question.id === currentQuestion && 'is-current'} />)}
+        {questions.map((question) => <li key={question.id} className={question.id === currentQuestion ? 'is-current' : ''} />)}
       </ol>
     </>
   );
