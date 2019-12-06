@@ -4,6 +4,7 @@ function FormSteps({
   currentQuestion,
   questionnaireSize,
   changeStep,
+  allowNext,
 }) {
   const changeQuestion = (num, type) => () => {
     changeStep(num, type);
@@ -19,6 +20,7 @@ function FormSteps({
         <button
           type="button"
           onClick={changeQuestion(1, 'next')}
+          disabled={!allowNext && 'disabled'}
         >
           Suivant
         </button>
@@ -27,6 +29,7 @@ function FormSteps({
         <button
           type="submit"
           onClick={changeQuestion(0, 'next')}
+          disabled={!allowNext && 'disabled'}
         >
           Valider
         </button>
