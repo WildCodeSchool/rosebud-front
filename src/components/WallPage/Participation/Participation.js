@@ -84,9 +84,26 @@ const Participation = () => {
           <div className="wrapper__content">
             <div className="wrapper">
               {data.reponses.map(reponse => (
-                <div className={`item__6-0${reponse.id}`}>
-                  <img src={reponse.url} alt="" />
-                </div>
+                  <div className={`item__6-0${reponse.id}`}>
+                    <img src={reponse.url} alt="" />
+                    <div class="meta">
+                      <h2>Lorem ipsum dolor sit.</h2>
+                      <ul class="cta-list">
+                        <li class="cta-item">
+                          <i class="material-icons">&#xE8DC;</i>
+                        </li>
+                        <li class="cta-item">
+                          <i class="material-icons">&#xE0B9;</i>
+                        </li>
+                        <li class="cta-item">
+                          <i class="material-icons">&#xE80D;</i>
+                        </li>
+                        <li class="cta-item">
+                          <i class="material-icons">&#xE5D4;</i>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
               ))}
             </div>
           </div>
