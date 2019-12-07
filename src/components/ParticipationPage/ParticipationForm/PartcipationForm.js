@@ -88,6 +88,7 @@ function ParticipationForm({ getParticipation }) {
         <FormPagination
           currentQuestion={currentQuestion}
           questionnaireSize={questionnaireSize}
+          questions={questions}
         />
       </form>
     </div>
