@@ -13,7 +13,7 @@ export default function Participant({ addParticipant }) {
   };
 
   const displayQuestions = () => {
-    addParticipant([{ lastname, city }]);
+    addParticipant({ lastname, city });
   };
 
   return (
@@ -29,7 +29,11 @@ export default function Participant({ addParticipant }) {
         onChange={handleChangeCity}
         value={city}
       />
-      <button type="button" onClick={displayQuestions}>
+      <button
+        type="button"
+        onClick={displayQuestions}
+        disabled={!lastname && !city && 'disabled'}
+      >
         Participer !
       </button>
     </div>

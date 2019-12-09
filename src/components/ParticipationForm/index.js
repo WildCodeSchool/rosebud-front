@@ -4,10 +4,9 @@ import ParticipantForm from './ParticipantForm';
 import QuestionsForm from './QuestionsForm';
 
 export default function Form() {
-  const [participant, setDataParticipant] = useState([]);
+  const [participant, setDataParticipant] = useState(null);
+  const [nbQuestions, setNbQuestions] = useState(0);
   const [answers, setDataAnswers] = useState([]);
-
-  console.log(participant);
 
   const submitParticipation = (e) => {
     e.preventDefault();
@@ -17,11 +16,15 @@ export default function Form() {
 
   return (
     <form onSubmit={submitParticipation}>
-      <ParticipantForm addParticipant={setDataParticipant} />
-      <QuestionsForm addAnswers={setDataAnswers} />
-      <button type="submit">
+      {!participant
+        ? <ParticipantForm addParticipant={setDataParticipant} />
+        : <QuestionsForm addAnswers={setDataAnswers} nbQuestions={setNbQuestions} />}
+      {answers.length === nbQuestions && nbQuestions > 0
+        && (
+        <button type="submit">
           Send participation
-      </button>
+        </button>
+        )}
     </form>
   );
 }

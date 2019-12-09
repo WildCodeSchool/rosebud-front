@@ -4,7 +4,7 @@ import Question from './Question';
 import Navigation from './Navigation';
 import { initialState, reducer } from '../answersReducer';
 
-export default function QuestionsForm({ addAnswers }) {
+export default function QuestionsForm({ addAnswers, nbQuestions }) {
   const [questions, setQuestions] = useState([]);
   const questionnaireSize = questions.length;
   const [currentPagination, setCurrentPagination] = useState(1);
@@ -33,6 +33,7 @@ export default function QuestionsForm({ addAnswers }) {
     } else {
       setCurrentPagination(currentPagination - 1);
     }
+    nbQuestions(questionnaireSize);
     setAnswer('');
   };
 
