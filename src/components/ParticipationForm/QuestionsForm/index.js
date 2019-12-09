@@ -17,7 +17,6 @@ export default function QuestionsForm() {
     const fetchData = async () => {
       const result = await axios.get('/api/v1/questionnaires/1/questions');
       setQuestions(result.data);
-      console.log(result);
     };
     fetchData();
   }, []);
@@ -45,7 +44,8 @@ export default function QuestionsForm() {
         ? (
           <div>
             <Question
-              question={questions.filter((index) => (index + 1 === currentPagination))}
+              question={questions
+                .find((question, index) => index + 1 === currentPagination && question)}
               currentAnswer={setAnswer}
             />
             <Navigation
@@ -57,9 +57,13 @@ export default function QuestionsForm() {
         )
         : (
           answers.map((item, index) => (
-            <button type="button" onClick={() => setCurrentPagination(index + 1)}>
-              {item.comment}
-            </button>
+            <div key={item.id}>
+              <h3>{questions[index].title}</h3>
+              <p>{item.comment}</p>
+              <button type="button" onClick={() => setCurrentPagination(index + 1)}>
+              edit
+              </button>
+            </div>
           ))
         )}
     </div>

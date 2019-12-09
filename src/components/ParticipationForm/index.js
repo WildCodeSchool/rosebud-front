@@ -6,13 +6,13 @@ export default function Form() {
   const submitParticipation = () => {
     localStorage.clear();
   };
+
   return (
     <form onSubmit={submitParticipation}>
       <ParticipantForm />
       <QuestionsForm />
-      <br />
       <button type="submit">
-                Send participation
+          Send participation
       </button>
     </form>
   );
