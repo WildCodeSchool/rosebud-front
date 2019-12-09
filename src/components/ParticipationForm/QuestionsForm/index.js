@@ -32,7 +32,11 @@ export default function QuestionsForm() {
     const action = answers.length < currentPagination ? 'ADD_ANSWER' : 'UPDATE_ANSWER';
     if (type === 'next') {
       dispatch({
-        type: action, id: currentPagination, comment: answer, question_id: questions[currentPagination - 1].id,
+        type: action,
+        id: currentPagination,
+        comment: answer,
+        question_id:
+          questions[currentPagination - 1].id,
       });
       setCurrentPagination(currentPagination + 1);
     } else {
@@ -46,11 +50,24 @@ export default function QuestionsForm() {
       {currentPagination <= questionnaireSize
         ? (
           <div>
-            <Question question={questions.filter((question) => (question.id === currentPagination))} currentAnswer={setAnswer} />
-            <Navigation allowClick={changeQuestion} currentPagination={currentPagination} questionnaireSize={questionnaireSize} />
+            <Question
+              question={questions.filter((question) => (question.id === currentPagination))}
+              currentAnswer={setAnswer}
+            />
+            <Navigation
+              allowClick={changeQuestion}
+              currentPagination={currentPagination}
+              questionnaireSize={questionnaireSize}
+            />
           </div>
         )
-        : answers.map((answer, index) => <p onClick={() => setCurrentPagination(index + 1)}>{answer.comment}</p>)}
+        : (
+          answers.map((item, index) => (
+            <button type="button" onClick={() => setCurrentPagination(index + 1)}>
+              {item.comment}
+            </button>
+          ))
+        )}
     </div>
   );
 }
