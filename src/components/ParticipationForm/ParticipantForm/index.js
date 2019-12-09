@@ -30,7 +30,7 @@ export default function Participant({ addParticipant }) {
 
   const displayQuestions = () => {
     addParticipant({
-      firstName, lastName, city, status,
+      firstName, lastName, city, status, age, email,
     });
   };
 
