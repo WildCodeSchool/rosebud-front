@@ -51,7 +51,8 @@ export default function QuestionsForm() {
         ? (
           <div>
             <Question
-              question={questions.filter((question) => (question.id === currentPagination))}
+              question={questions
+                .find((question, index) => index + 1 === currentPagination && question)}
               currentAnswer={setAnswer}
             />
             <Navigation
@@ -63,7 +64,7 @@ export default function QuestionsForm() {
         )
         : (
           answers.map((item, index) => (
-            <div>
+            <div key={item.id}>
               <h3>{questions[index].title}</h3>
               <p>{item.comment}</p>
               <button type="button" onClick={() => setCurrentPagination(index + 1)}>
