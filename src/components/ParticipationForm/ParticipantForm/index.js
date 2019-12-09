@@ -1,7 +1,7 @@
 import React from 'react';
 import useLocalStorage from 'react-use-localstorage';
 
-export default function Participant({ infosParticipant }) {
+export default function Participant({ addParticipant }) {
   const [name, setName] = useLocalStorage('name', '');
   const [city, setCity] = useLocalStorage('city', '');
 
@@ -13,7 +13,7 @@ export default function Participant({ infosParticipant }) {
   };
 
   const displayQuestions = () => {
-    infosParticipant();
+    addParticipant({ participant: { name, city } });
   };
 
   return (

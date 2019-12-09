@@ -4,7 +4,6 @@ import Question from './Question';
 import Navigation from './Navigation';
 import { initialState, reducer } from '../answersReducer';
 
-
 export default function QuestionsForm() {
   const [questions, setQuestions] = useState([]);
   const questionnaireSize = questions.length;
@@ -28,8 +27,7 @@ export default function QuestionsForm() {
         type: action,
         id: currentPagination,
         comment: answer,
-        question_id:
-          questions[currentPagination - 1].id,
+        question_id: questions[currentPagination - 1].id,
       });
       setCurrentPagination(currentPagination + 1);
     } else {
