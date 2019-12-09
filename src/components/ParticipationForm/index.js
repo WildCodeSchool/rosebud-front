@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import ParticipantForm from './ParticipantForm';
 import QuestionsForm from './QuestionsForm';
 
 export default function Form() {
-  const [dataParticipation, setDataParticipant] = useState([]);
-  const [dataAnswers, setDataAnswers] = useState([]);
+  const [participant, setDataParticipant] = useState([]);
+  const [answers, setDataAnswers] = useState([]);
 
-  console.log(dataParticipation);
-  console.log(dataAnswers);
-
-  const submitParticipation = () => {
+  const submitParticipation = (e) => {
+    e.preventDefault();
+    axios.post('/api/v1/questionnaires/1/participations', { participant, answers });
     localStorage.clear();
   };
 

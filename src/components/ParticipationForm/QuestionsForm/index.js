@@ -4,7 +4,7 @@ import Question from './Question';
 import Navigation from './Navigation';
 import { initialState, reducer } from '../answersReducer';
 
-export default function QuestionsForm() {
+export default function QuestionsForm({ addAnswers }) {
   const [questions, setQuestions] = useState([]);
   const questionnaireSize = questions.length;
   const [currentPagination, setCurrentPagination] = useState(1);
@@ -35,6 +35,10 @@ export default function QuestionsForm() {
     }
     setAnswer('');
   };
+
+  useEffect(() => {
+    addAnswers(answers);
+  });
 
   return (
     <div>
