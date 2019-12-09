@@ -63,9 +63,13 @@ export default function QuestionsForm() {
         )
         : (
           answers.map((item, index) => (
-            <button type="button" onClick={() => setCurrentPagination(index + 1)}>
-              {item.comment}
-            </button>
+            <div>
+              <h3>{questions[index].title}</h3>
+              <p>{item.comment}</p>
+              <button type="button" onClick={() => setCurrentPagination(index + 1)}>
+              edit
+              </button>
+            </div>
           ))
         )}
     </div>
