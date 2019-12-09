@@ -7,6 +7,8 @@ export default function Form() {
   const [participant, setDataParticipant] = useState([]);
   const [answers, setDataAnswers] = useState([]);
 
+  console.log(participant);
+
   const submitParticipation = (e) => {
     e.preventDefault();
     axios.post('/api/v1/questionnaires/1/participations', { participant, answers });

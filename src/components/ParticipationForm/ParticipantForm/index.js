@@ -2,7 +2,7 @@ import React from 'react';
 import useLocalStorage from 'react-use-localstorage';
 
 export default function Participant({ addParticipant }) {
-  const [name, setName] = useLocalStorage('name', '');
+  const [lastname, setName] = useLocalStorage('name', '');
   const [city, setCity] = useLocalStorage('city', '');
 
   const handleChangeName = (e) => {
@@ -13,7 +13,7 @@ export default function Participant({ addParticipant }) {
   };
 
   const displayQuestions = () => {
-    addParticipant({ participant: { name, city } });
+    addParticipant([{ lastname, city }]);
   };
 
   return (
@@ -22,7 +22,7 @@ export default function Participant({ addParticipant }) {
       <input
         placeholder="name"
         onChange={handleChangeName}
-        value={name}
+        value={lastname}
       />
       <input
         placeholder="City"
