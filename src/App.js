@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import ParticipationPage from './components/ParticipationPage/ParticipationPage';
+import ParticipationForm from './components/ParticipationForm';
 
 function App() {
   return (
     <div className="App">
-      <ParticipationPage />
+      <ParticipationForm />
     </div>
   );
 }
