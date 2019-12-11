@@ -16,7 +16,7 @@ export default function Question({ question, currentAnswer }) {
   return (
     <div>
       <h2>{title}</h2>
-      <input type="text" onChange={handleChange} value={localAnswer} />
+      <textarea type="text" onChange={handleChange} value={localAnswer} />
     </div>
   );
 }
