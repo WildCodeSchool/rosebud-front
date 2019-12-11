@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class UploadImage extends Component {
   constructor(props) {
     super();
-    this.state = {};
   }
 
   render() {
