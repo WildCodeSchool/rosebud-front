@@ -3,9 +3,9 @@ import axios from 'axios';
 import ParticipantForm from './ParticipantForm';
 import QuestionsForm from './QuestionsForm';
 
-export default function Form() {
+function ParticipationForm() {
   const [participant, setParticipant] = useState(null);
-  const [nbQuestions, setNbQuestions] = useState(0);
+  const [questionsLength, setQuestionsLength] = useState(0);
   const [answers, setAnswers] = useState([]);
 
   const submitParticipation = (e) => {
@@ -18,13 +18,15 @@ export default function Form() {
     <form onSubmit={submitParticipation}>
       {!participant
         ? <ParticipantForm addParticipant={setParticipant} />
-        : <QuestionsForm addAnswers={setAnswers} nbQuestions={setNbQuestions} />}
-      {answers.length === nbQuestions && nbQuestions > 0
+        : <QuestionsForm addAnswers={setAnswers} setQuestionsLength={setQuestionsLength} />}
+      {answers.length === questionsLength && questionsLength > 0
         && (
-        <button type="submit">
-          Send participation
-        </button>
+          <button type="submit">
+            Send participation
+          </button>
         )}
     </form>
   );
 }
+
+export default ParticipationForm;

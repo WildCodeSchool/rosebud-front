@@ -1,7 +1,7 @@
 import React from 'react';
 import useLocalStorage from 'react-use-localstorage';
 
-export default function Participant({ addParticipant }) {
+function ParticipantForm({ addParticipant }) {
   const [firstName, setFirstName] = useLocalStorage('firstname', '');
   const [lastName, setLastName] = useLocalStorage('lastname', '');
   const [status, setStatus] = useLocalStorage('status', '');
@@ -37,37 +37,66 @@ export default function Participant({ addParticipant }) {
   return (
     <div>
       <h2>Informations</h2>
-      <input
-        placeholder="firstname"
-        onChange={handleChangeFirstName}
-        value={firstName}
-      />
-      <input
-        placeholder="lastname"
-        onChange={handleChangeLastName}
-        value={lastName}
-      />
-      <select onChange={handleChangeStatus}>
-        <option value="">--votre statut--</option>
-        <option value="teacher" selected={status === 'teacher' && 'selected'}>Enseignant</option>
-        <option value="student" selected={status === 'student' && 'selected'}>Élève</option>
-        <option value="other" selected={status === 'other' && 'selected'}>Autre</option>
-      </select>
-      <input
-        placeholder="City"
-        onChange={handleChangeCity}
-        value={city}
-      />
-      <input
-        placeholder="Age"
-        onChange={handleChangeAge}
-        value={age}
-      />
-      <input
-        placeholder="Email"
-        onChange={handleChangeEmail}
-        value={email}
-      />
+      <label htmlFor="firstname">
+        Firstname
+        <input
+          name="firstname"
+          id="firstname"
+          placeholder="firstname"
+          onChange={handleChangeFirstName}
+          value={firstName}
+        />
+
+      </label>
+      <label htmlFor="lastname">
+        Lastname
+        <input
+          name="lastname"
+          id="lastname"
+          placeholder="lastname"
+          onChange={handleChangeLastName}
+          value={lastName}
+        />
+      </label>
+      <label htmlFor="status">
+        Status
+        <select onChange={handleChangeStatus} value={status}>
+          <option value="">--votre statut--</option>
+          <option value="teacher">Enseignant</option>
+          <option value="student">Élève</option>
+          <option value="other">Autre</option>
+        </select>
+      </label>
+      <label htmlFor="city">
+        City
+        <input
+          name="city"
+          id="city"
+          placeholder="City"
+          onChange={handleChangeCity}
+          value={city}
+        />
+      </label>
+      <label htmlFor="age">
+        Age
+        <input
+          name="age"
+          id="age"
+          placeholder="Age"
+          onChange={handleChangeAge}
+          value={age}
+        />
+      </label>
+      <label htmlFor="email">
+        Email
+        <input
+          name="email"
+          id="email"
+          placeholder="Email"
+          onChange={handleChangeEmail}
+          value={email}
+        />
+      </label>
       <button
         type="button"
         onClick={displayQuestions}
@@ -77,3 +106,5 @@ export default function Participant({ addParticipant }) {
     </div>
   );
 }
+
+export default ParticipantForm;

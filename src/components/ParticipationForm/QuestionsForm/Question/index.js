@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import useLocalStorage from 'react-use-localstorage';
 
-export default function Question({ question, currentAnswer }) {
+function Question({ question, currentAnswer }) {
   const { id, title } = question;
   const [localAnswer, setLocalAnswer] = useLocalStorage(`answer ${id}`, '');
   const handleChange = (e) => {
@@ -16,7 +16,9 @@ export default function Question({ question, currentAnswer }) {
   return (
     <div>
       <h2>{title}</h2>
-      <textarea type="text" onChange={handleChange} value={localAnswer} />
+      <textarea onChange={handleChange} value={localAnswer} />
     </div>
   );
 }
+
+export default Question;

@@ -4,7 +4,7 @@ import Question from './Question';
 import Navigation from './Navigation';
 import { initialState, reducer } from '../answersReducer';
 
-export default function QuestionsForm({ addAnswers, nbQuestions }) {
+function QuestionsForm({ addAnswers, setQuestionsLength }) {
   const [questions, setQuestions] = useState([]);
   const questionnaireSize = questions.length;
   const [currentPagination, setCurrentPagination] = useState(1);
@@ -33,7 +33,7 @@ export default function QuestionsForm({ addAnswers, nbQuestions }) {
     } else {
       setCurrentPagination(currentPagination - 1);
     }
-    nbQuestions(questionnaireSize);
+    setQuestionsLength(questionnaireSize);
     setAnswer('');
   };
 
@@ -64,7 +64,7 @@ export default function QuestionsForm({ addAnswers, nbQuestions }) {
               <h3>{questions[index].title}</h3>
               <p>{item.comment}</p>
               <button type="button" onClick={() => setCurrentPagination(index + 1)}>
-              edit
+                edit
               </button>
             </div>
           ))
@@ -72,3 +72,5 @@ export default function QuestionsForm({ addAnswers, nbQuestions }) {
     </div>
   );
 }
+
+export default QuestionsForm;

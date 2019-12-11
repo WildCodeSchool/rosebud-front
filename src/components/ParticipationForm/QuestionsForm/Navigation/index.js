@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Navigation({ allowClick, currentPagination, questionnaireSize }) {
+function Navigation({ allowClick, currentPagination, questionnaireSize }) {
   const questionNavigation = (type) => () => {
     allowClick(type);
   };
@@ -13,3 +13,5 @@ export default function Navigation({ allowClick, currentPagination, questionnair
     </div>
   );
 }
+
+export default Navigation;
