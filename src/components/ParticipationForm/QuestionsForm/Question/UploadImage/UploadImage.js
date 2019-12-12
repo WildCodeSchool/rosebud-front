@@ -1,11 +1,16 @@
 import React, { Component } from "react";
+import "./UploadImage.css";
 
 class UploadImage extends Component {
-  state = {
-    data: [],
-    isLoading: false,
-    file: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      file: [],
+      curr: null,
+      affiche: false
+    };
+  }
 
   fetchData() {
     fetch("/upload", {
@@ -21,36 +26,35 @@ class UploadImage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isLoading !== prevState.isLoading) {
-      this.fetchData();
-      console.log("didupdate");
+    if (this.state.affiche){
+      this.setState({affiche: false})
     }
   }
 
+ 
+
   handleUpload = event => {
-    this.setState({
-      file: URL.createObjectURL(event.target.files[0]),
-      isLoading: true
-    });
+    let newFile = URL.createObjectURL(event.target.files[0]);
+    localStorage.setItem(this.props.id, JSON.stringify(newFile));
+    this.setState({affiche: true})
+
+
   };
 
+ 
+
   render() {
+
+    const object = JSON.parse(localStorage.getItem(this.props.id))
     return (
       <div className="container">
         <h1>File Upload</h1>
-        
-        <form
-          action={this.state.data.file === "undefined" ? "/" : "/upload"}
-          method="POST"
-          encType="multipart/form-data"
-        >
+
+        <form action="/upload" method="POST" encType="multipart/form-data">
           <div className="file-field input-field">
             <div className="btn grey">
               <span>File</span>
               <input name="myImage" type="file" onChange={this.handleUpload} />
-            </div>
-            <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" />
             </div>
           </div>
           <button type="submit" className="btn">
@@ -58,12 +62,9 @@ class UploadImage extends Component {
           </button>
         </form>
         <br />
-        {this.state.isLoading && <img
-          src={this.state.file}
-          className="responsive-img"
-          alt="prévisualisation"
-        /> }
-        
+        <div>
+          <img className="test" src={object} />
+        </div>
       </div>
     );
   }
