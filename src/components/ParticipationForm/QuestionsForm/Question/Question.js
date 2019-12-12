@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import useLocalStorage from 'react-use-localstorage';
 
+
 function Question({ question, currentAnswer }) {
   const { id, title } = question;
   const [localAnswer, setLocalAnswer] = useLocalStorage(`answer ${id}`, '');
@@ -17,6 +18,7 @@ function Question({ question, currentAnswer }) {
     <div>
       <h2>{title}</h2>
       <textarea onChange={handleChange} value={localAnswer} />
+      
     </div>
   );
 }

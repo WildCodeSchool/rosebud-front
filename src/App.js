@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import ParticipationForm from './components/ParticipationForm';
-import UploadImage from './components/ParticipationForm/QuestionsForm/Question/UploadImage/UploadImage';
+import ParticipationForm from './components/ParticipationForm/ParticipationForm';
+import UploadImage from './components/ParticipationForm/QuestionsForm/Question/UploadImage/UploadImage'
+
 
 function App() {
   return (

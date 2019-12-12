@@ -1,20 +1,53 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class UploadImage extends Component {
-  constructor(props) {
-    super();
+  state = {
+    data: [],
+    isLoading: false,
+    file: null
+  };
+
+  fetchData() {
+    fetch("/upload", {
+      method: "POST"
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ data: res }))
+      .catch(error => console.log("ERROR"));
   }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.isLoading !== prevState.isLoading) {
+      this.fetchData();
+      console.log("didupdate");
+    }
+  }
+
+  handleUpload = event => {
+    this.setState({
+      file: URL.createObjectURL(event.target.files[0]),
+      isLoading: true
+    });
+  };
 
   render() {
     return (
       <div className="container">
         <h1>File Upload</h1>
-        {typeof msg !== 'undefined' ? msg : ''}
-        <form action="/upload" method="POST" encType="multipart/form-data">
+        
+        <form
+          action={this.state.data.file === "undefined" ? "/" : "/upload"}
+          method="POST"
+          encType="multipart/form-data"
+        >
           <div className="file-field input-field">
             <div className="btn grey">
               <span>File</span>
-              <input name="myImage" type="file" />
+              <input name="myImage" type="file" onChange={this.handleUpload} />
             </div>
             <div className="file-path-wrapper">
               <input className="file-path validate" type="text" />
@@ -25,11 +58,12 @@ class UploadImage extends Component {
           </button>
         </form>
         <br />
-        <img
-          src={typeof file !== 'undefined' ? file : ''}
+        {this.state.isLoading && <img
+          src={this.state.file}
           className="responsive-img"
           alt="prévisualisation"
-        />
+        /> }
+        
       </div>
     );
   }

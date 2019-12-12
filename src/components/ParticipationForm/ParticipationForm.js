@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import ParticipantForm from './ParticipantForm';
-import QuestionsForm from './QuestionsForm';
+import ParticipantForm from './ParticipantForm/ParticipationForm';
+import QuestionsForm from './QuestionsForm/QuestionForm';
 
 function ParticipationForm() {
   const [participant, setParticipant] = useState(null);

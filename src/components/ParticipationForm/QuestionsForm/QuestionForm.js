@@ -1,8 +1,9 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import axios from 'axios';
-import Question from './Question';
-import Navigation from './Navigation';
+import Question from './Question/Question';
+import Navigation from './Navigation/Navigation';
 import { initialState, reducer } from '../answersReducer';
+
 
 function QuestionsForm({ addAnswers, setQuestionsLength }) {
   const [questions, setQuestions] = useState([]);
@@ -28,6 +29,7 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
         id: currentPagination,
         comment: answer,
         question_id: questions[currentPagination - 1].id,
+    
       });
       setCurrentPagination(currentPagination + 1);
     } else {
@@ -56,6 +58,7 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
               currentPagination={currentPagination}
               questionnaireSize={questionnaireSize}
             />
+
           </div>
         )
         : (
