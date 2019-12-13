@@ -26,26 +26,19 @@ class UploadImage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.affiche){
-      this.setState({affiche: false})
+    if (this.state.affiche) {
+      this.setState({ affiche: false });
     }
   }
 
- 
-
   handleUpload = event => {
     let newFile = URL.createObjectURL(event.target.files[0]);
-    localStorage.setItem(this.props.id, JSON.stringify(newFile));
-    this.setState({affiche: true})
-
-
+    localStorage.setItem(`image ${this.props.id}`, JSON.stringify(newFile));
+    this.setState({ affiche: true });
   };
 
- 
-
   render() {
-
-    const object = JSON.parse(localStorage.getItem(this.props.id))
+    const imgCurrent = JSON.parse(localStorage.getItem(`image ${this.props.id}`));
     return (
       <div className="container">
         <h1>File Upload</h1>
@@ -63,7 +56,7 @@ class UploadImage extends Component {
         </form>
         <br />
         <div>
-          <img className="test" src={object} />
+          <img className="test" src={imgCurrent} alt='affiche de film' />
         </div>
       </div>
     );

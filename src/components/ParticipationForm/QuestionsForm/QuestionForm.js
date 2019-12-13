@@ -66,6 +66,7 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
             <div key={item.id}>
               <h3>{questions[index].title}</h3>
               <p>{item.comment}</p>
+              <img class='test' src={JSON.parse(localStorage.getItem(`image ${item.id}`))} alt='affiche de film'/>
               <button type="button" onClick={() => setCurrentPagination(index + 1)}>
                 edit
               </button>
