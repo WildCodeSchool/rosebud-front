@@ -26,7 +26,6 @@ function Question({ question, currentAnswer, currentImage }) {
     currentAnswer(localStorage.getItem(`answer ${id}`));
     currentImage(localStorage.getItem(`image object ${id}`));
   });
-
   return (
     <div>
       <h2>{title}</h2>
@@ -37,5 +36,4 @@ function Question({ question, currentAnswer, currentImage }) {
     </div>
   );
 }
-
 export default Question;
