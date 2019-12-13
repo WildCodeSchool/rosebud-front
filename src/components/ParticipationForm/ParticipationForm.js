@@ -14,6 +14,8 @@ function ParticipationForm() {
     localStorage.clear();
   };
 
+  console.log(answers);
+
   return (
     <form onSubmit={submitParticipation}>
       {!participant

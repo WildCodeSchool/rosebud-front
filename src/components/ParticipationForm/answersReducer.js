@@ -8,6 +8,7 @@ export const reducer = (state, action) => {
       const newAnswer = {
         id: action.id,
         comment: action.comment,
+        image_url: action.image_url,
         question_id: action.question_id,
       };
       return {

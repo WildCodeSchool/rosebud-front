@@ -10,6 +10,7 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
   const questionnaireSize = questions.length;
   const [currentPagination, setCurrentPagination] = useState(1);
   const [answer, setAnswer] = useState('');
+  const [image, setImage] = useState('');
   const [state, dispatch] = useReducer(reducer, initialState);
   const { answers } = state;
 
@@ -28,8 +29,9 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
         type: action,
         id: currentPagination,
         comment: answer,
+        image_url: image,
         question_id: questions[currentPagination - 1].id,
-    
+
       });
       setCurrentPagination(currentPagination + 1);
     } else {
@@ -37,6 +39,7 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
     }
     setQuestionsLength(questionnaireSize);
     setAnswer('');
+    setImage('');
   };
 
   useEffect(() => {
@@ -52,6 +55,7 @@ function QuestionsForm({ addAnswers, setQuestionsLength }) {
               question={questions
                 .find((question, index) => index + 1 === currentPagination && question)}
               currentAnswer={setAnswer}
+              currentImage={setImage}
             />
             <Navigation
               allowClick={changeQuestion}
