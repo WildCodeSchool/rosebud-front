@@ -1,0 +1,8 @@
+.step--show {
+    display: flex;
+    flex-direction: column;
+}
+
+.step--hide {
+    display: none;
+}
