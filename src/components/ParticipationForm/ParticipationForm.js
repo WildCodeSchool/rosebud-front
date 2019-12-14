@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './ParticipationForm.css';
 import axios from 'axios';
+import useLocalStorage from 'react-use-localstorage';
 
 function ParticipationForm() {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
+  const [imageUrl, SetImageUrl] = useLocalStorage(`image ${step}`, '');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +25,15 @@ function ParticipationForm() {
 
   const changeStep = (value) => {
     setStep(step + value);
+  };
+
+  const imagePreview = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      SetImageUrl(base64data);
+    };
   };
 
   return (
@@ -67,8 +78,14 @@ function ParticipationForm() {
               <div className={`${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                 <h3>{question.title}</h3>
                 <label htmlFor={`answer-${index}-image`}>
-                  <input name={`answer-${index}-image`} type="file" />
+                  <input name={`answer-${index}-image`} type="file" onChange={imagePreview} />
                 </label>
+                {imageUrl
+                  && (
+                  <div>
+                    <img src={imageUrl} alt="Preview" />
+                  </div>
+                  )}
                 <label htmlFor={`answer-${index}-comment`}>
                   <textarea name={`answer-${index}-comment`} cols="30" rows="10" />
                 </label>
