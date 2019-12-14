@@ -3,6 +3,8 @@ import './ParticipationForm.css';
 import axios from 'axios';
 import useLocalStorage from 'react-use-localstorage';
 
+window.onload = () => { localStorage.clear(); };
+
 function ParticipationForm() {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
