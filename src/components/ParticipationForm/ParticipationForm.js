@@ -20,6 +20,7 @@ function ParticipationForm() {
     e.preventDefault();
     const data = new FormData(e.target);
     axios.post('/api/v1/questionnaires/1/participations', data);
+    localStorage.clear();
     console.log(...data);
   };
 
