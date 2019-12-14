@@ -18,6 +18,7 @@ function ParticipationForm() {
     e.preventDefault();
     const data = new FormData(e.target);
     axios.post('/api/v1/questionnaires/1/participations', data);
+    console.log(data);
   };
 
   const changeStep = (value) => {
