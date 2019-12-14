@@ -72,7 +72,7 @@ function ParticipationForm() {
             <label htmlFor="email">
               <input name="email" type="text" placeholder="E-mail" />
             </label>
-            <div className="pagination pagination--firststep">
+            <div className="pagination--firststep">
               <button type="button" onClick={() => changeStep(1)}>Participer</button>
             </div>
           </div>
@@ -94,7 +94,7 @@ function ParticipationForm() {
                 </label>
                 {step < questions.length
                   && (
-                    <div className="pagination">
+                    <div className="pagination--steps">
                       <button type="button" onClick={() => changeStep(-1)}>Précédent</button>
                       <button type="button" onClick={() => changeStep(1)}>Suivant</button>
                     </div>
@@ -104,7 +104,7 @@ function ParticipationForm() {
           }
           {step === questions.length
             && (
-              <div className="pagination pagination--laststep">
+              <div className="pagination--laststep">
                 <button type="button" onClick={() => changeStep(-1)}>Précédent</button>
                 <button type="submit">Valider ma participation</button>
               </div>
