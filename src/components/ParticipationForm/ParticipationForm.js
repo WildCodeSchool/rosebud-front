@@ -30,8 +30,6 @@ function ParticipationForm() {
       {questions.length > 0
         && (
         <form
-          action="/upload"
-          method="POST"
           encType="multipart/formdata"
           onSubmit={submitParticipation}
           className="ParticipationForm"
