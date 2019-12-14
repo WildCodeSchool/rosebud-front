@@ -8,7 +8,7 @@ window.onload = () => { localStorage.clear(); };
 function ParticipationForm() {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
-  const [imageUrl, SetImageUrl] = useLocalStorage(`image ${step}`, '');
+  const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +30,12 @@ function ParticipationForm() {
     setStep(step + value);
   };
 
-  const imagePreview = (e) => {
+  const addImagePreview = (e) => {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = () => {
       const base64data = reader.result;
-      SetImageUrl(base64data);
+      SetImagePreimagePreview(base64data);
     };
   };
 
@@ -81,12 +81,12 @@ function ParticipationForm() {
               <div className={`${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                 <h3>{question.title}</h3>
                 <label htmlFor={`answer-${index}-image`}>
-                  <input name={`answer-${index}-image`} type="file" onChange={imagePreview} />
+                  <input name={`answer-${index}-image`} type="file" onChange={addImagePreview} />
                 </label>
-                {imageUrl
+                {imagePreview
                   && (
                   <div>
-                    <img src={imageUrl} alt="Preview" />
+                    <img src={imagePreview} alt="Preview" />
                   </div>
                   )}
                 <label htmlFor={`answer-${index}-comment`}>
