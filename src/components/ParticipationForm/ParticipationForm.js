@@ -30,7 +30,7 @@ function ParticipationForm() {
     setStep(step + value);
   };
 
-  const addImagePreview = (e) => {
+  const getImagePreview = (e) => {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = () => {
@@ -66,29 +66,29 @@ function ParticipationForm() {
                   </h2>
                   <div className="participant__wrapper__form">
                     <label className="participant__input__tall" htmlFor="firstName">
-                      <input className="form__input" name="firstName" type="text" placeholder="Prénom" />
+                      <input autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
                     </label>
                     <label className="participant__input__tall" htmlFor="lastname">
-                      <input className="form__input" name="lastname" type="text" placeholder="Nom" />
+                      <input autoComplete="off" className="form__input" name="lastname" type="text" placeholder="Nom" />
                     </label>
                     <div className="participant__group__inputs">
                       <label className="participant__select" htmlFor="status">
-                        <select className="form__select" name="status" defaultValue="">
-                          <option value="">Statut</option>
+                        <select className="form__select" name="status" defaultValue="0">
+                          <option disabled="disabled" value="student">Statut</option>
+                          <option value="student">Élève/étudiant</option>
                           <option value="teacher">Enseignant</option>
-                          <option value="student">Élève</option>
                           <option value="other">Autre</option>
                         </select>
                       </label>
                       <label className="participant__input__small" htmlFor="age">
-                        <input className="form__input" name="age" type="number" placeholder="Age" />
+                        <input autoComplete="off" className="form__input" name="age" type="number" placeholder="Age" />
                       </label>
                     </div>
                     <label className="participant__input__tall" htmlFor="city">
-                      <input className="form__input" name="city" type="text" placeholder="Ville" />
+                      <input autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville" />
                     </label>
                     <label className="participant__input__tall" htmlFor="email">
-                      <input className="form__input" name="email" type="text" placeholder="E-mail" />
+                      <input autoComplete="off" className="form__input" name="email" type="text" placeholder="E-mail" />
                     </label>
                     <div className="pagination pagination--firststep">
                       <button className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
@@ -107,7 +107,7 @@ function ParticipationForm() {
                   <div className="upload__image">
                     <label className="upload__image__button" htmlFor={`answer-${index}-image`}>
                       {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                      <input className="form__input__file" name={`answer-${index}-image`} id={`answer-${index}-image`} type="file" onChange={addImagePreview} />
+                      <input className="form__input__file" name={`answer-${index}-image`} id={`answer-${index}-image`} type="file" onChange={getImagePreview} />
                     </label>
                   </div>
                   {imagePreview
@@ -119,26 +119,31 @@ function ParticipationForm() {
                   <label className="comment__answer" htmlFor={`answer-${index}-comment`}>
                     <textarea className="textarea__answer" name={`answer-${index}-comment`} rows="10" placeholder="Commentaire.." />
                   </label>
-                    <div className="pagination pagination--steps">
-                      <div className="buttons__wrapper">
-                        <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
-                          <i className="button__steps__icon fa fa-caret-left"></i>
-                        </button>
-                        <p className="pagination__details">Question {index + 1} / {questions.length}</p>
-                        {step < questions.length
-                          &&
+                  <div className="pagination pagination--steps">
+                    <div className="buttons__wrapper">
+                      <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
+                        <i className="button__steps__icon fa fa-caret-left" />
+                      </button>
+                      <p className="pagination__details">
+                        Question
+                        {index + 1}
+                        /
+                        {questions.length}
+                      </p>
+                      {step < questions.length
+                          && (
                           <button className="button__steps" type="button" onClick={() => changeStep(1)}>
-                            <i className="button__steps__icon fa fa-caret-right"></i>
+                            <i className="button__steps__icon fa fa-caret-right" />
                           </button>
-                        }
-                        {step === questions.length
-                          &&
+                          )}
+                      {step === questions.length
+                          && (
                           <button className="submit__button" type="submit">
-                            <i className="submit__button__icon fa fa-check"></i>
+                            <i className="submit__button__icon fa fa-check" />
                           </button>
-                        }
-                      </div>
+                          )}
                     </div>
+                  </div>
                 </div>
               ))}
             </section>

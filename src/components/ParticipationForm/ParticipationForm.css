@@ -264,3 +264,16 @@
 .step--hide {
     display: none;
 }
+
+.required__message {
+    display: flex;
+    color: #DDDDCD;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #DDDDCD;
+    border-radius: 5px;
+}
+
+.required__message__icon {
+    margin-right: 10px;
+}
