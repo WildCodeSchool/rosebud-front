@@ -1,3 +1,132 @@
+.ParticipationForm {
+    display: flex;
+    flex-direction: column;
+}
+
+/* participant */
+
+.participant__presentation__title {
+    margin: 0px 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 22px;
+    background: #d1d1c2;
+    padding: 20px;    
+}
+
+.participant__presentation__content {
+    padding: 20px;    
+    margin:0;
+}
+
+.participant__wrapper {
+    display: flex;
+    flex-direction: column;
+    background: #F05D58;
+    height: auto;
+}
+
+.participant__handing {
+    margin:0;
+    padding: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 22px;
+    color: #DDDDCD;
+    background: #dc554f;
+}
+
+.participant__handing__icon {
+    background: #DDDDCD;
+    color: #F05D58;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    border-radius: 100%;
+}
+
+.participant__wrapper__form {
+    padding:30px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.participant__input__tall {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.participant__group__inputs {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.participant__select {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    width: 80%;
+}
+
+.participant__input__small {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.form__input {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #DDDDCD;
+    outline:0;
+}
+
+.form__select {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #DDDDCD;
+    outline:0;
+    color: #666;
+}
+
+.participant__button {
+    background: #363635;
+    outline: 0;
+    border:0;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    color: #DDDDCD;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.participant__form__message {
+    color: #DDDDCD;
+    font-size: 12px;
+    margin:20px 0 0 0;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: column;
+}
+
 .step--show {
     display: flex;
     flex-direction: column;
