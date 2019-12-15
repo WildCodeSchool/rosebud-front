@@ -81,7 +81,7 @@ function ParticipationForm() {
                         </select>
                       </label>
                       <label className="participant__input__small" htmlFor="age">
-                        <input className="form__input" name="age" type="text" placeholder="Age" />
+                        <input className="form__input" name="age" type="number" placeholder="Age" />
                       </label>
                     </div>
                     <label className="participant__input__tall" htmlFor="city">
@@ -101,41 +101,46 @@ function ParticipationForm() {
                   </div>
                 </div>
               </div>
-
-              {
-            questions.map((question, index) => (
-              <div className={`${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
-                <h3>{question.title}</h3>
-                <label htmlFor={`answer-${index}-image`}>
-                  <input name={`answer-${index}-image`} type="file" onChange={addImagePreview} />
-                </label>
-                {imagePreview
+              {questions.map((question, index) => (
+                <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
+                  <h2 className="question__title">{question.title}</h2>
+                  <div className="upload__image">
+                    <label className="upload__image__button" htmlFor={`answer-${index}-image`}>
+                      {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
+                      <input className="form__input__file" name={`answer-${index}-image`} id={`answer-${index}-image`} type="file" onChange={addImagePreview} />
+                    </label>
+                  </div>
+                  {imagePreview
                   && (
-                  <div>
-                    <img src={imagePreview} alt="Preview" />
+                  <div className="preview__wrapper">
+                    <img className="image__preview" src={imagePreview} alt="Preview" />
                   </div>
                   )}
-                <label htmlFor={`answer-${index}-comment`}>
-                  <textarea name={`answer-${index}-comment`} cols="30" rows="10" />
-                </label>
-                {step < questions.length
-                  && (
+                  <label className="comment__answer" htmlFor={`answer-${index}-comment`}>
+                    <textarea className="textarea__answer" name={`answer-${index}-comment`} rows="10" placeholder="Commentaire.." />
+                  </label>
                     <div className="pagination pagination--steps">
-                      <button type="button" onClick={() => changeStep(-1)}>Précédent</button>
-                      <button type="button" onClick={() => changeStep(1)}>Suivant</button>
+                      <div className="buttons__wrapper">
+                        <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
+                          <i className="button__steps__icon fa fa-caret-left"></i>
+                        </button>
+                        <p className="pagination__details">Question {index + 1} / {questions.length}</p>
+                        {step < questions.length
+                          &&
+                          <button className="button__steps" type="button" onClick={() => changeStep(1)}>
+                            <i className="button__steps__icon fa fa-caret-right"></i>
+                          </button>
+                        }
+                        {step === questions.length
+                          &&
+                          <button className="submit__button" type="submit">
+                            <i className="submit__button__icon fa fa-check"></i>
+                          </button>
+                        }
+                      </div>
                     </div>
-                  )}
-              </div>
-            ))
-          }
-              {step === questions.length
-            && (
-              <div className="pagination pagination--laststep">
-                <button type="button" onClick={() => changeStep(-1)}>Précédent</button>
-                <button type="submit">Valider ma participation</button>
-              </div>
-            )}
-
+                </div>
+              ))}
             </section>
           )}
       </form>
