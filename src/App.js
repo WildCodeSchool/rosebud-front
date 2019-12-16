@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import HomePage from './components/HomePage/HomePage';
 import ParticipationForm from './components/ParticipationForm/ParticipationForm';
-
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           <ParticipationForm />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }
