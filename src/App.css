@@ -1,5 +1,14 @@
 .App {
-    background: #EFEFEF;
+    background: #DDDDCD;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #363635;
+    font-size: 20px;
+}
+
+strong {
+    font-weight: 700;
 }

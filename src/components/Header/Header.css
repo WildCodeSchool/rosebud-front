@@ -1,0 +1,11 @@
+.Header {
+    background: #F05D58;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.Header__logo {
+    width: 100%;
+    max-width: 240px;
+}
