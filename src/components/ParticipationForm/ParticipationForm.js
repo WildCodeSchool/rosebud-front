@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ParticipationForm.css';
 import axios from 'axios';
 import useLocalStorage from 'react-use-localstorage';
+import { useParams } from 'react-router-dom';
 
 window.onload = () => { localStorage.clear(); };
 
@@ -9,14 +10,15 @@ function ParticipationForm() {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
+  const { questionnaireId } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get('/api/v1/questionnaires/1/questions');
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
     };
     fetchData();
-  }, []);
+  }, [questionnaireId]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
