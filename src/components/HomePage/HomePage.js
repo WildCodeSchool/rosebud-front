@@ -14,10 +14,10 @@ function HomePage() {
 
       <div className="random__images__wrapper">
         <img className="random__image image__1" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__2" src="http://lorempixel.com/641/361/" alt="random home" />
-        <img className="random__image image__3" src="http://lorempixel.com/642/362/" alt="random home" />
-        <img className="random__image image__4" src="http://lorempixel.com/643/363/" alt="random home" />
-        <img className="random__image image__5" src="http://lorempixel.com/644/364/" alt="random home" />
+        <img className="random__image image__2" src="http://lorempixel.com/640/360/" alt="random home" />
+        <img className="random__image image__3" src="http://lorempixel.com/640/360/" alt="random home" />
+        <img className="random__image image__4" src="http://lorempixel.com/640/360/" alt="random home" />
+        <img className="random__image image__5" src="http://lorempixel.com/640/360/" alt="random home" />
         <div className="random__images__button__wrapper">
           <Link to="/questionnaire/1/participer" className="random__images__button">
             <i className="random__images__button__icon fa fa-plus-square" />
