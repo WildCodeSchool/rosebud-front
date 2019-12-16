@@ -14,7 +14,7 @@ function App() {
         <Route exact path="/">
           <HomePage />
         </Route>
-        <Route path="/participation/questionnaire/:questionnaireId">
+        <Route path="/questionnaire/:questionnaireId/participer/">
           <ParticipationForm />
         </Route>
       </Switch>
