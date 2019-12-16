@@ -52,6 +52,11 @@
     height: 100%;
     width: 100%;
     border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .random__images__button__icon {

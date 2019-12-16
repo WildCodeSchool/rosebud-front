@@ -19,10 +19,10 @@ function HomePage() {
         <img className="random__image image__4" src="http://lorempixel.com/643/363/" alt="random home" />
         <img className="random__image image__5" src="http://lorempixel.com/644/364/" alt="random home" />
         <div className="random__images__button__wrapper">
-          <button type="button" className="random__images__button">
+          <Link to="/questionnaire/1/participer" className="random__images__button">
             <i className="random__images__button__icon fa fa-plus-square" />
             <p className="random__images__button__content">Participer</p>
-          </button>
+          </Link>
         </div>
       </div>
 
