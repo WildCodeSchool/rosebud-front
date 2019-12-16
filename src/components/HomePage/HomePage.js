@@ -82,6 +82,28 @@ function HomePage() {
                   : <i className="fa fa-arrow-right" />}
               </div>
             </Link>
+            <Link to={`${linkToConsult ? '/questionnaire/1/consulter/' : '/questionnaire/1/participer/'}`} className="search__results__item">
+              <div className="search__results__item__infos">
+                <h3 className="search__results__item__title">Classes pilotes Courts métrages / Jeu vidéo</h3>
+                <p className="search__results__item__content">Lorem ipsum dolor sit amet consectetur adipisicing sicing elit...</p>
+              </div>
+              <div className="search__results__access">
+                {linkToConsult
+                  ? <i className="fa fa-eye" />
+                  : <i className="fa fa-arrow-right" />}
+              </div>
+            </Link>
+            <Link to={`${linkToConsult ? '/questionnaire/1/consulter/' : '/questionnaire/1/participer/'}`} className="search__results__item">
+              <div className="search__results__item__infos">
+                <h3 className="search__results__item__title">Classes pilotes Courts métrages / Jeu vidéo</h3>
+                <p className="search__results__item__content">Lorem ipsum dolor sit amet consectetur adipisicing sicing elit...</p>
+              </div>
+              <div className="search__results__access">
+                {linkToConsult
+                  ? <i className="fa fa-eye" />
+                  : <i className="fa fa-arrow-right" />}
+              </div>
+            </Link>
           </div>
           <div className="search__results__pagination">
             <span className="search__results__pagination__item search__results__pagination__item--active" />
