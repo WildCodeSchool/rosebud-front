@@ -31,12 +31,14 @@ function ParticipationForm() {
   };
 
   const getImagePreview = (e) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onloadend = () => {
-      const base64data = reader.result;
-      SetImagePreimagePreview(base64data);
-    };
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        SetImagePreimagePreview(base64data);
+      };
+    }
   };
 
   return (
