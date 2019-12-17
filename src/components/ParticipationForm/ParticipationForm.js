@@ -23,7 +23,11 @@ function ParticipationForm() {
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    axios.post('/api/v1/questionnaires/1/participations', data);
+    const dataToJson = {};
+    data.forEach((value, key) => {
+      dataToJson[key] = value;
+    });
+    axios.post('/api/v1/questionnaires/1/participations', dataToJson);
     localStorage.clear();
   };
 
@@ -73,7 +77,7 @@ function ParticipationForm() {
                       <input required="required" autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
                     </label>
                     <label className="participant__input__tall" htmlFor="lastName">
-                      <input required="required" autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom" />
+                      <input autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom" />
                     </label>
                     <div className="participant__group__inputs">
                       <label className="participant__select" htmlFor="status">
