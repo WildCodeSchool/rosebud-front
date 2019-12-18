@@ -52,6 +52,7 @@ function ParticipationForm() {
       <form
         encType="multipart/formdata"
         onSubmit={submitParticipation}
+        noValidate
       >
         {questions.length > 0
           && (
@@ -74,29 +75,29 @@ function ParticipationForm() {
                   </h2>
                   <div className="participant__wrapper__form">
                     <label className="participant__input__tall" htmlFor="firstName">
-                      <input autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
+                      <input required="required" autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
                     </label>
                     <label className="participant__input__tall" htmlFor="lastName">
                       <input autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom" />
                     </label>
                     <div className="participant__group__inputs">
                       <label className="participant__select" htmlFor="status">
-                        <select className="form__select" name="status" defaultValue="0">
-                          <option disabled="disabled" value="student">Statut</option>
+                        <select className="form__select" name="status" defaultValue="">
+                          <option disabled="disabled">Statut</option>
                           <option value="student">Élève/étudiant</option>
                           <option value="teacher">Enseignant</option>
                           <option value="other">Autre</option>
                         </select>
                       </label>
                       <label className="participant__input__small" htmlFor="age">
-                        <input autoComplete="off" className="form__input" name="age" type="number" placeholder="Age" />
+                        <input required="required" autoComplete="off" className="form__input" name="age" type="number" placeholder="Age" />
                       </label>
                     </div>
                     <label className="participant__input__tall" htmlFor="city">
-                      <input autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville" />
+                      <input required="required" autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville" />
                     </label>
                     <label className="participant__input__tall" htmlFor="email">
-                      <input autoComplete="off" className="form__input" name="email" type="text" placeholder="E-mail" />
+                      <input required="required" autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail" />
                     </label>
                     <div className="pagination pagination--firststep">
                       <button className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
