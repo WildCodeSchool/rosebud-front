@@ -64,7 +64,7 @@ function WallPage() {
               </div>
               <div className="participationAnswers">
                 {answers.map((answer, index) => answer.ParticipantId === participant.id
-                  && <img key={answer.id} className={`random__image image__${index + 1}`} src="http://lorempixel.com/640/360/" alt="answer path" />)}
+                  && <img key={answer.id} className={`random__image image__${index + 1}`} src={answer.image_url} alt="answer path" />)}
                 <div className="participationAnswers__button__wrapper">
                   <button type="button" className="participationAnswers__button">
                     <i className="participationAnswers__button__icon fa fa-eye" />
