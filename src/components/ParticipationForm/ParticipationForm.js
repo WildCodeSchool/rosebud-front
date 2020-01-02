@@ -23,11 +23,7 @@ function ParticipationForm() {
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const dataToJson = {};
-    data.forEach((value, key) => {
-      dataToJson[key] = value;
-    });
-    axios.post('/api/v1/questionnaires/1/participations', dataToJson);
+    axios.post('/api/v1/questionnaires/1/participations', data);
     localStorage.clear();
   };
 
@@ -108,14 +104,15 @@ function ParticipationForm() {
                     </p>
                   </div>
                 </div>
+                <input type="hidden" name="questionsLength" value={`${questions.length}`} />
               </div>
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
                   <div className="upload__image">
-                    <label className="upload__image__button" htmlFor={`answer-${index}-image`}>
+                    <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                       {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                      <input required="required" className="form__input__file" name={`answer-${index}-image`} id={`answer-${index}-image`} type="file" onChange={getImagePreview} />
+                      <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                     </label>
                   </div>
                   {imagePreview
@@ -124,9 +121,10 @@ function ParticipationForm() {
                     <img className="image__preview" src={imagePreview} alt="Preview" />
                   </div>
                   )}
-                  <label className="comment__answer" htmlFor={`answer-${index}-comment`}>
-                    <textarea className="textarea__answer" name={`answer-${index}-comment`} rows="10" placeholder="Commentaire.." />
+                  <label className="comment__answer" htmlFor={`answerComment${index}`}>
+                    <textarea className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
                   </label>
+                  <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
                   <div className="pagination pagination--steps">
                     <div className="buttons__wrapper">
                       <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
