@@ -106,7 +106,6 @@ function ParticipationForm() {
                 </div>
                 <input type="hidden" name="questionsLength" value={`${questions.length}`} />
               </div>
-              <input type="hidden" value={questions.length} name="questionsLength" />
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
