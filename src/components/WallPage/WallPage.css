@@ -1,4 +1,9 @@
 
+.WallPage__fixe {
+    position: relative;
+    overflow: hidden;
+}
+
 .WallPage__presentation__title {
     margin: 0px 0;
     font-weight: 700;
@@ -180,4 +185,35 @@
     font-weight: 300;
     font-size: 18px;
     color: #DDDDCD;
+}
+
+.modal {
+    height: 100%;
+    width: 100%;
+    background: rgb(0, 0, 0, 0.7);
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal--open {
+    display: flex;
+}
+
+.modal__wrapper {
+    height: auto;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+}
+
+.modal__image {
+    width: 100%;
+    height: auto;
 }
