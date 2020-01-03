@@ -100,7 +100,7 @@ function WallPage() {
           <p>{currentAnswers[modalCount].comment}</p>
           {modalCount > 0
               && <button type="button" onClick={() => setModalCount(modalCount - 1)}>Prev</button>}
-          {modalCount + 1 < answers.length
+          {modalCount + 1 < currentAnswers.length
           && <button type="button" onClick={() => setModalCount(modalCount + 1)}>Next</button>}
           <p>
             <button type="button" onClick={closeModal}>
