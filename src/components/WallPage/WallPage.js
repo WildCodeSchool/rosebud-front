@@ -7,6 +7,10 @@ function WallPage() {
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [currentAnswers, setCurrentAnswers] = useState([]);
+  const [participantId, setParticipantId] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [modalCount, setModalCount] = useState(0);
   const { questionnaireId } = useParams();
 
   useEffect(() => {
@@ -19,8 +23,21 @@ function WallPage() {
     fetchData();
   }, [questionnaireId]);
 
+  const displayModal = (id) => {
+    const modalAnswers = answers.filter((x) => x.ParticipantId === id);
+    setCurrentAnswers(modalAnswers);
+    setParticipantId(id);
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+    setModalCount(0);
+  };
+
+
   return (
-    <div className="WallPage">
+    <div className={modal ? 'WallPage WallPage__fixe' : 'WallPage'}>
 
       <div className="WallPage__presentation">
         <h2 className="WallPage__presentation__title">
@@ -66,7 +83,7 @@ function WallPage() {
                 {answers.map((answer, index) => answer.ParticipantId === participant.id
                   && <img key={answer.id} className={`random__image image__${index + 1}`} src={answer.image_url} alt="answer path" />)}
                 <div className="participationAnswers__button__wrapper">
-                  <button type="button" className="participationAnswers__button">
+                  <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
                     <i className="participationAnswers__button__icon fa fa-eye" />
                   </button>
                 </div>
@@ -74,6 +91,25 @@ function WallPage() {
             </div>
           ))}
       </div>
+      {participants.map((participant) => participant.id === participantId && (
+      <div className={modal ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
+        <div className="modal__wrapper">
+          <img className="modal__image" src={currentAnswers[modalCount].image_url} alt="answer path" />
+          <p>{`${participant.firstName} ${participant.lastName}`}</p>
+          <p>{questions[modalCount].title}</p>
+          <p>{currentAnswers[modalCount].comment}</p>
+          {modalCount > 0
+              && <button type="button" onClick={() => setModalCount(modalCount - 1)}>Prev</button>}
+          {modalCount + 1 < answers.length
+          && <button type="button" onClick={() => setModalCount(modalCount + 1)}>Next</button>}
+          <p>
+            <button type="button" onClick={closeModal}>
+              close
+            </button>
+          </p>
+        </div>
+      </div>
+      ))}
     </div>
   );
 }
