@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './WallPage.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function WallPage() {
   const [participants, setParticipants] = useState([]);
@@ -42,10 +42,10 @@ function WallPage() {
       <div className="WallPage__presentation">
         <h2 className="WallPage__presentation__title">
           Classes pilotes Courts métrages / Jeu vidéo
-          <button type="button" className="WallPage__presentation__button">
+          <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
             <i className="WallPage__presentation__button__icon fa fa-plus-square" />
             <p className="WallPage__presentation__button__content">Participer</p>
-          </button>
+          </Link>
         </h2>
         <p className="WallPage__presentation__content">
                 Retrouvez ci-dessous les contributions des élèves des classes pilotes Lycéens
