@@ -5,14 +5,20 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
+  const [randomImages, setRandomImages] = useState([]);
   const [questionnaires, setQuestionnaires] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRandomImages = async () => {
+      const result = await axios.get('/api/v1/questionnaires/answers?limit=5');
+      setRandomImages(result.data);
+    };
+    fetchRandomImages();
+    const fetchQuestionnaires = async () => {
       const result = await axios.get('/api/v1/questionnaires');
       setQuestionnaires(result.data);
     };
-    fetchData();
+    fetchQuestionnaires();
   }, []);
 
   const changeLinkResults = () => {
@@ -38,11 +44,9 @@ function HomePage() {
     <div className="HomePage">
 
       <div className="random__images__wrapper">
-        <img className="random__image image__1" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__2" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__3" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__4" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__5" src="http://lorempixel.com/640/360/" alt="random home" />
+        {randomImages.map((image, index) => (
+          <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
+        ))}
         <div className="random__images__button__wrapper">
           <Link to="/questionnaire/1/consulter/" className="random__images__button">
             <i className="random__images__button__icon fa fa-eye" />
