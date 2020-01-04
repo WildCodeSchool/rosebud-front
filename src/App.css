@@ -9,6 +9,11 @@
     font-size: 20px;
 }
 
+.App--fixe {
+    position: fixed;
+    overflow: hidden;
+}
+
 strong {
     font-weight: 700;
 }

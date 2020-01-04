@@ -48,7 +48,7 @@ function HomePage() {
           <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
         ))}
         <div className="random__images__button__wrapper">
-          <Link to="/questionnaire/1/consulter/" className="random__images__button">
+          <Link to="/questionnaire/1" className="random__images__button">
             <i className="random__images__button__icon fa fa-eye" />
             <p className="random__images__button__content">Consulter</p>
           </Link>
@@ -101,7 +101,7 @@ function HomePage() {
           </div>
           <div className="search__results__wrapper">
             {questionnaires.map((questionnaire) => (
-              <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}/consulter/`}`} className="search__results__item" key={questionnaire.id}>
+              <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}`}`} className="search__results__item" key={questionnaire.id}>
                 <div className="search__results__item__infos">
                   <h3 className="search__results__item__title">{questionnaire.title}</h3>
                   <p className="search__results__item__content">
