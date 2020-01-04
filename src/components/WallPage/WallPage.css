@@ -192,15 +192,17 @@
     color: #DDDDCD;
 }
 
+/* MODAL */
+
 .modal {
     height: 100%;
     width: 100%;
     background: rgb(0, 0, 0, 0.7);
-    position: absolute;
+    position: fixed;
     z-index: 10;
     top: 0;
     left: 0;
-    padding: 20px;
+    padding: 30px 20px;
     display: none;
     flex-direction: column;
     align-items: center;
@@ -209,16 +211,125 @@
 
 .modal--open {
     display: flex;
+    flex-direction: column;
 }
 
 .modal__wrapper {
-    height: auto;
+    height: 100%;
     width: 100%;
-    background: white;
+    overflow-y: scroll;
+    background: #DDDDCD;
+    border: 20px solid #DDDDCD;
     border-radius: 5px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    position: relative;
+}
+
+.modal__closed__button {
+    position: absolute;
+    top: -1px;
+    right: -2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 41px;
+    padding:0px 0px 10px 10px;
+    box-sizing: content-box;
+    border: 0;
+    outline: none;
+    background: #DDDDCD;
+    border-radius: 0 0 0 20px;
+    cursor: pointer;
+}
+
+.modal__closed__button__icon {
+    font-size: 40px;
+    color: #363635;
+}
+
+.modal__question {
+    font-weight: 700;
+    padding: 0 20px;
+    border-radius: 5px 0 5px 5px;
+    background: #363635;
+    color: #DDDDCD;
+    padding-right: 70px;
+}
+
+.modal__participantInfos {
+    display: flex;
+    align-items: center;
+    background: #DDDDCD;
+    color: #363635;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.modal__participantInfos__icon {
+    display: flex;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.modal__image__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    overflow: hidden;
+    border-radius: 5px 5px 0 0;
 }
 
 .modal__image {
     width: 100%;
     height: auto;
+}
+
+.modal__content__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.modal__comment {
+    background: #d1d1c2;
+    margin:0;
+    padding: 20px;
+    border-radius: 0 0 5px 5px;
+    font-size: 18px;
+}
+
+.modal__pagination {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.modal__pagination__button {
+    color: #DDDDCD;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    background: #363635;
+    border:0;
+    outline: none;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.modal__like__button {
+    width: 40%;
+    color: #DDDDCD;
+    width: 100%;
+    padding: 10px 0;
+    background: #3f3f3f;
+    border:0;
+    outline: none;
+    cursor: pointer;
 }
