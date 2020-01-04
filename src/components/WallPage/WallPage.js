@@ -73,7 +73,7 @@ function WallPage() {
                   {participant.lastName}
                 </p>
                 <p className="participationInfos__age">
-                  {participant.age}
+                  {`${participant.age} ans`}
                 </p>
                 <p className="participationInfos__city">
                   {participant.city}
