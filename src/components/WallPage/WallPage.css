@@ -96,6 +96,7 @@
     flex-shrink: 0;
     box-sizing: border-box;
     padding: 10px;
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
     color: #363635;
