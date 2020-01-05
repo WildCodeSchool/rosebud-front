@@ -266,13 +266,13 @@
     background: #DDDDCD;
     color: #363635;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .modal__participantInfos__icon {
     display: flex;
     margin-right: 10px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .modal__image__wrapper {
@@ -300,7 +300,7 @@
     margin:0;
     padding: 20px;
     border-radius: 0 0 5px 5px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .modal__pagination {
@@ -313,8 +313,8 @@
 
 .modal__pagination__button {
     color: #DDDDCD;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     background: #363635;
     border:0;
