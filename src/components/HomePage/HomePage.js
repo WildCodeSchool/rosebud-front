@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
   const [randomImages, setRandomImages] = useState([]);
+  const [answersCounter, setAnswersCounter] = useState(0);
+  const [participantsCounter, setParticipantsCounter] = useState(0);
+  const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
   const [questionnaires, setQuestionnaires] = useState([]);
 
   useEffect(() => {
@@ -14,6 +17,22 @@ function HomePage() {
       setRandomImages(result.data);
     };
     fetchRandomImages();
+
+    const fetchAnswersCounter = async () => {
+      const result = await axios.get('/api/v1/answersCounter');
+      setAnswersCounter(result.data);
+    };
+    fetchAnswersCounter();
+    const fetchParticipantsCounter = async () => {
+      const result = await axios.get('/api/v1/participantsCounter');
+      setParticipantsCounter(result.data);
+    };
+    fetchParticipantsCounter();
+    const fetchQuestionnairesCounter = async () => {
+      const result = await axios.get('/api/v1/questionnairesCounter');
+      setQuestionnairesCounter(result.data);
+    };
+    fetchQuestionnairesCounter();
     const fetchQuestionnaires = async () => {
       const result = await axios.get('/api/v1/questionnaires');
       setQuestionnaires(result.data);
@@ -57,16 +76,16 @@ function HomePage() {
 
       <section className="home__counters">
         <div className="home__counters__title">
-            12
-          <span className="home__counters__length">thématiques</span>
+          {participantsCounter}
+          <span className="home__counters__length">{participantsCounter > 1 ? 'participants' : 'participant'}</span>
         </div>
         <div className="home__counters__title">
-            142
-          <span className="home__counters__length">questionnaires</span>
+          {questionnairesCounter}
+          <span className="home__counters__length">{questionnairesCounter > 1 ? 'questionnaires' : 'questionnaire'}</span>
         </div>
         <div className="home__counters__title">
-            463
-          <span className="home__counters__length">participants</span>
+          {answersCounter}
+          <span className="home__counters__length">{answersCounter > 1 ? 'réponses' : 'réponse'}</span>
         </div>
       </section>
 
