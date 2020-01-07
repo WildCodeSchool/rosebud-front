@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './WallPage.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-function WallPage() {
+function WallPage({ showModal, modalState }) {
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [currentAnswers, setCurrentAnswers] = useState([]);
   const [participantId, setParticipantId] = useState(null);
-  const [modal, setModal] = useState(false);
   const [modalCount, setModalCount] = useState(0);
   const { questionnaireId } = useParams();
 
@@ -27,25 +26,25 @@ function WallPage() {
     const modalAnswers = answers.filter((x) => x.ParticipantId === id);
     setCurrentAnswers(modalAnswers);
     setParticipantId(id);
-    setModal(true);
+    showModal(true);
   };
 
   const closeModal = () => {
-    setModal(false);
+    showModal(false);
     setModalCount(0);
   };
 
 
   return (
-    <div className={modal ? 'WallPage WallPage__fixe' : 'WallPage'}>
+    <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
 
       <div className="WallPage__presentation">
         <h2 className="WallPage__presentation__title">
           Classes pilotes Courts métrages / Jeu vidéo
-          <button type="button" className="WallPage__presentation__button">
+          <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
             <i className="WallPage__presentation__button__icon fa fa-plus-square" />
             <p className="WallPage__presentation__button__content">Participer</p>
-          </button>
+          </Link>
         </h2>
         <p className="WallPage__presentation__content">
                 Retrouvez ci-dessous les contributions des élèves des classes pilotes Lycéens
@@ -73,7 +72,7 @@ function WallPage() {
                   {participant.lastName}
                 </p>
                 <p className="participationInfos__age">
-                  {participant.age}
+                  {`${participant.age} ans`}
                 </p>
                 <p className="participationInfos__city">
                   {participant.city}
@@ -92,21 +91,43 @@ function WallPage() {
           ))}
       </div>
       {participants.map((participant) => participant.id === participantId && (
-      <div className={modal ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
+      <div className={modalState ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
         <div className="modal__wrapper">
-          <img className="modal__image" src={currentAnswers[modalCount].image_url} alt="answer path" />
-          <p>{`${participant.firstName} ${participant.lastName}`}</p>
-          <p>{questions[modalCount].title}</p>
-          <p>{currentAnswers[modalCount].comment}</p>
-          {modalCount > 0
-              && <button type="button" onClick={() => setModalCount(modalCount - 1)}>Prev</button>}
-          {modalCount + 1 < currentAnswers.length
-          && <button type="button" onClick={() => setModalCount(modalCount + 1)}>Next</button>}
-          <p>
-            <button type="button" onClick={closeModal}>
-              close
-            </button>
-          </p>
+          <button type="button" className="modal__closed__button" onClick={closeModal}>
+            <i className="modal__closed__button__icon fa fa-times-circle" />
+          </button>
+          <div className="modal__question">
+            <p>{questions[modalCount].title}</p>
+          </div>
+          <div className="modal__participantInfos">
+            <i className="modal__participantInfos__icon fa fa-user-circle" />
+            <p>{`${participant.firstName} ${participant.lastName}`}</p>
+          </div>
+          <div className="modal__image__wrapper">
+            <img className="modal__image" src={currentAnswers[modalCount].image_url} alt="answer path" />
+          </div>
+          <div className="modal__content__wrapper">
+            <p className="modal__comment">{currentAnswers[modalCount].comment}</p>
+            <div className="modal__pagination">
+              <div className="modal__pagination__wrapper__button">
+                {modalCount > 0
+                && (
+                <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount - 1)}>
+                  <i className="fa fa-caret-left" />
+                </button>
+                )}
+              </div>
+              <div className="modal__pagination__wrapper__button">
+                {modalCount + 1 < currentAnswers.length
+                && (
+                <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount + 1)}>
+                  <i className="fa fa-caret-right" />
+                </button>
+                )}
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
       ))}

@@ -1,43 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './HomePage.css';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function HomePage() {
-  const [linkToConsult, setLinkToConsult] = useState(false);
+  const [linkToParticipate, setLinkToParticipate] = useState(false);
+  const [randomImages, setRandomImages] = useState([]);
+  const [answersCounter, setAnswersCounter] = useState(0);
+  const [participantsCounter, setParticipantsCounter] = useState(0);
+  const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
+  const [questionnaires, setQuestionnaires] = useState([]);
+
+  useEffect(() => {
+    const fetchRandomImages = async () => {
+      const result = await axios.get('/api/v1/questionnaires/answers?limit=5');
+      setRandomImages(result.data);
+    };
+    fetchRandomImages();
+
+    const fetchAnswersCounter = async () => {
+      const result = await axios.get('/api/v1/answersCounter');
+      setAnswersCounter(result.data);
+    };
+    fetchAnswersCounter();
+    const fetchParticipantsCounter = async () => {
+      const result = await axios.get('/api/v1/participantsCounter');
+      setParticipantsCounter(result.data);
+    };
+    fetchParticipantsCounter();
+    const fetchQuestionnairesCounter = async () => {
+      const result = await axios.get('/api/v1/questionnairesCounter');
+      setQuestionnairesCounter(result.data);
+    };
+    fetchQuestionnairesCounter();
+    const fetchQuestionnaires = async () => {
+      const result = await axios.get('/api/v1/questionnaires');
+      setQuestionnaires(result.data);
+    };
+    fetchQuestionnaires();
+  }, []);
 
   const changeLinkResults = () => {
-    setLinkToConsult(!linkToConsult);
+    setLinkToParticipate(!linkToParticipate);
+  };
+
+  const textTruncate = (str, length, ending) => {
+    let lengthText = length;
+    if (lengthText !== null) {
+      lengthText = 80;
+    }
+    let endingText = ending;
+    if (endingText !== null) {
+      endingText = '...';
+    }
+    if (str.length > lengthText) {
+      return str.substring(0, lengthText - endingText.length) + endingText;
+    }
+    return str;
   };
 
   return (
     <div className="HomePage">
 
       <div className="random__images__wrapper">
-        <img className="random__image image__1" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__2" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__3" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__4" src="http://lorempixel.com/640/360/" alt="random home" />
-        <img className="random__image image__5" src="http://lorempixel.com/640/360/" alt="random home" />
+        {randomImages.map((image, index) => (
+          <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
+        ))}
         <div className="random__images__button__wrapper">
-          <Link to="/questionnaire/1/participer" className="random__images__button">
-            <i className="random__images__button__icon fa fa-plus-square" />
-            <p className="random__images__button__content">Participer</p>
+          <Link to="/questionnaire/1" className="random__images__button">
+            <i className="random__images__button__icon fa fa-eye" />
+            <p className="random__images__button__content">Consulter</p>
           </Link>
         </div>
       </div>
 
       <section className="home__counters">
         <div className="home__counters__title">
-            12
-          <span className="home__counters__length">thématiques</span>
+          {participantsCounter}
+          <span className="home__counters__length">{participantsCounter > 1 ? 'participants' : 'participant'}</span>
         </div>
         <div className="home__counters__title">
-            142
-          <span className="home__counters__length">questionnaires</span>
+          {questionnairesCounter}
+          <span className="home__counters__length">{questionnairesCounter > 1 ? 'questionnaires' : 'questionnaire'}</span>
         </div>
         <div className="home__counters__title">
-            463
-          <span className="home__counters__length">participants</span>
+          {answersCounter}
+          <span className="home__counters__length">{answersCounter > 1 ? 'réponses' : 'réponse'}</span>
         </div>
       </section>
 
@@ -67,43 +115,27 @@ function HomePage() {
         </div>
         <div className="search__results">
           <div className="search__results__buttons">
-            <button type="button" className={`search__results__button ${!linkToConsult && 'search__results__button--active'}`} onClick={changeLinkResults}>Participer</button>
-            <button type="button" className={`search__results__button ${linkToConsult && 'search__results__button--active'}`} onClick={changeLinkResults}>Consulter</button>
+            <button type="button" className={`search__results__button ${!linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Consulter</button>
+            <button type="button" className={`search__results__button ${linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Participer</button>
           </div>
           <div className="search__results__wrapper">
-            <Link to={`${linkToConsult ? '/questionnaire/1/consulter/' : '/questionnaire/1/participer/'}`} className="search__results__item">
-              <div className="search__results__item__infos">
-                <h3 className="search__results__item__title">Classes pilotes Courts métrages / Jeu vidéo</h3>
-                <p className="search__results__item__content">Lorem ipsum dolor sit amet consectetur adipisicing sicing elit...</p>
-              </div>
-              <div className="search__results__access">
-                {linkToConsult
-                  ? <i className="fa fa-eye" />
-                  : <i className="fa fa-arrow-right" />}
-              </div>
-            </Link>
-            <Link to={`${linkToConsult ? '/questionnaire/1/consulter/' : '/questionnaire/1/participer/'}`} className="search__results__item">
-              <div className="search__results__item__infos">
-                <h3 className="search__results__item__title">Classes pilotes Courts métrages / Jeu vidéo</h3>
-                <p className="search__results__item__content">Lorem ipsum dolor sit amet consectetur adipisicing sicing elit...</p>
-              </div>
-              <div className="search__results__access">
-                {linkToConsult
-                  ? <i className="fa fa-eye" />
-                  : <i className="fa fa-arrow-right" />}
-              </div>
-            </Link>
-            <Link to={`${linkToConsult ? '/questionnaire/1/consulter/' : '/questionnaire/1/participer/'}`} className="search__results__item">
-              <div className="search__results__item__infos">
-                <h3 className="search__results__item__title">Classes pilotes Courts métrages / Jeu vidéo</h3>
-                <p className="search__results__item__content">Lorem ipsum dolor sit amet consectetur adipisicing sicing elit...</p>
-              </div>
-              <div className="search__results__access">
-                {linkToConsult
-                  ? <i className="fa fa-eye" />
-                  : <i className="fa fa-arrow-right" />}
-              </div>
-            </Link>
+            {questionnaires.map((questionnaire) => (
+              <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}`}`} className="search__results__item" key={questionnaire.id}>
+                <div className="search__results__item__infos">
+                  <h3 className="search__results__item__title">{questionnaire.title}</h3>
+                  <p className="search__results__item__content">
+                    {linkToParticipate
+                      ? textTruncate(questionnaire.description_participate)
+                      : textTruncate(questionnaire.description_consult)}
+                  </p>
+                </div>
+                <div className="search__results__access">
+                  {!linkToParticipate
+                    ? <i className="fa fa-eye" />
+                    : <i className="fa fa-arrow-right" />}
+                </div>
+              </Link>
+            ))}
           </div>
           <div className="search__results__pagination">
             <span className="search__results__pagination__item search__results__pagination__item--active" />
