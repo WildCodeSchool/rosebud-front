@@ -333,3 +333,12 @@
     outline: none;
     cursor: pointer;
 }
+
+/* Submit message */
+  
+.Submit__message {
+    background-color: #73BB45;
+    text-align: center;
+    margin: auto;
+    padding: 2%;
+}

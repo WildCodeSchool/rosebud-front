@@ -3,7 +3,7 @@ import './WallPage.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
-function WallPage({ showModal, modalState }) {
+function WallPage({ showModal, modalState, isSubmited }) {
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
@@ -37,7 +37,9 @@ function WallPage({ showModal, modalState }) {
 
   return (
     <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
-
+      {isSubmited && (
+      <p className="Submit__message">Merci pour votre participation !</p>
+      )}
       <div className="WallPage__presentation">
         <h2 className="WallPage__presentation__title">
           Classes pilotes Courts métrages / Jeu vidéo

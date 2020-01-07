@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 window.onload = () => { localStorage.clear(); };
 
-function ParticipationForm() {
+function ParticipationForm({ onClickSubmit }) {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
@@ -22,8 +22,10 @@ function ParticipationForm() {
 
   const submitParticipation = (e) => {
     e.preventDefault();
+
     const data = new FormData(e.target);
     axios.post('/api/v1/questionnaires/1/participations', data);
+    onClickSubmit(questionnaireId);
     localStorage.clear();
   };
 
@@ -47,7 +49,7 @@ function ParticipationForm() {
       <form
         encType="multipart/formdata"
         onSubmit={submitParticipation}
-        noValidate
+        checkvalidiy="true"
       >
         {questions.length > 0
           && (
@@ -70,7 +72,7 @@ function ParticipationForm() {
                   </h2>
                   <div className="participant__wrapper__form">
                     <label className="participant__input__tall" htmlFor="firstName">
-                      <input required="required" autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
+                      <input autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
                     </label>
                     <label className="participant__input__tall" htmlFor="lastName">
                       <input autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom" />
@@ -144,9 +146,9 @@ function ParticipationForm() {
                           )}
                       {step === questions.length
                           && (
-                          <button className="submit__button" type="submit">
-                            <i className="submit__button__icon fa fa-check" />
-                          </button>
+                            <button className="submit__button" type="submit">
+                              <i className="submit__button__icon fa fa-check" />
+                            </button>
                           )}
                     </div>
                   </div>
