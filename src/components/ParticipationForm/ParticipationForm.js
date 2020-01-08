@@ -11,6 +11,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionnaire, setQuestionnaire] = useState(null);
   const [step, setStep] = useState(0);
   const [imagePreview, setImagePreview] = useLocalStorage(`image ${step}`, '');
+  const [imageSelect, setImageSelect] = useLocalStorage(`image select ${step}`, '');
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -21,7 +22,6 @@ function ParticipationForm({ onClickSubmit }) {
   const [inputCity, setInputCity] = useState('');
   const [inputEmail, setInputEmail] = useState('');
   const [formValidate, setFormValidate] = useState(false);
-  // Question
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -56,9 +56,7 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const changeStep = (value) => {
-    if (step === 0 || (imagePreview !== '' && comment !== '')) {
-      setStep(step + value);
-    } else if (value > 0 && imagePreview === '' && comment === '') /* Arriere */{
+    if (step === 0 || ((imagePreview !== '' || imageSelect !== '') && comment !== '')) {
       setStep(step + value);
     }
   };
@@ -160,7 +158,7 @@ function ParticipationForm({ onClickSubmit }) {
                         {question.Images.map((image, i) => (
                           <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
                             <img className="choice__image" src={image.image_url} alt="choice select" />
-                            <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} />
+                            <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} onChange={(e) => setImageSelect(e.target.value)} />
                           </label>
                         ))}
                       </div>
