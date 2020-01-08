@@ -8,35 +8,31 @@ window.onload = () => { localStorage.clear(); };
 
 function ParticipationForm() {
   const [questions, setQuestions] = useState([]);
-  const [images, setImages] = useState([]);
-  const [imageSelect, setImageSelect] = useState();
   const [questionnaire, setQuestionnaire] = useState(null);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
+  const [imagePreview, setImagePreview] = useLocalStorage(`image ${step}`, '');
   const { questionnaireId } = useParams();
 
+  console.log(questions);
+
   useEffect(() => {
-    const fetchQuestions = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
-      setQuestions(result.data);
-    };
-    fetchQuestions();
     const fetchQuestionnaire = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}`);
       setQuestionnaire(result.data);
     };
     fetchQuestionnaire();
-    const fetchImages = async () => {
-      const result = await axios.get(`/api/v1/questions/${step}/images`);
-      setImages(result.data);
+    const fetchQuestions = async () => {
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
+      setQuestions(result.data);
     };
-    fetchImages();
-  }, [questionnaireId, step]);
+    fetchQuestions();
+  }, [questionnaireId]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     axios.post('/api/v1/questionnaires/1/participations', data);
+    console.log(...data);
     localStorage.clear();
   };
 
@@ -50,7 +46,7 @@ function ParticipationForm() {
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => {
         const base64data = reader.result;
-        SetImagePreimagePreview(base64data);
+        setImagePreview(base64data);
       };
     }
   };
@@ -139,12 +135,11 @@ function ParticipationForm() {
                     )
                     : (
                       <div className="choice__wrapper">
-                        <input type="hidden" name={`answerImageSelect${index}`} id={`answerImageSelect${index}`} value={imageSelect || ''} />
-                        {images.map((image) => (
-                          <button type="button" className="choice__answer" key={image.id} onClick={() => setImageSelect(image.image_url)}>
+                        {question.Images.map((image, i) => (
+                          <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
                             <img className="choice__image" src={image.image_url} alt="choice select" />
-                            <p className="choice__title">{image.title}</p>
-                          </button>
+                            <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} />
+                          </label>
                         ))}
                       </div>
                     )}
