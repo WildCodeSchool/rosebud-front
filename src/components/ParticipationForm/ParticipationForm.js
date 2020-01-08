@@ -23,9 +23,6 @@ function ParticipationForm({ onClickSubmit }) {
   const [formValidate, setFormValidate] = useState(false);
   // Question
 
-
-  console.log(questions);
-
   useEffect(() => {
     const fetchQuestionnaire = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}`);
