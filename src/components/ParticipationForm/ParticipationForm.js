@@ -10,7 +10,18 @@ function ParticipationForm({ onClickSubmit }) {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
+  const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
+  // Form
+  const [inputFirstName, setInputFirstName] = useState('');
+  const [inputLastName, setInputLastName] = useState('');
+  const [inputStatus, setInputStatus] = useState('');
+  const [inputAge, setInputAge] = useState('');
+  const [inputCity, setInputCity] = useState('');
+  const [inputEmail, setInputEmail] = useState('');
+  const [formValidate, setFormValidate] = useState(false);
+  // Question
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,11 +29,21 @@ function ParticipationForm({ onClickSubmit }) {
       setQuestions(result.data);
     };
     fetchData();
-  }, [questionnaireId]);
+    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '') {
+      setFormValidate(true);
+    } else {
+      setFormValidate(false);
+    }
+  }, [inputAge,
+    inputCity,
+    inputEmail,
+    inputFirstName,
+    inputLastName,
+    inputStatus,
+    questionnaireId]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
-
     const data = new FormData(e.target);
     axios.post('/api/v1/questionnaires/1/participations', data);
     onClickSubmit(questionnaireId);
@@ -30,7 +51,11 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const changeStep = (value) => {
-    setStep(step + value);
+    if (step === 0 || (imagePreview !== '' && comment !== '')) {
+      setStep(step + value);
+    } else if (value > 0 && imagePreview === '' && comment === '') /* Arriere */{
+      setStep(step + value);
+    }
   };
 
   const getImagePreview = (e) => {
@@ -49,7 +74,6 @@ function ParticipationForm({ onClickSubmit }) {
       <form
         encType="multipart/formdata"
         onSubmit={submitParticipation}
-        checkvalidiy="true"
       >
         {questions.length > 0
           && (
@@ -72,32 +96,32 @@ function ParticipationForm({ onClickSubmit }) {
                   </h2>
                   <div className="participant__wrapper__form">
                     <label className="participant__input__tall" htmlFor="firstName">
-                      <input autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom" />
+                      <input value={inputFirstName} onChange={(e) => setInputFirstName(e.target.value)} autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom*" />
                     </label>
                     <label className="participant__input__tall" htmlFor="lastName">
-                      <input autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom" />
+                      <input value={inputLastName} onChange={(e) => setInputLastName(e.target.value)} autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom*" />
                     </label>
                     <div className="participant__group__inputs">
-                      <label className="participant__select" htmlFor="status">
+                      <label defaultValue="" value={inputStatus} onChange={(e) => setInputStatus(e.target.value)} className="participant__select" htmlFor="status">
                         <select className="form__select" name="status" defaultValue="">
-                          <option disabled="disabled">Statut</option>
+                          <option disabled="disabled" value="">Statut*</option>
                           <option value="student">Élève/étudiant</option>
                           <option value="teacher">Enseignant</option>
                           <option value="other">Autre</option>
                         </select>
                       </label>
                       <label className="participant__input__small" htmlFor="age">
-                        <input required="required" autoComplete="off" className="form__input" name="age" type="number" placeholder="Age" />
+                        <input value={inputAge} onChange={(e) => setInputAge(e.target.value)} autoComplete="off" className="form__input" name="age" type="number" placeholder="Age*" />
                       </label>
                     </div>
                     <label className="participant__input__tall" htmlFor="city">
-                      <input required="required" autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville" />
+                      <input value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville*" />
                     </label>
                     <label className="participant__input__tall" htmlFor="email">
-                      <input required="required" autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail" />
+                      <input value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail*" />
                     </label>
                     <div className="pagination pagination--firststep">
-                      <button className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
+                      <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer</button>
                     </div>
                     <p className="participant__form__message">
                       {`*En soumettant ce formulaire, j'accepte que les informations saisies soient utilisées pour permettre à Ciclic Centre-Val de Loire, de me recontacter, pour m’envoyer des informations sur ses actions.
@@ -124,7 +148,7 @@ function ParticipationForm({ onClickSubmit }) {
                   </div>
                   )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                    <textarea className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                    <textarea value={comment || ''} onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
                   </label>
                   <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
                   <div className="pagination pagination--steps">
@@ -146,7 +170,7 @@ function ParticipationForm({ onClickSubmit }) {
                           )}
                       {step === questions.length
                           && (
-                            <button className="submit__button" type="submit">
+                            <button checkvalidation="true" className="submit__button" type="submit">
                               <i className="submit__button__icon fa fa-check" />
                             </button>
                           )}
