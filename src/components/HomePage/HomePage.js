@@ -76,12 +76,12 @@ function HomePage() {
 
       <section className="home__counters">
         <div className="home__counters__title">
-          {participantsCounter}
-          <span className="home__counters__length">{participantsCounter > 1 ? 'participants' : 'participant'}</span>
-        </div>
-        <div className="home__counters__title">
           {questionnairesCounter}
           <span className="home__counters__length">{questionnairesCounter > 1 ? 'questionnaires' : 'questionnaire'}</span>
+        </div>
+        <div className="home__counters__title">
+          {participantsCounter}
+          <span className="home__counters__length">{participantsCounter > 1 ? 'participants' : 'participant'}</span>
         </div>
         <div className="home__counters__title">
           {answersCounter}
