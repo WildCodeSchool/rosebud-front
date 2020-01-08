@@ -7,8 +7,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
-  const [currentAnswers, setCurrentAnswers] = useState([]);
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
   const { questionnaireId } = useParams();
@@ -19,14 +17,11 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
-      setAnswers(result.data.answers);
     };
     fetchData();
   }, [questionnaireId]);
 
   const displayModal = (id) => {
-    const modalAnswers = answers.filter((x) => x.ParticipantId === id);
-    setCurrentAnswers(modalAnswers);
     setParticipantId(id);
     showModal(true);
   };
@@ -82,7 +77,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                 </p>
               </div>
               <div className="participationAnswers">
-                {answers.map((answer, index) => answer.ParticipantId === participant.id
+                {participant.Answers.map((answer, index) => answer.ParticipantId === participant.id
                   && <img key={answer.id} className={`random__image image__${index + 1}`} src={answer.image_url} alt="answer path" />)}
                 <div className="participationAnswers__button__wrapper">
                   <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
@@ -107,10 +102,10 @@ function WallPage({ showModal, modalState, isSubmited }) {
             <p>{`${participant.firstName} ${participant.lastName}`}</p>
           </div>
           <div className="modal__image__wrapper">
-            <img className="modal__image" src={currentAnswers[modalCount].image_url} alt="answer path" />
+            <img className="modal__image" src={participant.Answers[modalCount].image_url} alt="answer path" />
           </div>
           <div className="modal__content__wrapper">
-            <p className="modal__comment">{currentAnswers[modalCount].comment}</p>
+            <p className="modal__comment">{participant.Answers[modalCount].comment}</p>
             <div className="modal__pagination">
               <div className="modal__pagination__wrapper__button">
                 {modalCount > 0
@@ -121,7 +116,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                 )}
               </div>
               <div className="modal__pagination__wrapper__button">
-                {modalCount + 1 < currentAnswers.length
+                {modalCount + 1 < participant.Answers.length
                 && (
                 <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount + 1)}>
                   <i className="fa fa-caret-right" />
