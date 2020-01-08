@@ -85,7 +85,7 @@ function HomePage() {
         </div>
         <div className="home__counters__title">
           {answersCounter}
-          <span className="home__counters__length">{answersCounter > 1 ? 'réponses' : 'réponse'}</span>
+          <span className="home__counters__length">{answersCounter > 1 ? 'images' : 'image'}</span>
         </div>
       </section>
 
@@ -93,7 +93,7 @@ function HomePage() {
         <div className="about__us__wrapper">
           <h2 className="about__us__title">
             <i className="about__us__icon fa fa-info" />
-                À propos de Rosebud
+            À propos de Rosebud
           </h2>
           <p className="about__us__content">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
