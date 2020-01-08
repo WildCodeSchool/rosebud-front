@@ -107,7 +107,7 @@
 }
 
 .participant__button {
-    background: #363635;
+    background:#363635;
     outline: 0;
     border:0;
     height: 60px;
@@ -116,8 +116,17 @@
     color: #DDDDCD;
     text-transform: uppercase;
     border-radius: 5px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     font-weight: 700;
-    cursor: pointer;
+    outline: none;
+    position: relative;
+    transition: all 0.4s;
+}
+
+.participant__button:disabled {
+    opacity: 0.8;
 }
 
 .participant__form__message {
@@ -259,12 +268,16 @@
 
 .submit__button {
     background: #363635;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     outline: 0;
     border:0;
     height: 65px;
     width: 65px;
     border-radius: 100%;
     text-transform: uppercase;
+    text-decoration: none;
     font-weight: 700;
     cursor: pointer;
 }

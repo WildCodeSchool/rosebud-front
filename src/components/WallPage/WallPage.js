@@ -3,7 +3,7 @@ import './WallPage.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
-function WallPage({ showModal, modalState }) {
+function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -38,6 +38,9 @@ function WallPage({ showModal, modalState }) {
 
   return (
     <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
+      {isSubmited && (
+      <p className="Submit__message">Merci pour votre participation !</p>
+      )}
       {questionnaires.length > 0 && (
         <div className="WallPage__presentation">
           <h2 className="WallPage__presentation__title">
