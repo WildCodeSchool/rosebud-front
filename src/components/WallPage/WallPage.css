@@ -137,16 +137,65 @@
     border-radius: 5px;
 }
 
-.image__1 {
+/* GRID 3 */
+
+.image__1--3 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.image__2--3 {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.image__3--3 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.image__3 {
+/* GRID 4 */
+
+.image__1--4 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.image__2--4 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+}
+
+.image__3--4 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.image__4--4 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+/* GRID 5 */
+
+.image__1--5 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.image__3--5 {
     grid-row-start: 2;
     grid-row-end: 4;
 }
-.image__4 {
+
+.image__4--5 {
     grid-column-start: 2;
     grid-column-end: 4;
 }
@@ -165,6 +214,7 @@
     padding: 5px;
     box-sizing: border-box;
 }
+
 
 .participationAnswers__button {
     border:0;

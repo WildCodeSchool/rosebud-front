@@ -50,7 +50,7 @@ function ParticipationForm({ onClickSubmit }) {
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    axios.post('/api/v1/questionnaires/1/participations', data);
+    axios.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
     onClickSubmit(questionnaireId);
     console.log(...data);
     localStorage.clear();
