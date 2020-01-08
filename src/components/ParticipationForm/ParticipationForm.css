@@ -191,6 +191,29 @@
     border-radius: 5px;
 }
 
+.choice__wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: #DDDDCD;
+}
+
+.choice__answer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #DDDDCD;
+    padding: 0;
+    border:0;
+    outline: none;
+    cursor: pointer;
+}
+
+.choice__image {
+    width: 100%;
+    border-radius: 5px;
+}
+
 .comment__answer {
     display: flex;
     flex-direction: column;

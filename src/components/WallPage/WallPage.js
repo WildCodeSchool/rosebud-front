@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
 function WallPage({ showModal, modalState, isSubmited }) {
+  const [questionnaires, setQuestionnaires] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
@@ -15,6 +16,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations`);
+      setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
       setAnswers(result.data.answers);
@@ -34,26 +36,25 @@ function WallPage({ showModal, modalState, isSubmited }) {
     setModalCount(0);
   };
 
-
   return (
     <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
       {isSubmited && (
       <p className="Submit__message">Merci pour votre participation !</p>
       )}
-      <div className="WallPage__presentation">
-        <h2 className="WallPage__presentation__title">
-          Classes pilotes Courts métrages / Jeu vidéo
-          <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
-            <i className="WallPage__presentation__button__icon fa fa-plus-square" />
-            <p className="WallPage__presentation__button__content">Participer</p>
-          </Link>
-        </h2>
-        <p className="WallPage__presentation__content">
-                Retrouvez ci-dessous les contributions des élèves des classes pilotes Lycéens
-                et apprentis au cinéma 2019/2020 autour du cinéma et des jeux vidéos.
-        </p>
-      </div>
-
+      {questionnaires.length > 0 && (
+        <div className="WallPage__presentation">
+          <h2 className="WallPage__presentation__title">
+            {questionnaires[0].title}
+            <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
+              <i className="WallPage__presentation__button__icon fa fa-plus-square" />
+              <p className="WallPage__presentation__button__content">Participer</p>
+            </Link>
+          </h2>
+          <p className="WallPage__presentation__content">
+            {questionnaires[0].description_consult}
+          </p>
+        </div>
+      )}
       <div className="WallPage__filter">
         <p className="WallPage__filter__title">
           <i className="WallPage__filter__icon fa fa-filter" />
