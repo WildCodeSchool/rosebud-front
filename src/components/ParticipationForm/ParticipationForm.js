@@ -8,22 +8,31 @@ window.onload = () => { localStorage.clear(); };
 
 function ParticipationForm() {
   const [questions, setQuestions] = useState([]);
+  const [questionnaire, setQuestionnaire] = useState(null);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
+  const [imagePreview, setImagePreview] = useLocalStorage(`image ${step}`, '');
   const { questionnaireId } = useParams();
 
+  console.log(questions);
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchQuestionnaire = async () => {
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}`);
+      setQuestionnaire(result.data);
+    };
+    fetchQuestionnaire();
+    const fetchQuestions = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
     };
-    fetchData();
+    fetchQuestions();
   }, [questionnaireId]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     axios.post('/api/v1/questionnaires/1/participations', data);
+    console.log(...data);
     localStorage.clear();
   };
 
@@ -37,7 +46,7 @@ function ParticipationForm() {
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => {
         const base64data = reader.result;
-        SetImagePreimagePreview(base64data);
+        setImagePreview(base64data);
       };
     }
   };
@@ -49,18 +58,16 @@ function ParticipationForm() {
         onSubmit={submitParticipation}
         noValidate
       >
-        {questions.length > 0
+        {questionnaire && questions.length > 0
           && (
             <section>
               <div className={`participant ${step < 1 ? 'step--show' : 'step--hide'}`}>
                 <div className="participant__presentation">
                   <h2 className="participant__presentation__title">
-                  Classes pilotes Courts métrages / Jeu vidéo
+                    {questionnaire[0].title}
                   </h2>
                   <p className="participant__presentation__content">
-                  Vous avez participé aux classes pilotes Lycéens et apprentis au cinéma 2019/2020,
-                  et nous vous proposons de terminer ce projet en répondant à quatre questions
-                  autourdu cinéma et des jeux vidéos.
+                    {questionnaire[0].description_participate}
                   </p>
                 </div>
                 <div className="participant__wrapper">
@@ -109,18 +116,33 @@ function ParticipationForm() {
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
-                  <div className="upload__image">
-                    <label className="upload__image__button" htmlFor={`answerImage${index}`}>
-                      {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                      <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
-                    </label>
-                  </div>
-                  {imagePreview
-                  && (
-                  <div className="preview__wrapper">
-                    <img className="image__preview" src={imagePreview} alt="Preview" />
-                  </div>
-                  )}
+                  {question.uploadFormat
+                    ? (
+                      <>
+                        <div className="upload__image">
+                          <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                            {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
+                            <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                          </label>
+                        </div>
+                        {imagePreview
+                          && (
+                            <div className="preview__wrapper">
+                              <img className="image__preview" src={imagePreview} alt="Preview" />
+                            </div>
+                          )}
+                      </>
+                    )
+                    : (
+                      <div className="choice__wrapper">
+                        {question.Images.map((image, i) => (
+                          <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
+                            <img className="choice__image" src={image.image_url} alt="choice select" />
+                            <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} />
+                          </label>
+                        ))}
+                      </div>
+                    )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
                     <textarea className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
                   </label>
