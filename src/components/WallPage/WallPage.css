@@ -52,20 +52,65 @@
 
 .WallPage__filter {
     background: #363635;
-    padding:20px;
     display: flex;
+    padding:0 20px;
     justify-content: space-between;
+    flex-direction: column;
     color: #DDDDCD;
+}
+
+.WallPage__filter__button {
+    margin:0;
+    padding:20px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: transparent;
+    border:0;
+    outline: none;
+    display: flex;
+    color: #DDDDCD;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
 }
 
 .WallPage__filter__icon {
     margin-right: 10px;
 }
 
-.WallPage__filter__title {
-    margin:0;
-    text-transform: uppercase;
-    font-weight: 700;
+.filters__wrapper {
+    background: #3f3f3f;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.filters__input {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #DDDDCD;
+    outline:0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.filters__select {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #DDDDCD;
+    outline:0;
+    color: #666;
+    display: flex;
+    flex-direction: column;
 }
 
 /* participation */

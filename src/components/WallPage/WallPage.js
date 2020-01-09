@@ -10,16 +10,19 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
   const { questionnaireId } = useParams();
+  const [filters, setFilters] = useState(false);
+  const [statusFilter, setStatusFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations`);
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations${statusFilter ? `?status=${statusFilter}` : ''}${cityFilter ? `?city=${cityFilter}` : ''}`);
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
     };
     fetchData();
-  }, [questionnaireId]);
+  }, [cityFilter, questionnaireId, statusFilter]);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -51,11 +54,26 @@ function WallPage({ showModal, modalState, isSubmited }) {
         </div>
       )}
       <div className="WallPage__filter">
-        <p className="WallPage__filter__title">
-          <i className="WallPage__filter__icon fa fa-filter" />
-                Filtrer
-        </p>
-        <i className="fa fa-caret-down" />
+        <button type="button" onClick={() => setFilters(!filters)} className="WallPage__filter__button">
+          <div className="WallPage__filter__title">
+            <i className="WallPage__filter__icon fa fa-filter" />
+            Filtrer
+          </div>
+          <i className={filters ? 'fa fa-caret-up' : 'fa fa-caret-down'} />
+        </button>
+        {filters && (
+          <div className="filters__wrapper">
+            <input className="filters__input" type="text" value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} placeholder="Ville" />
+            <label className="filters__select" htmlFor="status">
+              <select className="form__select" name="status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                <option disabled="disabled" value="">Statut</option>
+                <option value="student">Élève/étudiant</option>
+                <option value="teacher">Enseignant</option>
+                <option value="other">Autre</option>
+              </select>
+            </label>
+          </div>
+        )}
       </div>
 
       <div className="participation">
