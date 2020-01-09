@@ -145,7 +145,7 @@ function HomePage() {
               <span className="search__results__pagination__item" />
             </div>
           </div>
-        ) : <p>Aucun questionnaire ne correspond à votre recherche.</p>}
+        ) : <p>Aucun questionnaire trouvé.</p>}
       </section>
 
     </div>
