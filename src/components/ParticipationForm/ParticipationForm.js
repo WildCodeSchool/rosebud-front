@@ -22,6 +22,8 @@ function ParticipationForm({ onClickSubmit }) {
   const [inputCity, setInputCity] = useState('');
   const [inputEmail, setInputEmail] = useState('');
   const [formValidate, setFormValidate] = useState(false);
+  // Question
+  const [questionValidate, setQuestionValidate] = useState(false);
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -34,14 +36,20 @@ function ParticipationForm({ onClickSubmit }) {
       setQuestions(result.data);
     };
     fetchQuestions();
-    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '') {
+    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1) {
       setFormValidate(true);
     } else {
       setFormValidate(false);
     }
-  }, [inputAge,
-    inputCity,
-    inputEmail,
+    if ((imageSelect !== '' || imagePreview !== '') && comment !== '') {
+      setQuestionValidate(true);
+    } else {
+      setQuestionValidate(false);
+    }
+  }, [comment,
+    imagePreview,
+    imageSelect, inputAge,
+    inputCity, inputEmail,
     inputFirstName,
     inputLastName,
     inputStatus,
@@ -57,8 +65,14 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const changeStep = (value) => {
-    if (step === 0 || ((imagePreview !== '' || imageSelect !== '') && comment !== '')) {
+    if (step === 0) /* FormParticipation */{
       setStep(step + value);
+    } else if (value === -1) /* Arriere */{
+      setStep(step + value);
+    } else if (value === 1) /* Avant */ {
+      setStep(step + value);
+    } else {
+      console.log('erreur');
     }
   };
 
@@ -181,13 +195,13 @@ function ParticipationForm({ onClickSubmit }) {
                       </p>
                       {step < questions.length
                           && (
-                          <button className="button__steps" type="button" onClick={() => changeStep(1)}>
+                          <button disabled={!questionValidate && 'disabled'} className="button__steps" type="button" onClick={() => changeStep(1)}>
                             <i className="button__steps__icon fa fa-caret-right" />
                           </button>
                           )}
                       {step === questions.length
                           && (
-                            <button checkvalidation="true" className="submit__button" type="submit">
+                            <button disabled={!questionValidate && 'disabled'} checkvalidation="true" className="submit__button" type="submit">
                               <i className="submit__button__icon fa fa-check" />
                             </button>
                           )}

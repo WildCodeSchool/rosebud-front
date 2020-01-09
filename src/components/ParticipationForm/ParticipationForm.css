@@ -257,6 +257,11 @@
     cursor: pointer;
 }
 
+.button__steps:disabled {
+    opacity: 0.6;
+    cursor:not-allowed;
+}
+
 .button__steps__icon {
     color: #DDDDCD;
 }
@@ -282,6 +287,11 @@
     text-decoration: none;
     font-weight: 700;
     cursor: pointer;
+}
+
+.submit__button:disabled {
+    opacity: 0.6;
+    cursor:not-allowed;
 }
 
 .submit__button__icon {
