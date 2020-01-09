@@ -157,7 +157,7 @@ function ParticipationForm({ onClickSubmit }) {
                         <div className="upload__image">
                           <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                             {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                            <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                            <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" accept="image/*" onChange={getImagePreview} />
                           </label>
                         </div>
                         {imagePreview
