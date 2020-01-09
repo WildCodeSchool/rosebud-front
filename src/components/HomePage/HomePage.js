@@ -10,6 +10,7 @@ function HomePage() {
   const [participantsCounter, setParticipantsCounter] = useState(0);
   const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
   const [questionnaires, setQuestionnaires] = useState([]);
+  const [querySearch, setQuerySearch] = useState('');
 
   useEffect(() => {
     const fetchRandomImages = async () => {
@@ -34,11 +35,11 @@ function HomePage() {
     };
     fetchQuestionnairesCounter();
     const fetchQuestionnaires = async () => {
-      const result = await axios.get('/api/v1/questionnaires');
+      const result = await axios.get(`/api/v1/questionnaires?query=${querySearch}`);
       setQuestionnaires(result.data);
     };
     fetchQuestionnaires();
-  }, []);
+  }, [querySearch]);
 
   const changeLinkResults = () => {
     setLinkToParticipate(!linkToParticipate);
@@ -111,38 +112,40 @@ function HomePage() {
 
       <section className="home__search">
         <div className="home__search__input__wrapper">
-          <input type="text" placeholder="Rechercher..." className="home__search__input" />
+          <input type="text" value={querySearch || ''} placeholder="Rechercher..." className="home__search__input" onChange={(e) => setQuerySearch(e.target.value)} />
         </div>
-        <div className="search__results">
-          <div className="search__results__buttons">
-            <button type="button" className={`search__results__button ${!linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Consulter</button>
-            <button type="button" className={`search__results__button ${linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Participer</button>
+        {questionnaires.length > 0 ? (
+          <div className="search__results">
+            <div className="search__results__buttons">
+              <button type="button" className={`search__results__button ${!linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Consulter</button>
+              <button type="button" className={`search__results__button ${linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Participer</button>
+            </div>
+            <div className="search__results__wrapper">
+              {questionnaires && questionnaires.map((questionnaire) => (
+                <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}`}`} className="search__results__item" key={questionnaire.id}>
+                  <div className="search__results__item__infos">
+                    <h3 className="search__results__item__title">{questionnaire.title}</h3>
+                    <p className="search__results__item__content">
+                      {linkToParticipate
+                        ? textTruncate(questionnaire.description_participate)
+                        : textTruncate(questionnaire.description_consult)}
+                    </p>
+                  </div>
+                  <div className="search__results__access">
+                    {!linkToParticipate
+                      ? <i className="fa fa-eye" />
+                      : <i className="fa fa-arrow-right" />}
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="search__results__pagination">
+              <span className="search__results__pagination__item search__results__pagination__item--active" />
+              <span className="search__results__pagination__item" />
+              <span className="search__results__pagination__item" />
+            </div>
           </div>
-          <div className="search__results__wrapper">
-            {questionnaires.map((questionnaire) => (
-              <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}`}`} className="search__results__item" key={questionnaire.id}>
-                <div className="search__results__item__infos">
-                  <h3 className="search__results__item__title">{questionnaire.title}</h3>
-                  <p className="search__results__item__content">
-                    {linkToParticipate
-                      ? textTruncate(questionnaire.description_participate)
-                      : textTruncate(questionnaire.description_consult)}
-                  </p>
-                </div>
-                <div className="search__results__access">
-                  {!linkToParticipate
-                    ? <i className="fa fa-eye" />
-                    : <i className="fa fa-arrow-right" />}
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="search__results__pagination">
-            <span className="search__results__pagination__item search__results__pagination__item--active" />
-            <span className="search__results__pagination__item" />
-            <span className="search__results__pagination__item" />
-          </div>
-        </div>
+        ) : <p>Aucun questionnaire ne correspond à votre recherche.</p>}
       </section>
 
     </div>
