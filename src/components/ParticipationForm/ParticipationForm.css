@@ -257,11 +257,6 @@
     cursor: pointer;
 }
 
-.button__steps:disabled {
-    opacity: 0.8;
-    cursor:not-allowed;
-}
-
 .button__steps__icon {
     color: #DDDDCD;
 }
