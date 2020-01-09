@@ -58,7 +58,6 @@ function ParticipationForm({ onClickSubmit }) {
       setStep(step + value);
     } else if (value === 1 && imagePreview !== '' && comment !== '') /* Avant */ {
       setStep(step + value);
-      setQuestionValidate();
     } else {
       console.log('erreur');
     }
@@ -127,7 +126,7 @@ function ParticipationForm({ onClickSubmit }) {
                       <input value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail*" />
                     </label>
                     <div className="pagination pagination--firststep">
-                      <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer</button>
+                      <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
                     </div>
                     <p className="participant__form__message">
                       {`*En soumettant ce formulaire, j'accepte que les informations saisies soient utilisées pour permettre à Ciclic Centre-Val de Loire, de me recontacter, pour m’envoyer des informations sur ses actions.
@@ -170,7 +169,7 @@ function ParticipationForm({ onClickSubmit }) {
                       </p>
                       {step < questions.length
                           && (
-                          <button disabled={!questionValidate} className="button__steps" type="button" onClick={() => changeStep(1)}>
+                          <button disabled={!questionValidate && 'disabled'} className="button__steps" type="button" onClick={() => changeStep(1)}>
                             <i className="button__steps__icon fa fa-caret-right" />
                           </button>
                           )}
