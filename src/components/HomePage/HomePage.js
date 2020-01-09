@@ -11,6 +11,8 @@ function HomePage() {
   const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
   const [questionnaires, setQuestionnaires] = useState([]);
   const [querySearch, setQuerySearch] = useState('');
+  // prèc, next questionnaire
+  const [queryStep, setQueryStep] = useState(0);
 
   useEffect(() => {
     const fetchRandomImages = async () => {
@@ -35,11 +37,12 @@ function HomePage() {
     };
     fetchQuestionnairesCounter();
     const fetchQuestionnaires = async () => {
-      const result = await axios.get(`/api/v1/questionnaires?query=${querySearch}`);
+      const result = await axios.get(`/api/v1/questionnaires?page=${queryStep}&query=${querySearch}`);
+      console.log(queryStep);
       setQuestionnaires(result.data);
     };
     fetchQuestionnaires();
-  }, [querySearch]);
+  }, [querySearch, queryStep]);
 
   const changeLinkResults = () => {
     setLinkToParticipate(!linkToParticipate);
@@ -146,6 +149,9 @@ function HomePage() {
             </div>
           </div>
         ) : <p>Aucun questionnaire trouvé.</p>}
+        <button className="button__page__prec" type="button" onClick={() => setQueryStep(-3)}>Précédent</button>
+        <button className="button__page__next" type="button" onClick={() => setQueryStep(3)}>Suivant</button>
+
       </section>
 
     </div>
