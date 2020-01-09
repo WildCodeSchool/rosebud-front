@@ -105,7 +105,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
             </div>
           )) : (
-            <p>Aucune participation correspond à votre recherche.</p>
+            <p>Aucune participation trouvée.</p>
           )}
       </div>
       {participants.map((participant) => participant.id === participantId && (
