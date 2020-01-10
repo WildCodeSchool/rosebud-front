@@ -8,10 +8,8 @@ window.onload = () => { localStorage.clear(); };
 
 function ParticipationForm({ onClickSubmit }) {
   const [questions, setQuestions] = useState([]);
-  const [questionnaire, setQuestionnaire] = useState(null);
   const [step, setStep] = useState(0);
-  const [imagePreview, setImagePreview] = useLocalStorage(`image ${step}`, '');
-  const [imageSelect, setImageSelect] = useLocalStorage(`image select ${step}`, '');
+  const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -25,42 +23,30 @@ function ParticipationForm({ onClickSubmit }) {
   // Question
   const [questionValidate, setQuestionValidate] = useState(false);
 
+
   useEffect(() => {
-    const fetchQuestionnaire = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}`);
-      setQuestionnaire(result.data);
-    };
-    fetchQuestionnaire();
-    const fetchQuestions = async () => {
+    const fetchData = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
     };
-    fetchQuestions();
+    fetchData();
     if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1) {
       setFormValidate(true);
     } else {
       setFormValidate(false);
     }
-    if ((imageSelect !== '' || imagePreview !== '') && comment !== '') {
+    if (imagePreview !== '' && comment !== '') {
       setQuestionValidate(true);
     } else {
       setQuestionValidate(false);
     }
-  }, [comment,
-    imagePreview,
-    imageSelect, inputAge,
-    inputCity, inputEmail,
-    inputFirstName,
-    inputLastName,
-    inputStatus,
-    questionnaireId]);
+  }, [comment, imagePreview, inputAge, inputCity, inputEmail, inputFirstName, inputLastName, inputStatus, questionnaireId]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     axios.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
     onClickSubmit(questionnaireId);
-    console.log(...data);
     localStorage.clear();
   };
 
@@ -82,7 +68,7 @@ function ParticipationForm({ onClickSubmit }) {
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => {
         const base64data = reader.result;
-        setImagePreview(base64data);
+        SetImagePreimagePreview(base64data);
       };
     }
   };
@@ -93,16 +79,18 @@ function ParticipationForm({ onClickSubmit }) {
         encType="multipart/formdata"
         onSubmit={submitParticipation}
       >
-        {questionnaire && questions.length > 0
+        {questions.length > 0
           && (
             <section>
               <div className={`participant ${step < 1 ? 'step--show' : 'step--hide'}`}>
                 <div className="participant__presentation">
                   <h2 className="participant__presentation__title">
-                    {questionnaire[0].title}
+                  Classes pilotes Courts métrages / Jeu vidéo
                   </h2>
                   <p className="participant__presentation__content">
-                    {questionnaire[0].description_participate}
+                  Vous avez participé aux classes pilotes Lycéens et apprentis au cinéma 2019/2020,
+                  et nous vous proposons de terminer ce projet en répondant à quatre questions
+                  autourdu cinéma et des jeux vidéos.
                   </p>
                 </div>
                 <div className="participant__wrapper">
@@ -135,9 +123,10 @@ function ParticipationForm({ onClickSubmit }) {
                     </label>
                     <label className="participant__input__tall" htmlFor="email">
                       <input value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail*" />
+
                     </label>
                     <div className="pagination pagination--firststep">
-                      <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer</button>
+                      <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
                     </div>
                     <p className="participant__form__message">
                       {`*En soumettant ce formulaire, j'accepte que les informations saisies soient utilisées pour permettre à Ciclic Centre-Val de Loire, de me recontacter, pour m’envoyer des informations sur ses actions.
@@ -151,35 +140,20 @@ function ParticipationForm({ onClickSubmit }) {
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
-                  {question.uploadFormat
-                    ? (
-                      <>
-                        <div className="upload__image">
-                          <label className="upload__image__button" htmlFor={`answerImage${index}`}>
-                            {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                            <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" accept="image/*" onChange={getImagePreview} />
-                          </label>
-                        </div>
-                        {imagePreview
-                          && (
-                            <div className="preview__wrapper">
-                              <img className="image__preview" src={imagePreview} alt="Preview" />
-                            </div>
-                          )}
-                      </>
-                    )
-                    : (
-                      <div className="choice__wrapper">
-                        {question.Images.map((image, i) => (
-                          <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
-                            <img className="choice__image" src={image.image_url} alt="choice select" />
-                            <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} onChange={(e) => setImageSelect(e.target.value)} />
-                          </label>
-                        ))}
-                      </div>
-                    )}
+                  <div className="upload__image">
+                    <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                      {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
+                      <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                    </label>
+                  </div>
+                  {imagePreview
+                  && (
+                  <div className="preview__wrapper">
+                    <img className="image__preview" src={imagePreview} alt="Preview" />
+                  </div>
+                  )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                    <textarea onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                    <textarea value={comment || ''} onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
                   </label>
                   <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
                   <div className="pagination pagination--steps">
@@ -201,7 +175,7 @@ function ParticipationForm({ onClickSubmit }) {
                           )}
                       {step === questions.length
                           && (
-                            <button disabled={!questionValidate && 'disabled'} checkvalidation="true" className="submit__button" type="submit">
+                            <button checkvalidation="true" className="submit__button" type="submit">
                               <i className="submit__button__icon fa fa-check" />
                             </button>
                           )}
