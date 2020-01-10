@@ -3,6 +3,8 @@ import './HomePage.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+const limit = 3;
+
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
   const [randomImages, setRandomImages] = useState([]);
@@ -12,7 +14,9 @@ function HomePage() {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [querySearch, setQuerySearch] = useState('');
   // prèc, next questionnaire
-  const [queryStep, setQueryStep] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const [prevZero, setPrevZero] = useState(false);
+  const [nextZero, setNextZero] = useState(false);
 
   useEffect(() => {
     const fetchRandomImages = async () => {
@@ -37,12 +41,22 @@ function HomePage() {
     };
     fetchQuestionnairesCounter();
     const fetchQuestionnaires = async () => {
-      const result = await axios.get(`/api/v1/questionnaires?page=${queryStep}&query=${querySearch}`);
-      console.log(queryStep);
+      const result = await axios.get(`/api/v1/questionnaires?offset=${offset}&limit=${limit}&query=${querySearch}`);
       setQuestionnaires(result.data);
     };
     fetchQuestionnaires();
-  }, [querySearch, queryStep]);
+    if (offset === 0) {
+      setPrevZero(true);
+    } else {
+      setPrevZero(false);
+    }
+
+    if ((questionnaires.length % limit === 1) || (offset + limit === questionnairesCounter)) {
+      setNextZero(true);
+    } else {
+      setNextZero(false);
+    }
+  }, [offset, querySearch, questionnaires.length, questionnairesCounter]);
 
   const changeLinkResults = () => {
     setLinkToParticipate(!linkToParticipate);
@@ -143,15 +157,18 @@ function HomePage() {
               ))}
             </div>
             <div className="search__results__pagination">
-              <span className="search__results__pagination__item search__results__pagination__item--active" />
-              <span className="search__results__pagination__item" />
-              <span className="search__results__pagination__item" />
+              <div className="button__wrapper">
+                <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
+                  {' '}
+                  <i className="button__steps__icon fa fa-caret-left" />
+                </button>
+                <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
+                  <i className="button__steps__icon fa fa-caret-right" />
+                </button>
+              </div>
             </div>
           </div>
         ) : <p>Aucun questionnaire trouvé.</p>}
-        <button className="button__page__prec" type="button" onClick={() => setQueryStep(-3)}>Précédent</button>
-        <button className="button__page__next" type="button" onClick={() => setQueryStep(3)}>Suivant</button>
-
       </section>
 
     </div>

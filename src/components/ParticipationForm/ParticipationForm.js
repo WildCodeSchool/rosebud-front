@@ -30,7 +30,7 @@ function ParticipationForm({ onClickSubmit }) {
       setQuestions(result.data);
     };
     fetchData();
-    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1 ) {
+    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1) {
       setFormValidate(true);
     } else {
       setFormValidate(false);
