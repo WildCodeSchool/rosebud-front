@@ -3,26 +3,49 @@ import './WallPage.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
+const limit = 7;
+
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
+  // REQ PARAMS
   const { questionnaireId } = useParams();
+  // REQ QUERY
   const [filters, setFilters] = useState(false);
-  const [statusFilter, setStatusFilter] = useState('');
-  const [cityFilter, setCityFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState(null);
+  const [cityFilter, setCityFilter] = useState(null);
+  const [nameFilter, setNameFilter] = useState(null);
+  // Pagination
+  const [offset, setOffset] = useState(0);
+  const [prevZero, setPrevZero] = useState(false);
+  const [nextZero, setNextZero] = useState(false);
+  const [participantsCounter, setParticipantsCounter] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations${statusFilter ? `?status=${statusFilter}` : ''}${cityFilter ? `?city=${cityFilter}` : ''}`);
+    const fetchParticipations = async () => {
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
+      setParticipantsCounter(result.data.participantsCounter);
     };
-    fetchData();
-  }, [cityFilter, questionnaireId, statusFilter]);
+    fetchParticipations();
+
+    if (offset === 0) {
+      setPrevZero(true);
+    } else {
+      setPrevZero(false);
+    }
+
+    if ((participants.length % limit === 1) || (offset + limit === participantsCounter)) {
+      setNextZero(true);
+    } else {
+      setNextZero(false);
+    }
+  }, [cityFilter, nameFilter, offset, participants.length, participantsCounter, questionnaireId, questionnaires.length, statusFilter]);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -63,6 +86,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
         </button>
         {filters && (
           <div className="filters__wrapper">
+            <input className="filters__input" type="text" value={nameFilter} onChange={(e) => setNameFilter(e.target.value)} placeholder="Nom de famille" />
             <input className="filters__input" type="text" value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} placeholder="Ville" />
             <label className="filters__select" htmlFor="status">
               <select className="form__select" name="status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
@@ -143,12 +167,21 @@ function WallPage({ showModal, modalState, isSubmited }) {
                 </button>
                 )}
               </div>
-
             </div>
           </div>
         </div>
       </div>
       ))}
+      <div className="results__pagination">
+        <div className="button__wrapper">
+          <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
+            <i className="button__steps__icon fa fa-caret-left" />
+          </button>
+          <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
+            <i className="button__steps__icon fa fa-caret-right" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
