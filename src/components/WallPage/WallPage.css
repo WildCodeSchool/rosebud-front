@@ -429,6 +429,51 @@
     cursor: pointer;
 }
 
+
+.results__pagination {
+    background: #d1d1c2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.button__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #d1d1c2;
+}
+
+.button__page__next {
+    background: #363635;
+    outline: 0;
+    border:0;
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+.button__page__prev {
+    background: #363635;
+    outline: 0;
+    border:0;
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+.button__page__prev:disabled {
+    opacity: 0;
+}
+.button__page__next:disabled {
+    opacity: 0;
+}
+
 /* Submit message */
   
 .Submit__message {
