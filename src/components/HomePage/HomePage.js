@@ -158,6 +158,7 @@ function HomePage() {
                 </Link>
               ))}
             </div>
+            {questionnairesCounter > limit || offset > 0 && (
             <div className="search__results__pagination">
               <div className="button__wrapper">
                 <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
@@ -169,6 +170,7 @@ function HomePage() {
                 </button>
               </div>
             </div>
+            )}
           </div>
         ) : <p>Aucun questionnaire trouvé.</p>}
       </section>
