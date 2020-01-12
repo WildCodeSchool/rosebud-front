@@ -22,7 +22,9 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [offset, setOffset] = useState(0);
   const [prevZero, setPrevZero] = useState(false);
   const [nextZero, setNextZero] = useState(false);
-  const [participantsCounter, setParticipantsCounter] = useState(0);
+  const [participantsCount, setParticipantsCount] = useState(0);
+
+  console.log(participantsCount);
 
   useEffect(() => {
     const fetchParticipations = async () => {
@@ -30,9 +32,14 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
-      setParticipantsCounter(result.data.participantsCounter);
     };
     fetchParticipations();
+
+    const fetchParticipantsCount = async () => {
+      const result = await axios.get(`/api/v1/participantsCount/${questionnaireId}`);
+      setParticipantsCount(result.data);
+    };
+    fetchParticipantsCount();
 
     if (offset === 0) {
       setPrevZero(true);
@@ -40,12 +47,19 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setPrevZero(false);
     }
 
-    if ((participants.length % limit === 1) || (offset + limit === participantsCounter)) {
+    if ((participants.length % limit === 1) || (offset + limit === participantsCount)) {
       setNextZero(true);
     } else {
       setNextZero(false);
     }
-  }, [cityFilter, nameFilter, offset, participants.length, participantsCounter, questionnaireId, questionnaires.length, statusFilter]);
+  }, [cityFilter,
+    nameFilter,
+    offset,
+    participants.length,
+    participantsCount,
+    questionnaireId,
+    questionnaires.length,
+    statusFilter]);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -172,16 +186,18 @@ function WallPage({ showModal, modalState, isSubmited }) {
         </div>
       </div>
       ))}
-      <div className="results__pagination">
-        <div className="button__wrapper">
-          <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
-            <i className="button__steps__icon fa fa-caret-left" />
-          </button>
-          <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
-            <i className="button__steps__icon fa fa-caret-right" />
-          </button>
+      {(participantsCount > limit || offset > 0) && (
+        <div className="results__pagination">
+          <div className="button__wrapper">
+            <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
+              <i className="button__steps__icon fa fa-caret-left" />
+            </button>
+            <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
+              <i className="button__steps__icon fa fa-caret-right" />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
