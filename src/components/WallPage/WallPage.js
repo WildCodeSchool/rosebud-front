@@ -24,8 +24,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [nextZero, setNextZero] = useState(false);
   const [participantsCount, setParticipantsCount] = useState(0);
 
-  console.log(participantsCount);
-
   useEffect(() => {
     const fetchParticipations = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
