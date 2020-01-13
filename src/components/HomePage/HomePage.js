@@ -3,6 +3,8 @@ import './HomePage.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+const limit = 3;
+
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
   const [randomImages, setRandomImages] = useState([]);
@@ -10,6 +12,11 @@ function HomePage() {
   const [participantsCounter, setParticipantsCounter] = useState(0);
   const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
   const [questionnaires, setQuestionnaires] = useState([]);
+  const [querySearch, setQuerySearch] = useState('');
+  // prèc, next questionnaire
+  const [offset, setOffset] = useState(0);
+  const [prevZero, setPrevZero] = useState(false);
+  const [nextZero, setNextZero] = useState(false);
 
   useEffect(() => {
     const fetchRandomImages = async () => {
@@ -34,11 +41,22 @@ function HomePage() {
     };
     fetchQuestionnairesCounter();
     const fetchQuestionnaires = async () => {
-      const result = await axios.get('/api/v1/questionnaires');
+      const result = await axios.get(`/api/v1/questionnaires?offset=${offset}&limit=${limit}&query=${querySearch}`);
       setQuestionnaires(result.data);
     };
     fetchQuestionnaires();
-  }, []);
+    if (offset === 0) {
+      setPrevZero(true);
+    } else {
+      setPrevZero(false);
+    }
+
+    if ((questionnaires.length % limit === 1) || (offset + limit === questionnairesCounter)) {
+      setNextZero(true);
+    } else {
+      setNextZero(false);
+    }
+  }, [offset, querySearch, questionnaires.length, questionnairesCounter]);
 
   const changeLinkResults = () => {
     setLinkToParticipate(!linkToParticipate);
@@ -76,16 +94,16 @@ function HomePage() {
 
       <section className="home__counters">
         <div className="home__counters__title">
-          {participantsCounter}
-          <span className="home__counters__length">{participantsCounter > 1 ? 'participants' : 'participant'}</span>
-        </div>
-        <div className="home__counters__title">
           {questionnairesCounter}
           <span className="home__counters__length">{questionnairesCounter > 1 ? 'questionnaires' : 'questionnaire'}</span>
         </div>
         <div className="home__counters__title">
+          {participantsCounter}
+          <span className="home__counters__length">{participantsCounter > 1 ? 'participants' : 'participant'}</span>
+        </div>
+        <div className="home__counters__title">
           {answersCounter}
-          <span className="home__counters__length">{answersCounter > 1 ? 'réponses' : 'réponse'}</span>
+          <span className="home__counters__length">{answersCounter > 1 ? 'images' : 'image'}</span>
         </div>
       </section>
 
@@ -93,7 +111,7 @@ function HomePage() {
         <div className="about__us__wrapper">
           <h2 className="about__us__title">
             <i className="about__us__icon fa fa-info" />
-                À propos de Rosebud
+            À propos de Rosebud
           </h2>
           <p className="about__us__content">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
@@ -111,38 +129,48 @@ function HomePage() {
 
       <section className="home__search">
         <div className="home__search__input__wrapper">
-          <input type="text" placeholder="Rechercher..." className="home__search__input" />
+          <input type="text" value={querySearch || ''} placeholder="Rechercher..." className="home__search__input" onChange={(e) => setQuerySearch(e.target.value)} />
         </div>
-        <div className="search__results">
-          <div className="search__results__buttons">
-            <button type="button" className={`search__results__button ${!linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Consulter</button>
-            <button type="button" className={`search__results__button ${linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Participer</button>
+        {questionnaires.length > 0 ? (
+          <div className="search__results">
+            <div className="search__results__buttons">
+              <button type="button" className={`search__results__button ${!linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Consulter</button>
+              <button type="button" className={`search__results__button ${linkToParticipate && 'search__results__button--active'}`} onClick={changeLinkResults}>Participer</button>
+            </div>
+            <div className="search__results__wrapper">
+              {questionnaires && questionnaires.map((questionnaire) => (
+                <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}`}`} className="search__results__item" key={questionnaire.id}>
+                  <div className="search__results__item__infos">
+                    <h3 className="search__results__item__title">{questionnaire.title}</h3>
+                    <p className="search__results__item__content">
+                      {linkToParticipate
+                        ? textTruncate(questionnaire.description_participate)
+                        : textTruncate(questionnaire.description_consult)}
+                    </p>
+                  </div>
+                  <div className="search__results__access">
+                    {!linkToParticipate
+                      ? <i className="fa fa-eye" />
+                      : <i className="fa fa-arrow-right" />}
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {(questionnairesCounter > limit || offset > 0) && (
+            <div className="search__results__pagination">
+              <div className="button__wrapper">
+                <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
+                  {' '}
+                  <i className="button__steps__icon fa fa-caret-left" />
+                </button>
+                <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
+                  <i className="button__steps__icon fa fa-caret-right" />
+                </button>
+              </div>
+            </div>
+            )}
           </div>
-          <div className="search__results__wrapper">
-            {questionnaires.map((questionnaire) => (
-              <Link to={`${linkToParticipate ? `/questionnaire/${questionnaire.id}/participer/` : `/questionnaire/${questionnaire.id}`}`} className="search__results__item" key={questionnaire.id}>
-                <div className="search__results__item__infos">
-                  <h3 className="search__results__item__title">{questionnaire.title}</h3>
-                  <p className="search__results__item__content">
-                    {linkToParticipate
-                      ? textTruncate(questionnaire.description_participate)
-                      : textTruncate(questionnaire.description_consult)}
-                  </p>
-                </div>
-                <div className="search__results__access">
-                  {!linkToParticipate
-                    ? <i className="fa fa-eye" />
-                    : <i className="fa fa-arrow-right" />}
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="search__results__pagination">
-            <span className="search__results__pagination__item search__results__pagination__item--active" />
-            <span className="search__results__pagination__item" />
-            <span className="search__results__pagination__item" />
-          </div>
-        </div>
+        ) : <p>Aucun questionnaire trouvé.</p>}
       </section>
 
     </div>
