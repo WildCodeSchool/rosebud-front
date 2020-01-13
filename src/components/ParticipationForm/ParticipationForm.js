@@ -9,7 +9,8 @@ window.onload = () => { localStorage.clear(); };
 function ParticipationForm({ onClickSubmit }) {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreimagePreview] = useLocalStorage(`image ${step}`, '');
+  const [imagePreview, SetImagePreview] = useLocalStorage(`image ${step}`, '');
+  const [imageSelect, setImageSelect] = useLocalStorage(`image select ${step}`, '');
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -30,17 +31,18 @@ function ParticipationForm({ onClickSubmit }) {
       setQuestions(result.data);
     };
     fetchData();
+
     if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1) {
       setFormValidate(true);
     } else {
       setFormValidate(false);
     }
-    if (imagePreview !== '' && comment !== '') {
+    if ((imagePreview !== '' || imageSelect !== '') && comment !== '') {
       setQuestionValidate(true);
     } else {
       setQuestionValidate(false);
     }
-  }, [comment, imagePreview, inputAge, inputCity, inputEmail, inputFirstName, inputLastName, inputStatus, questionnaireId]);
+  }, [comment, imagePreview, imageSelect, inputAge, inputCity, inputEmail, inputFirstName, inputLastName, inputStatus, questionnaireId, step]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
@@ -69,7 +71,7 @@ function ParticipationForm({ onClickSubmit }) {
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => {
         const base64data = reader.result;
-        SetImagePreimagePreview(base64data);
+        SetImagePreview(base64data);
       };
     }
   };
@@ -141,17 +143,31 @@ function ParticipationForm({ onClickSubmit }) {
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
-                  <div className="upload__image">
-                    <label className="upload__image__button" htmlFor={`answerImage${index}`}>
-                      {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                      <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
-                    </label>
-                  </div>
-                  {imagePreview
-                  && (
-                  <div className="preview__wrapper">
-                    <img className="image__preview" src={imagePreview} alt="Preview" />
-                  </div>
+                  {question.uploadFormat ? (
+                    <>
+                      <div className="upload__image">
+                        <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                          {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
+                          <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                        </label>
+                      </div>
+                      {imagePreview
+                    && (
+                    <div className="preview__wrapper">
+                      <img className="image__preview" src={imagePreview} alt="Preview" />
+                    </div>
+                    )}
+                    </>
+                  ) : (
+                    <div className="choice__wrapper">
+                      {question.Images.map((image, i) => (
+                        <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
+                          <img className="choice__image" src={image.image_url} alt="choice select" />
+                          <p className="choice__title">{image.title}</p>
+                          <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} onChange={(e) => setImageSelect(e.target.value)} />
+                        </label>
+                      ))}
+                    </div>
                   )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
                     <textarea onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
