@@ -46,6 +46,7 @@ function ParticipationForm({ onClickSubmit }) {
     e.preventDefault();
     const data = new FormData(e.target);
     axios.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
+    console.log(...data);
     onClickSubmit(questionnaireId);
     localStorage.clear();
   };
@@ -153,7 +154,7 @@ function ParticipationForm({ onClickSubmit }) {
                   </div>
                   )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                    <textarea value={comment || ''} onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                    <textarea onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
                   </label>
                   <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
                   <div className="pagination pagination--steps">
