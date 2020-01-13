@@ -56,8 +56,6 @@ function HomePage() {
     } else {
       setNextZero(false);
     }
-
-    console.log(offset);
   }, [offset, querySearch, questionnaires.length, questionnairesCounter]);
 
   const changeLinkResults = () => {
