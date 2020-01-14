@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 window.onload = () => { localStorage.clear(); };
 
 function ParticipationForm({ onClickSubmit }) {
+  const [questionnaires, setQuestionnaires] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [imagePreview, SetImagePreview] = useLocalStorage(`image ${step}`, '');
@@ -26,11 +27,17 @@ function ParticipationForm({ onClickSubmit }) {
 
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchQuestions = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
     };
-    fetchData();
+    fetchQuestions();
+
+    const fetchQuestionnaires = async () => {
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}`);
+      setQuestionnaires(result.data);
+    };
+    fetchQuestionnaires();
 
     if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1) {
       setFormValidate(true);
@@ -86,16 +93,16 @@ function ParticipationForm({ onClickSubmit }) {
           && (
             <section>
               <div className={`participant ${step < 1 ? 'step--show' : 'step--hide'}`}>
+                {questionnaires.length > 0 && (
                 <div className="participant__presentation">
                   <h2 className="participant__presentation__title">
-                  Classes pilotes Courts métrages / Jeu vidéo
+                    {questionnaires[0].title}
                   </h2>
                   <p className="participant__presentation__content">
-                  Vous avez participé aux classes pilotes Lycéens et apprentis au cinéma 2019/2020,
-                  et nous vous proposons de terminer ce projet en répondant à quatre questions
-                  autourdu cinéma et des jeux vidéos.
+                    {questionnaires[0].description_participate}
                   </p>
                 </div>
+                )}
                 <div className="participant__wrapper">
                   <h2 className="participant__handing">
                     <i className="fa fa-caret-down participant__handing__icon" aria-hidden="true" />
