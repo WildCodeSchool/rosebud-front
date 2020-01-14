@@ -26,17 +26,17 @@ function HomePage() {
     fetchRandomImages();
 
     const fetchAnswersCounter = async () => {
-      const result = await axios.get('/api/v1/answersCounter');
+      const result = await axios.get('/api/v1/metrics/answers');
       setAnswersCounter(result.data);
     };
     fetchAnswersCounter();
     const fetchParticipantsCounter = async () => {
-      const result = await axios.get('/api/v1/participantsCounter');
+      const result = await axios.get('/api/v1/metrics/participants');
       setParticipantsCounter(result.data);
     };
     fetchParticipantsCounter();
     const fetchQuestionnairesCounter = async () => {
-      const result = await axios.get('/api/v1/questionnairesCounter');
+      const result = await axios.get('/api/v1/metrics/questionnaires');
       setQuestionnairesCounter(result.data);
     };
     fetchQuestionnairesCounter();
