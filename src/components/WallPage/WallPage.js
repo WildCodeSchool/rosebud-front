@@ -28,7 +28,10 @@ function WallPage({ showModal, modalState, isSubmited }) {
 
   useEffect(() => {
     const fetchParticipations = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter
+        ? `&status=${statusFilter}` : '&status=all'}${cityFilter
+        ? `&city=${cityFilter}` : '&city=all'}${nameFilter
+        ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
@@ -36,7 +39,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
     fetchParticipations();
 
     const fetchParticipantsCount = async () => {
-      const result = await axios.get(`/api/v1/participantsCount/${questionnaireId}`);
+      const result = await axios.get(`/api/v1/metrics/participants/${questionnaireId}`);
       setParticipantsCount(result.data);
     };
     fetchParticipantsCount();
