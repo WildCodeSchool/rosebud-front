@@ -84,7 +84,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
             </Link>
           </h2>
           <p className="WallPage__presentation__content">
-            {questionnaires[0].description_consult}
+            {questionnaires[0].presentationText}
           </p>
         </div>
       )}

@@ -99,7 +99,7 @@ function ParticipationForm({ onClickSubmit }) {
                     {questionnaires[0].title}
                   </h2>
                   <p className="participant__presentation__content">
-                    {questionnaires[0].description_participate}
+                    {questionnaires[0].participationText}
                   </p>
                 </div>
                 )}

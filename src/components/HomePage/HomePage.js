@@ -144,8 +144,8 @@ function HomePage() {
                     <h3 className="search__results__item__title">{questionnaire.title}</h3>
                     <p className="search__results__item__content">
                       {linkToParticipate
-                        ? textTruncate(questionnaire.description_participate)
-                        : textTruncate(questionnaire.description_consult)}
+                        ? textTruncate(questionnaire.participationText)
+                        : textTruncate(questionnaire.presentationText)}
                     </p>
                   </div>
                   <div className="search__results__access">
