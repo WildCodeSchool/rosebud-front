@@ -15,6 +15,7 @@ jobs:
           npm install
           npm run build
           sshpass -p ${{secrets.SSH_PASS}} \
-          rsync -av --delete ./build/ \
+          rsync -e "ssh -o StrictHostKeyChecking=no" \
+          -av --delete ./build/ \
           ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/var/www/rosebud-front/
 
