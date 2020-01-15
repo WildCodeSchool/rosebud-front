@@ -30,6 +30,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
+      window.scrollTo(0, 0);
     };
     fetchParticipations();
 

@@ -22,6 +22,7 @@ function HomePage() {
     const fetchRandomImages = async () => {
       const result = await axios.get('/api/v1/questionnaires/answers?limit=5');
       setRandomImages(result.data);
+      window.scrollTo(0, 0);
     };
     fetchRandomImages();
 
