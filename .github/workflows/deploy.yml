@@ -1,0 +1,21 @@
+name: Deploy updates
+
+on:
+  push:
+    branches: master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy
+        run: |
+          npm install
+          npm run build
+          sshpass -p ${{secrets.SSH_PASS}} \
+          rsync -e "ssh -o StrictHostKeyChecking=no" \
+          -av --delete ./build/ \
+          ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/var/www/rosebud-front/
+
