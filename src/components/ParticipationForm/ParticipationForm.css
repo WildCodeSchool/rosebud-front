@@ -223,6 +223,13 @@
     background: #F05D58;
 }
 
+.comment__length{
+    opacity: 0.6;
+    font-style: italic;
+    text-align: right;
+    margin-top: 5px;
+}
+
 .textarea__answer {
     display: flex;
     flex-direction: column;

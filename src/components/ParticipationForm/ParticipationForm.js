@@ -50,6 +50,9 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setQuestionValidate(false);
     }
+    if (comment.length > 400){
+
+    }
   }, [comment, imagePreview, imageSelect, inputAge, inputCity, inputEmail, inputFirstName, inputLastName, inputStatus, questionnaireId, step]);
 
   const submitParticipation = (e) => {
@@ -182,7 +185,8 @@ function ParticipationForm({ onClickSubmit }) {
                     </div>
                   )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                    <textarea onChange={(e) => setComment(e.target.value)} required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                    <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                    <p className="comment__length">caractères: {comment.length}/400</p>
                   </label>
                   <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
                   <div className="pagination pagination--steps">
