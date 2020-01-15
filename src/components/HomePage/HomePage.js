@@ -27,17 +27,17 @@ function HomePage() {
     fetchRandomImages();
 
     const fetchAnswersCounter = async () => {
-      const result = await axios.get('/api/v1/answersCounter');
+      const result = await axios.get('/api/v1/metrics/answers');
       setAnswersCounter(result.data);
     };
     fetchAnswersCounter();
     const fetchParticipantsCounter = async () => {
-      const result = await axios.get('/api/v1/participantsCounter');
+      const result = await axios.get('/api/v1/metrics/participants');
       setParticipantsCounter(result.data);
     };
     fetchParticipantsCounter();
     const fetchQuestionnairesCounter = async () => {
-      const result = await axios.get('/api/v1/questionnairesCounter');
+      const result = await axios.get('/api/v1/metrics/questionnaires');
       setQuestionnairesCounter(result.data);
     };
     fetchQuestionnairesCounter();
@@ -145,8 +145,8 @@ function HomePage() {
                     <h3 className="search__results__item__title">{questionnaire.title}</h3>
                     <p className="search__results__item__content">
                       {linkToParticipate
-                        ? textTruncate(questionnaire.description_participate)
-                        : textTruncate(questionnaire.description_consult)}
+                        ? textTruncate(questionnaire.participationText)
+                        : textTruncate(questionnaire.presentationText)}
                     </p>
                   </div>
                   <div className="search__results__access">
