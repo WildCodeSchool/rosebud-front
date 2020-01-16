@@ -6,21 +6,21 @@ function Footer() {
     <footer className="Footer">
       <div className="Footer__wrapper">
         <p className="Footer__list__item">
-          <a href="https://www.facebook.com/Ciclic.RegionCentre" target="_blank">
+          <a href="https://www.facebook.com/Ciclic.RegionCentre" rel="noopener noreferrer" target="_blank">
             {' '}
             <i className="Footer__icon fa fa-facebook-square" />
           </a>
 
         </p>
         <p className="Footer__list__item">
-          <a href="https://twitter.com/Ciclic_CVL" target="_blank">
+          <a href="https://twitter.com/Ciclic_CVL" rel="noopener noreferrer" target="_blank">
             {' '}
             <i className="Footer__icon fa fa-twitter-square" />
           </a>
 
         </p>
         <p className="Footer__list__item">
-          <a href="https://upopi.ciclic.fr/" target="_blank">
+          <a href="https://upopi.ciclic.fr/" rel="noopener noreferrer" target="_blank">
             {' '}
             <i className="Footer__icon fa fa-instagram" />
           </a>
