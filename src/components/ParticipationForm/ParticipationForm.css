@@ -223,11 +223,13 @@
     background: #F05D58;
 }
 
-.comment__length{
-    opacity: 0.6;
+.comment__length {
     font-style: italic;
     text-align: right;
-    margin-top: 5px;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #DDDDCD;
+    margin-bottom: 0px;
 }
 
 .textarea__answer {

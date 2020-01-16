@@ -30,7 +30,6 @@ function ParticipationForm({ onClickSubmit }) {
     const fetchQuestions = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
-      
     };
     fetchQuestions();
 
@@ -50,7 +49,7 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setQuestionValidate(false);
     }
-    if (comment.length > 400){
+    if (comment.length > 400) {
 
     }
   }, [comment, imagePreview, imageSelect, inputAge, inputCity, inputEmail, inputFirstName, inputLastName, inputStatus, questionnaireId, step]);
@@ -74,7 +73,7 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       console.log('erreur');
     }
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   };
 
   const getImagePreview = (e) => {
@@ -186,7 +185,10 @@ function ParticipationForm({ onClickSubmit }) {
                   )}
                   <label className="comment__answer" htmlFor={`answerComment${index}`}>
                     <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
-                    <p className="comment__length">caractères: {comment.length}/400</p>
+                    <p className="comment__length">
+                      {comment.length}
+/400
+                    </p>
                   </label>
                   <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
                   <div className="pagination pagination--steps">
