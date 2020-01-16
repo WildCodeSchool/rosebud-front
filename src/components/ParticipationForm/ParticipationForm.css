@@ -193,6 +193,36 @@
     border-radius: 5px;
 }
 
+.FileSizeIsBad {
+    display: block;
+    background-color: black;
+    font-size: 15px;
+    color: #F05D58;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    padding: 8px;
+}
+
+.FileSizeIsGood{
+    display: none;
+}
+
+.FileTypeIsBad {
+    display: block;
+    background-color: black;
+    font-size: 15px;
+    color: #F05D58;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    padding: 8px;
+}
+
+.FileTypeIsGood{
+    display: none;
+}
+
 .choice__wrapper {
     display: flex;
     flex-direction: column;
