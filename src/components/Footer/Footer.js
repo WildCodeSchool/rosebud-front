@@ -5,17 +5,27 @@ function Footer() {
   return (
     <footer className="Footer">
       <div className="Footer__wrapper">
-        <ul className="Footer__list">
-          <h2 className="Footer__title">Informations</h2>
-          <li className="Footer__list__item">Lorem ipsum</li>
-          <li className="Footer__list__item">Ipsumlorem lox</li>
-          <li className="Footer__list__item">Mentions Légales</li>
-        </ul>
-        <ul>
-          <li className="Footer__list__item"><i className="Footer__icon fa fa-facebook-square" /></li>
-          <li className="Footer__list__item"><i className="Footer__icon fa fa-twitter-square" /></li>
-          <li className="Footer__list__item"><i className="Footer__icon fa fa-instagram" /></li>
-        </ul>
+        <p className="Footer__list__item">
+          <a href="https://www.facebook.com/Ciclic.RegionCentre" rel="noopener noreferrer" target="_blank">
+            {' '}
+            <i className="Footer__icon fa fa-facebook-square" />
+          </a>
+
+        </p>
+        <p className="Footer__list__item">
+          <a href="https://twitter.com/Ciclic_CVL" rel="noopener noreferrer" target="_blank">
+            {' '}
+            <i className="Footer__icon fa fa-twitter-square" />
+          </a>
+
+        </p>
+        <p className="Footer__list__item">
+          <a href="https://upopi.ciclic.fr/" rel="noopener noreferrer" target="_blank">
+            {' '}
+            <i className="Footer__icon fa fa-instagram" />
+          </a>
+
+        </p>
       </div>
       <div className="Footer__copyright">
             © 2020 - Ciclic

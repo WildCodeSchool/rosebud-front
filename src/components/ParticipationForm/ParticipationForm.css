@@ -193,6 +193,36 @@
     border-radius: 5px;
 }
 
+.FileSizeIsBad {
+    display: block;
+    background-color: black;
+    font-size: 15px;
+    color: #F05D58;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    padding: 8px;
+}
+
+.FileSizeIsGood{
+    display: none;
+}
+
+.FileTypeIsBad {
+    display: block;
+    background-color: black;
+    font-size: 15px;
+    color: #F05D58;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    padding: 8px;
+}
+
+.FileTypeIsGood{
+    display: none;
+}
+
 .choice__wrapper {
     display: flex;
     flex-direction: column;
@@ -221,6 +251,15 @@
     flex-direction: column;
     padding: 20px;
     background: #F05D58;
+}
+
+.comment__length {
+    font-style: italic;
+    text-align: right;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #DDDDCD;
+    margin-bottom: 0px;
 }
 
 .textarea__answer {
