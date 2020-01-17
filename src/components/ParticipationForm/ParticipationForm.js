@@ -30,7 +30,6 @@ function ParticipationForm({ onClickSubmit }) {
     const fetchQuestions = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
-      
     };
     fetchQuestions();
 
@@ -50,7 +49,17 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setQuestionValidate(false);
     }
-  }, [comment, imagePreview, imageSelect, inputAge, inputCity, inputEmail, inputFirstName, inputLastName, inputStatus, questionnaireId, step]);
+  }, [comment,
+    imagePreview,
+    imageSelect,
+    inputAge,
+    inputCity,
+    inputEmail,
+    inputFirstName,
+    inputLastName,
+    inputStatus,
+    questionnaireId,
+    step]);
 
   const submitParticipation = (e) => {
     e.preventDefault();
@@ -71,7 +80,7 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       console.log('erreur');
     }
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   };
 
   const getImagePreview = (e) => {
@@ -101,9 +110,6 @@ function ParticipationForm({ onClickSubmit }) {
                     {questionnaires[0].title}
                   </h2>
                   <p className="participant__presentation__content">
-                  Vous avez participé aux classes pilotes Lycéens et apprentis au cinéma 2019/2020,
-                  et nous vous proposons de terminer ce projet en répondant à quatre questions
-                  autour du cinéma et des jeux vidéos.
                     {questionnaires[0].participationText}
                   </p>
                 </div>
