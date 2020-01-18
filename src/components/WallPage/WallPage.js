@@ -119,6 +119,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
       <div className="participation">
         {participants.length > 0
           ? participants.map((participant) => (
+            participant.isApproved && (
             <div className="participation__wrapper" key={participant.id}>
               <div className="participationInfos">
                 <p className="participationInfos__firstname">
@@ -144,6 +145,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                 </div>
               </div>
             </div>
+            )
           )) : (
             <p>Aucune participation trouvée.</p>
           )}
