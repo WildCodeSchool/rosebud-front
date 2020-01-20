@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import loading from './loading/loader150px.gif';
 
-const limit = 7;
+const limit = 1;
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
@@ -33,7 +33,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
-      window.scrollTo(0, 0);
       setTimeout(() => {
         setLoader(false);
       }, 1800);
@@ -223,11 +222,27 @@ function WallPage({ showModal, modalState, isSubmited }) {
       ))}
       {(participantsCount > limit || offset > 0) && (
         <div className="results__pagination">
-          <div className="button__wrapper">
-            <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
+          <div className="button__wrapper__wallpage">
+            <button
+              disabled={prevZero && 'disabled'}
+              className="button__page__prev"
+              type="button"
+              onClick={() => {
+                setOffset(offset - limit);
+                window.scrollTo(0, 0);
+              }}
+            >
               <i className="button__steps__icon fa fa-caret-left" />
             </button>
-            <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
+            <button
+              disabled={nextZero && 'disabled'}
+              className="button__page__next"
+              type="button"
+              onClick={() => {
+                setOffset(offset + limit);
+                window.scrollTo(0, 0);
+              }}
+            >
               <i className="button__steps__icon fa fa-caret-right" />
             </button>
           </div>
