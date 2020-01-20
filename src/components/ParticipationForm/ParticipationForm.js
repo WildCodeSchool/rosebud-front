@@ -30,7 +30,6 @@ function ParticipationForm({ onClickSubmit }) {
   const [fileWrongType, setFileWrongType] = useState(false);
 
   // Config
-
   const sizeAuthorized = 5;
 
 
@@ -203,7 +202,7 @@ function ParticipationForm({ onClickSubmit }) {
                       <div className="upload__image">
                         <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                           {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                          <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                          <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                         </label>
                       </div>
                       {imagePreview
