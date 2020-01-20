@@ -3,6 +3,8 @@ import './WallPage.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
+import loading from './loading/loader150px.gif';
+
 const limit = 7;
 
 function WallPage({ showModal, modalState, isSubmited }) {
@@ -11,6 +13,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [questions, setQuestions] = useState([]);
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
+  const [loader, setLoader] = useState(true);
   // REQ PARAMS
   const { questionnaireId } = useParams();
   // REQ QUERY
@@ -26,14 +29,14 @@ function WallPage({ showModal, modalState, isSubmited }) {
 
   useEffect(() => {
     const fetchParticipations = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter
-        ? `&status=${statusFilter}` : '&status=all'}${cityFilter
-        ? `&city=${cityFilter}` : '&city=all'}${nameFilter
-        ? `&name=${nameFilter}` : '&name=all'}`);
+      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
       window.scrollTo(0, 0);
+      setTimeout(() => {
+        setLoader(false);
+      }, 1800);
     };
     fetchParticipations();
 
@@ -55,6 +58,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setNextZero(false);
     }
   }, [cityFilter,
+    loader,
     nameFilter,
     offset,
     participants.length,
@@ -71,6 +75,13 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const closeModal = () => {
     showModal(false);
     setModalCount(0);
+  };
+
+  const isLoading = (load) => {
+    if (participants.length >= 0 && !load) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -117,39 +128,59 @@ function WallPage({ showModal, modalState, isSubmited }) {
       </div>
 
       <div className="participation">
-        {participants.length > 0
-          ? participants.map((participant) => (
-            participant.isApproved && (
-            <div className="participation__wrapper" key={participant.id}>
-              <div className="participationInfos">
-                <p className="participationInfos__firstname">
-                  {participant.firstName}
-                </p>
-                <p className="participationInfos__lastname">
-                  {participant.lastName}
-                </p>
-                <p className="participationInfos__age">
-                  {`${participant.age} ans`}
-                </p>
-                <p className="participationInfos__city">
-                  {participant.city}
-                </p>
-              </div>
-              <div className="participationAnswers">
-                {participant.Answers.map((answer, index) => answer.ParticipantId === participant.id
-                  && <img key={answer.id} className={`random__image image__${index + 1}--${participant.Answers.length}`} src={answer.image_url} alt="answer path" />)}
-                <div className="participationAnswers__button__wrapper">
-                  <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
-                    <i className="participationAnswers__button__icon fa fa-eye" />
-                  </button>
+        {isLoading(loader) && (
+          <div className="loader__wrapper__wallpage">
+            <img src={loading} className="loader__image" alt="loader" />
+          </div>
+        )}
+        {!isLoading(loader) && (
+          participants.length > 0 ? (participants.map((participant) => (
+            participant.isApproved ? (
+              <div className="participation__wrapper" key={participant.id}>
+                <div className="participationInfos">
+                  <p className="participationInfos__firstname">
+                    {participant.firstName}
+                  </p>
+                  <p className="participationInfos__lastname">
+                    {participant.lastName}
+                  </p>
+                  <p className="participationInfos__age">
+                    {`${participant.age} ans`}
+                  </p>
+                  <p className="participationInfos__city">
+                    {participant.city}
+                  </p>
+                </div>
+                <div className="participationAnswers">
+                  {participant.Answers
+                    .map((answer, index) => answer.ParticipantId === participant.id && (
+                    <img
+                      key={answer.id}
+                      className={`random__image image__${index + 1}--${participant.Answers.length}`}
+                      src={answer.image_url}
+                      alt="answer path"
+                    />
+                    ))}
+                  <div className="participationAnswers__button__wrapper">
+                    <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
+                      <i className="participationAnswers__button__icon fa fa-eye" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="loader__wrapper__wallpage">
+                <p>Aucune participation trouvée.</p>
+              </div>
             )
-          )) : (
-            <p>Aucune participation trouvée.</p>
-          )}
+          ))
+          ) : (
+            <div className="loader__wrapper__wallpage">
+              <p>Aucune participation trouvée.</p>
+            </div>
+          ))}
       </div>
+
       {participants.map((participant) => participant.id === participantId && (
       <div className={modalState ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
         <div className="modal__wrapper">

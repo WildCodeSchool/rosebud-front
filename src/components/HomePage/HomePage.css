@@ -8,6 +8,19 @@
     grid-row-gap: 10px;
     border:20px solid #DDDDCD;
 }
+
+.loader__wrapper {
+    height: 420px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.loader__image {
+    height: auto;
+    width: 80px;
+}
+
 .random__image {
     width: 100%;
     height: 100%;
