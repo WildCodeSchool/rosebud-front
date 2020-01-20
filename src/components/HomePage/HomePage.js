@@ -12,7 +12,7 @@ function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
   const [questionnaires, setQuestionnaires] = useState([]);
   const [querySearch, setQuerySearch] = useState('');
-  // Metrics
+  // Custom hooks
   const questionnairesCounter = useMetrics('questionnaires');
   const participantsCounter = useMetrics('participants');
   const answersCounter = useMetrics('answers');
