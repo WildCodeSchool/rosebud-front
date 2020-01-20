@@ -457,8 +457,8 @@
     background: #363635;
     outline: 0;
     border:0;
-    height: 65px;
-    width: 65px;
+    height: 55px;
+    width: 55px;
     border-radius: 100%;
     text-transform: uppercase;
     font-weight: 700;
@@ -468,13 +468,14 @@
     background: #363635;
     outline: 0;
     border:0;
-    height: 65px;
-    width: 65px;
+    height: 55px;
+    width: 55px;
     border-radius: 100%;
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
 }
+
 .button__page__prev:disabled {
     opacity: 0;
 }

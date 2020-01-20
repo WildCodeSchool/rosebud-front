@@ -2,50 +2,31 @@ import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import useMetrics from '../../hooks/useMetrics';
+import useRandomImages from '../../hooks/useRandomImages';
 
 const limit = 3;
 
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
-  const [randomImages, setRandomImages] = useState([]);
-  const [answersCounter, setAnswersCounter] = useState(0);
-  const [participantsCounter, setParticipantsCounter] = useState(0);
-  const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
   const [questionnaires, setQuestionnaires] = useState([]);
   const [querySearch, setQuerySearch] = useState('');
+  // Metrics
+  const questionnairesCounter = useMetrics('questionnaires');
+  const participantsCounter = useMetrics('participants');
+  const answersCounter = useMetrics('answers');
   // prèc, next questionnaire
   const [offset, setOffset] = useState(0);
   const [prevZero, setPrevZero] = useState(false);
   const [nextZero, setNextZero] = useState(false);
 
   useEffect(() => {
-    const fetchRandomImages = async () => {
-      const result = await axios.get('/api/v1/questionnaires/answers?limit=5');
-      setRandomImages(result.data);
-      window.scrollTo(0, 0);
-    };
-    fetchRandomImages();
-
-    const fetchAnswersCounter = async () => {
-      const result = await axios.get('/api/v1/metrics/answers');
-      setAnswersCounter(result.data);
-    };
-    fetchAnswersCounter();
-    const fetchParticipantsCounter = async () => {
-      const result = await axios.get('/api/v1/metrics/participants');
-      setParticipantsCounter(result.data);
-    };
-    fetchParticipantsCounter();
-    const fetchQuestionnairesCounter = async () => {
-      const result = await axios.get('/api/v1/metrics/questionnaires');
-      setQuestionnairesCounter(result.data);
-    };
-    fetchQuestionnairesCounter();
     const fetchQuestionnaires = async () => {
       const result = await axios.get(`/api/v1/questionnaires?offset=${offset}&limit=${limit}&query=${querySearch}`);
       setQuestionnaires(result.data);
     };
     fetchQuestionnaires();
+
     if (offset === 0) {
       setPrevZero(true);
     } else {
@@ -82,7 +63,7 @@ function HomePage() {
     <div className="HomePage">
 
       <div className="random__images__wrapper">
-        {randomImages.map((image, index) => (
+        {useRandomImages(5).map((image, index) => (
           <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
         ))}
         <div className="random__images__button__wrapper">
@@ -160,12 +141,11 @@ function HomePage() {
             </div>
             {(questionnairesCounter > limit || offset > 0) && (
             <div className="search__results__pagination">
-              <div className="button__wrapper">
-                <button disabled={prevZero && 'disabled'} className="button__page__prev" type="button" onClick={() => setOffset(offset - limit)}>
-                  {' '}
+              <div className="button__wrapper__homepage">
+                <button disabled={prevZero && 'disabled'} className="button__page__prev__homepage" type="button" onClick={() => setOffset(offset - limit)}>
                   <i className="button__steps__icon fa fa-caret-left" />
                 </button>
-                <button disabled={nextZero && 'disabled'} className="button__page__next" type="button" onClick={() => setOffset(offset + limit)}>
+                <button disabled={nextZero && 'disabled'} className="button__page__next__homepage" type="button" onClick={() => setOffset(offset + limit)}>
                   <i className="button__steps__icon fa fa-caret-right" />
                 </button>
               </div>
