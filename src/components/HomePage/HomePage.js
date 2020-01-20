@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import loading from './loading/loader150px.gif';
 
 const limit = 3;
 
@@ -13,6 +14,7 @@ function HomePage() {
   const [questionnairesCounter, setQuestionnairesCounter] = useState(0);
   const [questionnaires, setQuestionnaires] = useState([]);
   const [querySearch, setQuerySearch] = useState('');
+  const [loader, setLoader] = useState(true);
   // prèc, next questionnaire
   const [offset, setOffset] = useState(0);
   const [prevZero, setPrevZero] = useState(false);
@@ -23,7 +25,9 @@ function HomePage() {
       const result = await axios.get('/api/v1/questionnaires/answers?limit=5');
       setRandomImages(result.data);
       window.scrollTo(0, 0);
-    };
+    }; setTimeout(() => {
+      setLoader(false);
+    }, 2000);
     fetchRandomImages();
 
     const fetchAnswersCounter = async () => {
@@ -80,18 +84,23 @@ function HomePage() {
 
   return (
     <div className="HomePage">
-
-      <div className="random__images__wrapper">
-        {randomImages.map((image, index) => (
-          <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
-        ))}
-        <div className="random__images__button__wrapper">
-          <Link to="/questionnaire/1" className="random__images__button">
-            <i className="random__images__button__icon fa fa-eye" />
-            <p className="random__images__button__content">Consulter</p>
-          </Link>
+      {loader ? (
+        <div className="loader__wrapper">
+          <img src={loading} className="loader__image" alt="loader" />
         </div>
-      </div>
+      ) : (
+        <div className="random__images__wrapper">
+          {randomImages.map((image, index) => (
+            <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
+          ))}
+          <div className="random__images__button__wrapper">
+            <Link to="/questionnaire/1" className="random__images__button">
+              <i className="random__images__button__icon fa fa-eye" />
+              <p className="random__images__button__content">Consulter</p>
+            </Link>
+          </div>
+        </div>
+      )}
 
       <section className="home__counters">
         <div className="home__counters__title">

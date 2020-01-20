@@ -287,6 +287,12 @@
     color: #DDDDCD;
 }
 
+.loader__wrapper__wallpage {
+    height: auto;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
 /* MODAL */
 
 .modal {
