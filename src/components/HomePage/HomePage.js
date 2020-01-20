@@ -124,7 +124,16 @@ function HomePage() {
 
       <section className="home__search">
         <div className="home__search__input__wrapper">
-          <input type="text" value={querySearch || ''} placeholder="Rechercher..." className="home__search__input" onChange={(e) => setQuerySearch(e.target.value)} />
+          <input
+            type="text"
+            value={querySearch || ''}
+            placeholder="Rechercher..."
+            className="home__search__input"
+            onChange={(e) => {
+              setQuerySearch(e.target.value);
+              setOffset(0);
+            }}
+          />
         </div>
         {questionnaires.length > 0 ? (
           <div className="search__results">
