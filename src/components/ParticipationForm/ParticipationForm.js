@@ -31,7 +31,7 @@ function ParticipationForm({ onClickSubmit }) {
 
   // Config
 
-  const sizeAuthorized = 5;
+  const sizeAuthorized = 1;
   
 
 
@@ -93,7 +93,7 @@ function ParticipationForm({ onClickSubmit }) {
           const reader = new FileReader();
           reader.readAsDataURL(e.target.files[0]);
           reader.onloadend = () => {
-          const base64data = reader.result;
+            const base64data = reader.result;
           SetImagePreview(base64data);}
         } else { 
         return setFileWrongType(true)
@@ -180,7 +180,7 @@ function ParticipationForm({ onClickSubmit }) {
                       <div className="upload__image">
                         <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                           {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                          <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                          <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" accept="image/*" onChange={getImagePreview} />
                         </label>
                       </div>
                       {imagePreview
