@@ -26,13 +26,11 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionValidate, setQuestionValidate] = useState(false);
 
   // Check size and type of image
-  const [fileTooBig, setFileTooBig ] = useState(false)
-  const [fileWrongType, setFileWrongType ] = useState(false)
+  const [fileTooBig, setFileTooBig] = useState(false);
+  const [fileWrongType, setFileWrongType] = useState(false);
 
   // Config
-
   const sizeAuthorized = 5;
-  
 
 
   useEffect(() => {
@@ -93,21 +91,24 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-      if(e.target.files[0].size < sizeAuthorized * 1000000) { 
-        if(e.target.files[0].type === "image/jpeg" || e.target.files[0].type === "image/png" || e.target.files[0].type === "image/gif" ) {
-          setFileTooBig(false)
-          setFileWrongType(false)
-          const reader = new FileReader();
-          reader.readAsDataURL(e.target.files[0]);
-          reader.onloadend = () => {
+    if (e.target.files[0].size < sizeAuthorized * 1000000) {
+      if (e.target.files[0].type === 'image/jpeg'
+        || e.target.files[0].type === 'image/png'
+        || e.target.files[0].type === 'image/gif') {
+        setFileTooBig(false);
+        setFileWrongType(false);
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onloadend = () => {
           const base64data = reader.result;
-          SetImagePreview(base64data);}
-        } else { 
-        return setFileWrongType(true)
-        }
-    } else {
-        return setFileTooBig(true)
+          SetImagePreview(base64data);
+        };
+      } else {
+        setFileWrongType(true);
       }
+    } else {
+      setFileTooBig(true);
+    }
   };
 
   return (
@@ -177,14 +178,31 @@ function ParticipationForm({ onClickSubmit }) {
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
-              <p className={ fileTooBig ? "FileSizeIsBad" : "FileSizeIsGood"}> OUPSS... <br/> Veuillez chosir une image de taille inferieur à {sizeAuthorized}Mo svp.</p>
-              <p className={ fileWrongType ? "FileTypeIsBad" : "FileTypeIsGood"}> OUPSS... <br/> Veuillez chosir un format d'image de type jpeg, png ou gif svp.</p>
+                  <p className={fileTooBig ? 'FileSizeIsBad' : 'FileSizeIsGood'}>
+                    {' '}
+                    OUPSS...
+                    {' '}
+                    <br />
+                    {' '}
+                    Veuillez chosir une image de taille inferieur à
+                    {' '}
+                    {sizeAuthorized}
+                    Mo svp.
+                  </p>
+                  <p className={fileWrongType ? 'FileTypeIsBad' : 'FileTypeIsGood'}>
+                    {' '}
+                    OUPSS...
+                    {' '}
+                    <br />
+                    {' '}
+                    Veuillez chosir un format d&apos;image de type jpeg, png ou gif svp.
+                  </p>
                   {question.uploadFormat ? (
                     <>
                       <div className="upload__image">
                         <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                           {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                          <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
+                          <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                         </label>
                       </div>
                       {imagePreview
@@ -209,7 +227,7 @@ function ParticipationForm({ onClickSubmit }) {
                     <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
                     <p className="comment__length">
                       {comment.length}
-/400
+                      /400
                     </p>
                   </label>
                   <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />

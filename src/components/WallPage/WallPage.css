@@ -21,6 +21,7 @@
     outline: 0;
     background: #DDDDCD;
     padding: 10px;
+    margin-left: 20px;
     display: flex;
     color: #363635;
     text-decoration: none;
@@ -141,7 +142,7 @@
     flex-shrink: 0;
     box-sizing: border-box;
     padding: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
     color: #363635;
@@ -403,7 +404,8 @@
     border-radius: 0 0 5px -1px;
     font-size: 16px;
     word-wrap: break-word;
-    height: 75%;
+    height: auto;
+    max-height: 70%;
     width: 100%;
     overflow: scroll;
     border-bottom: 20px solid #d1d1c2;

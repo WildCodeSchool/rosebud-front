@@ -124,15 +124,16 @@ function HomePage() {
             À propos de Rosebud
           </h2>
           <p className="about__us__content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
+            Rosebud est un jeu créé par des étudiants de la
             {' '}
-            <strong>debitis</strong>
+            <strong>Wild Code School</strong>
             {' '}
-            commodi magnam soluta! In debitis, officiis, a nam
+            de Tours pour l&apos;agence Ciclic Centre-Val de Loire
             {' '}
-            <strong>repellat</strong>
+            et sa plateforme pédagogique
             {' '}
-            tenetur ex, vero dignissimos ad doloribus reiciendis? Eum eius qui vitae!
+            <strong>Upopi</strong>
+            .
           </p>
         </div>
       </section>
