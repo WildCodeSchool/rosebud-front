@@ -112,10 +112,36 @@ function WallPage({ showModal, modalState, isSubmited }) {
         </button>
         {filters && (
           <div className="filters__wrapper">
-            <input className="filters__input" type="text" value={nameFilter} onChange={(e) => setNameFilter(e.target.value)} placeholder="Nom de famille" />
-            <input className="filters__input" type="text" value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} placeholder="Ville" />
+            <input
+              className="filters__input"
+              type="text"
+              placeholder="Nom de famille"
+              value={nameFilter}
+              onChange={(e) => {
+                setNameFilter(e.target.value);
+                setOffset(0);
+              }}
+            />
+            <input
+              className="filters__input"
+              type="text"
+              value={cityFilter}
+              placeholder="Ville"
+              onChange={(e) => {
+                setCityFilter(e.target.value);
+                setOffset(0);
+              }}
+            />
             <label className="filters__select" htmlFor="status">
-              <select className="form__select" name="status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <select
+                className="form__select"
+                name="status"
+                value={statusFilter}
+                onChange={(e) => {
+                  setStatusFilter(e.target.value);
+                  setOffset(0);
+                }}
+              >
                 <option disabled="disabled" value="">Statut</option>
                 <option value="student">Élève/étudiant</option>
                 <option value="teacher">Enseignant</option>
