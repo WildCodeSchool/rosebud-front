@@ -30,13 +30,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [fileWrongType, setFileWrongType] = useState(false);
 
   // Config
-<<<<<<< HEAD
-
-  const sizeAuthorized = 1;
-  
-=======
   const sizeAuthorized = 5;
->>>>>>> dev
 
 
   useEffect(() => {
@@ -97,22 +91,6 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-<<<<<<< HEAD
-      if(e.target.files[0].size < sizeAuthorized * 1000000) { 
-        if(e.target.files[0].type === "image/jpeg" || e.target.files[0].type === "image/png" || e.target.files[0].type === "image/gif" ) {
-          setFileTooBig(false)
-          setFileWrongType(false)
-          const reader = new FileReader();
-          reader.readAsDataURL(e.target.files[0]);
-          reader.onloadend = () => {
-            const base64data = reader.result;
-          SetImagePreview(base64data);}
-        } else { 
-        return setFileWrongType(true)
-        }
-    } else {
-        return setFileTooBig(true)
-=======
     if (e.target.files[0].size < sizeAuthorized * 1000000) {
       if (e.target.files[0].type === 'image/jpeg'
         || e.target.files[0].type === 'image/png'
@@ -127,7 +105,6 @@ function ParticipationForm({ onClickSubmit }) {
         };
       } else {
         setFileWrongType(true);
->>>>>>> dev
       }
     } else {
       setFileTooBig(true);
@@ -225,11 +202,7 @@ function ParticipationForm({ onClickSubmit }) {
                       <div className="upload__image">
                         <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                           {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-<<<<<<< HEAD
-                          <input required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" accept="image/*" onChange={getImagePreview} />
-=======
                           <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
->>>>>>> dev
                         </label>
                       </div>
                       {imagePreview
