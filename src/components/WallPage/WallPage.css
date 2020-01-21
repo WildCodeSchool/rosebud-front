@@ -80,12 +80,9 @@
 }
 
 .filters__wrapper {
-    background: #3f3f3f;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     margin-bottom: 20px;
-    border-radius: 5px;
 }
 
 .filters__input {
