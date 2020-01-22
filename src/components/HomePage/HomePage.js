@@ -126,6 +126,12 @@ function HomePage() {
               {' '}
               <strong>Upopi</strong>
               .
+              <br />
+              <br />
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste deleniti harum, iure incidunt corporis velit id commodi debitis doloribus corrupti dolor tenetur suscipit ipsa. Facilis ipsa nulla asperiores a fuga!Non harum et quia odit assumenda, quasi, quis blanditiis, consequatur minus dolorem atque impedit sint quo! Odio quis et nemo debitis ut facere, in, asperiores minus cupiditate fuga quibusdam quae.
+              <br />
+              <br />
+              <strong>Iste deleniti harum, iure incidunt corporis velit.</strong>
             </p>
           </div>
         </section>
