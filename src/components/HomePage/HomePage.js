@@ -151,6 +151,7 @@ function HomePage() {
                 setOffset(0);
               }}
             />
+            <i className="fa fa-search home__search__input__icon" />
           </div>
           {questionnaires.length > 0 ? (
             <div className="search__results">

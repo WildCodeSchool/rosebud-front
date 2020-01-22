@@ -6,7 +6,8 @@
     grid-template-rows: 120px 120px 120px;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
-    border:20px solid #DDDDCD;
+    padding: 20px;
+    border-top: 20px solid #d1d1c2;
 }
 
 .loader__wrapper {
@@ -160,6 +161,12 @@
     text-transform: uppercase;
 }
 
+/* search sections */
+
+.search__sections {
+    border-bottom: 20px solid #3f3f3e;
+}
+
 /* about__us */
 
 .about__us {
@@ -215,15 +222,24 @@
     flex-direction: column;
     padding:0 20px 20px 20px;
     background: #F05D58;
+    position: relative;
 }
 
 .home__search__input {
     display: flex;
-    padding:20px;
+    padding:20px 20px 20px 60px;
     border-radius: 5px;
     border: 0;
     background: #DDDDCD;
     outline:0;
+}
+
+.home__search__input__icon {
+    position: absolute;
+    left: 40px;
+    top:17px;
+    font-size: 28px;
+    color: #747474;
 }
 
 /* search__results */
@@ -319,11 +335,11 @@
 /* Pagination questionnaire */
 
 .search__results__pagination {
-    background: #dc554f;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding:10px 35px 30px 35px;
+    background: #F05D58;
+    padding:20px 35px 20px 35px;
 }
 
 .button__wrapper__homepage {
@@ -342,6 +358,7 @@
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
+    opacity: 1;
 }
 
 .button__page__prev__homepage {
@@ -496,6 +513,7 @@
     
     .search__sections {
         display: flex;
+        border-top: 20px solid #dc554f;
     }
 
     .home__search {
@@ -506,7 +524,12 @@
     }
 
     .home__search__input__wrapper {
-        padding:5px 0 20px 0;
+        padding:5px 0 25px 0;
+    }
+
+    .home__search__input__icon {
+        left: 20px;
+        top: 22px;
     }
 
     .search__results__button:first-child {
@@ -523,7 +546,7 @@
 
     .search__results__pagination {
         background: #F05D58;
-        padding:20px 35px 20px 35px;
+        padding:20px 35px 0px 35px;
     }
 
     .about__us {
