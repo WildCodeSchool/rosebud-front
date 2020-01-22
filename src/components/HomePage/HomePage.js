@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 import useMetrics from '../../hooks/useMetrics';
 import useRandomImages from '../../hooks/useRandomImages';
 import loading from './loading/loader150px.gif';
+import logoCiclic from './images/logo_ciclic.png';
 
-const limit = 3;
+const limit = 2;
 
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
@@ -126,6 +127,15 @@ function HomePage() {
               {' '}
               <strong>Upopi</strong>
               .
+              <br />
+              <br />
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste deleniti harum, iure incidunt corporis velit id commodi debitis doloribus corrupti dolor tenetur suscipit ipsa. Facilis ipsa nulla asperiores a fuga!Non harum et quia odit assumenda, quasi, quis blanditiis, consequatur minus dolorem atque impedit sint quo! Odio quis et nemo debitis ut facere, in, asperiores minus cupiditate fuga quibusdam quae.
+              <br />
+              <br />
+              <strong>Iste deleniti harum, iure incidunt corporis velit.</strong>
+              <div className="logo__ciclic__wrapper">
+                <img src={logoCiclic} alt="Logo Ciclic" className="logo__ciclic" />
+              </div>
             </p>
           </div>
         </section>
