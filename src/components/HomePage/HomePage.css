@@ -143,6 +143,7 @@
     background: #363635;
     display: flex;
     justify-content: space-around;
+    border-top: 20px solid #3f3f3e;
 }
 
 .home__counters__title {
