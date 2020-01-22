@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useMetrics from '../../hooks/useMetrics';
 import useRandomImages from '../../hooks/useRandomImages';
 import loading from './loading/loader150px.gif';
+import logoCiclic from './images/logo_ciclic.png';
 
 const limit = 2;
 
@@ -132,6 +133,9 @@ function HomePage() {
               <br />
               <br />
               <strong>Iste deleniti harum, iure incidunt corporis velit.</strong>
+              <div className="logo__ciclic__wrapper">
+                <img src={logoCiclic} alt="Logo Ciclic" className="logo__ciclic" />
+              </div>
             </p>
           </div>
         </section>

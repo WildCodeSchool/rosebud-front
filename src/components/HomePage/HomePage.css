@@ -200,6 +200,10 @@
     padding:20px;
 }
 
+.logo__ciclic__wrapper {
+    display: none;
+}
+
 /* home__search */
 
 .home__search {
@@ -530,6 +534,18 @@
     
     .about__us__title {
         border-radius: 5px;
+    }
+
+    .logo__ciclic__wrapper {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 20px;
+        opacity: 0.8;
+    }
+    
+    .logo__ciclic {
+        width: 100px;
+        height: auto;
     }
 
 }
