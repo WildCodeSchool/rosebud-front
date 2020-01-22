@@ -8,6 +8,19 @@
     grid-row-gap: 10px;
     border:20px solid #DDDDCD;
 }
+
+.loader__wrapper {
+    height: 420px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.loader__image {
+    height: auto;
+    width: 80px;
+}
+
 .random__image {
     width: 100%;
     height: 100%;
@@ -247,49 +260,49 @@
     width: 50px;
 }
 
+/* Pagination questionnaire */
+
 .search__results__pagination {
     background: #dc554f;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 20px;
+    padding:10px 35px 30px 35px;
 }
 
-
-/* Pagination questionnaire */
-.button__wrapper {
+.button__wrapper__homepage {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px 0px 15px;
-    background: #dc554f;
 }
 
-.button__page__next {
+.button__page__next__homepage {
     background: #363635;
     outline: 0;
     border:0;
-    height: 65px;
-    width: 65px;
+    height: 60px;
+    width: 60px;
     border-radius: 100%;
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
 }
-.button__page__prev {
+
+.button__page__prev__homepage {
     background: #363635;
     outline: 0;
     border:0;
-    height: 65px;
-    width: 65px;
+    height: 60px;
+    width: 60px;
     border-radius: 100%;
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
 }
-.button__page__prev:disabled {
+
+.button__page__prev__homepage:disabled {
     opacity: 0;
 }
-.button__page__next:disabled {
+.button__page__next__homepage:disabled {
     opacity: 0;
 }
