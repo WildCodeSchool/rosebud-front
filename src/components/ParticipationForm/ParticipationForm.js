@@ -33,6 +33,7 @@ function ParticipationForm({ onClickSubmit }) {
   const sizeAuthorized = 5;
 
 
+
   useEffect(() => {
     const fetchQuestions = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
@@ -46,7 +47,7 @@ function ParticipationForm({ onClickSubmit }) {
     };
     fetchQuestionnaires();
 
-    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.indexOf('@') > -1) {
+    if (inputFirstName && inputLastName && inputStatus && inputAge && inputCity && inputEmail !== '' && inputEmail.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)) {
       setFormValidate(true);
     } else {
       setFormValidate(false);
@@ -109,6 +110,7 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFileTooBig(true);
     }
+    
   };
 
   return (
@@ -160,7 +162,8 @@ function ParticipationForm({ onClickSubmit }) {
                       <input value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville*" />
                     </label>
                     <label className="participant__input__tall" htmlFor="email">
-                      <input value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail*" />
+                      <input value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                       autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail*" />
 
                     </label>
                     <div className="pagination pagination--firststep">
