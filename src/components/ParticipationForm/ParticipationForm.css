@@ -359,3 +359,17 @@
 .required__message__icon {
     margin-right: 10px;
 }
+
+.ParticipationForm__notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.notFound__icon {
+    color: #d1d1c2;
+    font-size: 80px;
+    margin-bottom: 0;
+}

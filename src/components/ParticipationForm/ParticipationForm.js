@@ -118,7 +118,7 @@ function ParticipationForm({ onClickSubmit }) {
         onSubmit={submitParticipation}
       >
         {questions.length > 0
-          && (
+          ? (
             <section>
               <div className={`participant ${step < 1 ? 'step--show' : 'step--hide'}`}>
                 {questionnaires.length > 0 && (
@@ -259,6 +259,11 @@ function ParticipationForm({ onClickSubmit }) {
                 </div>
               ))}
             </section>
+          ) : (
+            <div className="ParticipationForm__notFound">
+              <i className="fa fa-question-circle-o notFound__icon" />
+              <p>Aucune question trouvée.</p>
+            </div>
           )}
       </form>
     </div>

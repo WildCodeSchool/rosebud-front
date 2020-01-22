@@ -5,7 +5,8 @@ import { Link, useParams } from 'react-router-dom';
 
 import loading from './loading/loader150px.gif';
 
-const limit = 1;
+// Limit per page /!\ ONLY ODD NUMBER /!\
+const limit = 7;
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
@@ -194,13 +195,15 @@ function WallPage({ showModal, modalState, isSubmited }) {
                 </div>
               </div>
             ) : (
-              <div className="loader__wrapper__wallpage">
+              <div className="WallPage__notFound">
+                <i className="fa fa-question-circle-o notFound__icon" />
                 <p>Aucune participation trouvée.</p>
               </div>
             )
           ))
           ) : (
-            <div className="loader__wrapper__wallpage">
+            <div className="WallPage__notFound">
+              <i className="fa fa-question-circle-o notFound__icon" />
               <p>Aucune participation trouvée.</p>
             </div>
           ))}

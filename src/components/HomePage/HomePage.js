@@ -173,7 +173,12 @@ function HomePage() {
             </div>
             )}
           </div>
-        ) : <p>Aucun questionnaire trouvé.</p>}
+        ) : (
+          <div className="HomePage__notFound">
+            <i className="fa fa-question-circle-o notFound__icon" />
+            <p>Aucun questionnaire trouvé.</p>
+          </div>
+        )}
       </section>
 
     </div>
