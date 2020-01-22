@@ -6,7 +6,7 @@ import useMetrics from '../../hooks/useMetrics';
 import useRandomImages from '../../hooks/useRandomImages';
 import loading from './loading/loader150px.gif';
 
-const limit = 3;
+const limit = 2;
 
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
