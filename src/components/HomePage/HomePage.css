@@ -423,7 +423,7 @@
     }
 
     .home__search {
-        width: 50%;
+        width: 60%;
         display: flex;
         flex-direction: column;
         padding:20px;
@@ -444,14 +444,14 @@
     .search__results__wrapper {
         border-radius:0 0 5px 5px;
     }
-    
+
     .search__results__pagination {
         background: #F05D58;
         padding:20px 35px 20px 35px;
     }
 
     .about__us {
-        width: 50%;
+        width: 40%;
         display: flex;
         flex-direction: column;
         padding: 20px;
