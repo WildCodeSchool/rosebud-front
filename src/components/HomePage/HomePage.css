@@ -237,8 +237,8 @@
 .home__search__input__icon {
     position: absolute;
     left: 40px;
-    top:17px;
-    font-size: 28px;
+    top:18px;
+    font-size: 26px;
     color: #747474;
 }
 
@@ -529,7 +529,7 @@
 
     .home__search__input__icon {
         left: 20px;
-        top: 22px;
+        top: 24px;
     }
 
     .search__results__button:first-child {
