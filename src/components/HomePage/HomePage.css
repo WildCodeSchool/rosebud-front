@@ -566,5 +566,24 @@
         width: 100px;
         height: auto;
     }
+    .random__images__button__participate__wrapper:hover {
+        background-color:#363635 ;
+        transition: transform .2s;
+        transform: scale(1.1);
+    }
+    
+    .random__images__button__participate:hover {
+        background: #3f3f3e;
+    }
+    
+    .random__images__button__consult__wrapper:hover {
+        background-color:#dc554f;
+        transition: transform .2s;
+        transform: scale(1.1);
+    }
+    
+    .random__images__button__consult:hover {
+        background: #F05D58;
+    }
 
 }
