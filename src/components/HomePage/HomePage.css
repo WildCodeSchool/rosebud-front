@@ -392,7 +392,7 @@
 
 /* TABLET DEVICE */
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
     .random__images__wrapper {
         grid-template-columns: repeat(4, 1fr);
     } 
