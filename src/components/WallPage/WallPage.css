@@ -21,6 +21,7 @@
     outline: 0;
     background: #DDDDCD;
     padding: 10px;
+    margin-left: 20px;
     display: flex;
     color: #363635;
     text-decoration: none;
@@ -52,20 +53,62 @@
 
 .WallPage__filter {
     background: #363635;
-    padding:20px;
     display: flex;
+    padding:0 20px;
     justify-content: space-between;
+    flex-direction: column;
     color: #DDDDCD;
+}
+
+.WallPage__filter__button {
+    margin:0;
+    padding:20px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: transparent;
+    border:0;
+    outline: none;
+    display: flex;
+    color: #DDDDCD;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
 }
 
 .WallPage__filter__icon {
     margin-right: 10px;
 }
 
-.WallPage__filter__title {
-    margin:0;
-    text-transform: uppercase;
-    font-weight: 700;
+.filters__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.filters__input {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #DDDDCD;
+    outline:0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.filters__select {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 0;
+    background: #DDDDCD;
+    outline:0;
+    color: #666;
+    display: flex;
+    flex-direction: column;
 }
 
 /* participation */
@@ -96,7 +139,7 @@
     flex-shrink: 0;
     box-sizing: border-box;
     padding: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
     color: #363635;
@@ -137,16 +180,65 @@
     border-radius: 5px;
 }
 
-.image__1 {
+/* GRID 3 */
+
+.image__1--3 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.image__2--3 {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.image__3--3 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.image__3 {
+/* GRID 4 */
+
+.image__1--4 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.image__2--4 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+}
+
+.image__3--4 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.image__4--4 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+/* GRID 5 */
+
+.image__1--5 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.image__3--5 {
     grid-row-start: 2;
     grid-row-end: 4;
 }
-.image__4 {
+
+.image__4--5 {
     grid-column-start: 2;
     grid-column-end: 4;
 }
@@ -165,6 +257,7 @@
     padding: 5px;
     box-sizing: border-box;
 }
+
 
 .participationAnswers__button {
     border:0;
@@ -192,6 +285,12 @@
     color: #DDDDCD;
 }
 
+.loader__wrapper__wallpage {
+    height: auto;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
 /* MODAL */
 
 .modal {
@@ -292,15 +391,22 @@
 .modal__content__wrapper {
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: 45%;
 }
 
 .modal__comment {
     background: #d1d1c2;
-    margin:0;
-    padding: 20px;
-    border-radius: 0 0 5px 5px;
+    margin: 0;
+    padding: 0px 22px 0 20px;
+    border-radius: 0 0 5px -1px;
     font-size: 16px;
+    word-wrap: break-word;
+    height: auto;
+    max-height: 70%;
+    width: 100%;
+    overflow: scroll;
+    border-bottom: 20px solid #d1d1c2;
+    border-top: 20px solid #d1d1c2;
 }
 
 .modal__pagination {
@@ -313,8 +419,8 @@
 
 .modal__pagination__button {
     color: #DDDDCD;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     padding: 0;
     background: #363635;
     border:0;
@@ -332,4 +438,72 @@
     border:0;
     outline: none;
     cursor: pointer;
+}
+
+
+.results__pagination {
+    background: #d1d1c2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding:20px 35px 20px 35px;
+}
+
+.button__wrapper__wallpage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button__page__next {
+    background: #363635;
+    outline: 0;
+    border:0;
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+.button__page__prev {
+    background: #363635;
+    outline: 0;
+    border:0;
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.button__page__prev:disabled {
+    opacity: 0;
+}
+.button__page__next:disabled {
+    opacity: 0;
+}
+
+/* Submit message */
+  
+.Submit__message {
+    background-color: #73BB45;
+    text-align: center;
+    margin: auto;
+    padding: 2%;
+}
+
+.WallPage__notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+}
+
+.notFound__icon {
+    color: #d1d1c2;
+    font-size: 80px;
+    margin-bottom: 0;
 }

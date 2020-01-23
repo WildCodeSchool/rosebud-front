@@ -1,11 +1,12 @@
 
 .Footer {
+    border-top: 20px solid #3f3f3e;
     background: #363635;
 }
 
 .Footer__wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background: #363635;
     height: auto;
@@ -28,7 +29,7 @@
 
 .Footer__list__item {
     list-style: none;
-    margin-top: 10px;
+    margin: 10px 10px 0 10px;
 }
 
 .Footer__icon {
@@ -36,7 +37,7 @@
 }
 
 .Footer__icon::before {
-    font-size: 32px;
+    font-size: 40px;
 }
 
 .Footer__copyright {
