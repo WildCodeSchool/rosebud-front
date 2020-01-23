@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ParticipationForm.css';
-import axios from 'axios';
 import useLocalStorage from 'react-use-localstorage';
 import { useParams } from 'react-router-dom';
+import api from '../../api';
 
 window.onload = () => { localStorage.clear(); };
 
@@ -35,13 +35,13 @@ function ParticipationForm({ onClickSubmit }) {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
+      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
       setQuestions(result.data);
     };
     fetchQuestions();
 
     const fetchQuestionnaires = async () => {
-      const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}`);
+      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}`);
       setQuestionnaires(result.data);
     };
     fetchQuestionnaires();
@@ -71,7 +71,7 @@ function ParticipationForm({ onClickSubmit }) {
   const submitParticipation = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    axios.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
+    api.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
     console.log(...data);
     onClickSubmit(questionnaireId);
     localStorage.clear();

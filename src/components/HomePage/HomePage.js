@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.css';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import api from '../../api';
 import useMetrics from '../../hooks/useMetrics';
 import useRandomImages from '../../hooks/useRandomImages';
 import loading from './loading/loader150px.gif';
@@ -27,7 +27,7 @@ function HomePage() {
 
   useEffect(() => {
     const fetchQuestionnaires = async () => {
-      const result = await axios.get(`/api/v1/questionnaires?offset=${offset}&limit=${limit}&query=${querySearch}`);
+      const result = await api.get(`/api/v1/questionnaires?offset=${offset}&limit=${limit}&query=${querySearch}`);
       setQuestionnaires(result.data);
       setTimeout(() => {
         setLoader(false);
