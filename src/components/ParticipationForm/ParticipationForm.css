@@ -378,6 +378,19 @@
 /* DEVICE TABLET */
 
 @media screen and (min-width: 768px) {
+    .participant__presentation {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .participant__presentation__title {
+        width: 35%;
+    }
+
+    .participant__presentation__content {
+        width: 65%;
+    }
+
     .participant__wrapper__form {
         flex-direction: row;
         justify-content: space-between;
@@ -395,6 +408,5 @@
 
 /* DEVICE DESKTOP */
 
-@media screen and (min-width: 1024) {
-    
+@media screen and (min-width: 1024px) {
 }
