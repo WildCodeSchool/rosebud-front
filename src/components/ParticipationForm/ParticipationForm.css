@@ -51,7 +51,7 @@
 }
 
 .participant__wrapper__form {
-    padding:30px 20px 20px 20px;
+    padding:30px 20px 0px 20px;
     display: flex;
     flex-direction: column;
 }
@@ -134,7 +134,8 @@
 .participant__form__message {
     color: #DDDDCD;
     font-size: 12px;
-    margin:20px 0 0 0;
+    margin:0;
+    padding:30px 20px;
 }
 
 /* questions */
@@ -372,4 +373,28 @@
     color: #d1d1c2;
     font-size: 80px;
     margin-bottom: 0;
+}
+
+/* DEVICE TABLET */
+
+@media screen and (min-width: 768px) {
+    .participant__wrapper__form {
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        padding:20px 10px 0 10px;
+    }
+
+    .participant__form__bloc {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 10px;
+    }
+}
+
+/* DEVICE DESKTOP */
+
+@media screen and (min-width: 1024) {
+    
 }

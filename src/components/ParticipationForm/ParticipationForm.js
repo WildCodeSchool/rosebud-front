@@ -33,7 +33,6 @@ function ParticipationForm({ onClickSubmit }) {
   const sizeAuthorized = 5;
 
 
-
   useEffect(() => {
     const fetchQuestions = async () => {
       const result = await axios.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
@@ -110,7 +109,6 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFileTooBig(true);
     }
-    
   };
 
   return (
@@ -139,42 +137,53 @@ function ParticipationForm({ onClickSubmit }) {
                     Formulaire de participation
                   </h2>
                   <div className="participant__wrapper__form">
-                    <label className="participant__input__tall" htmlFor="firstName">
-                      <input value={inputFirstName} onChange={(e) => setInputFirstName(e.target.value)} autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom*" />
-                    </label>
-                    <label className="participant__input__tall" htmlFor="lastName">
-                      <input value={inputLastName} onChange={(e) => setInputLastName(e.target.value)} autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom*" />
-                    </label>
-                    <div className="participant__group__inputs">
-                      <label defaultValue="" value={inputStatus} onChange={(e) => setInputStatus(e.target.value)} className="participant__select" htmlFor="status">
-                        <select className="form__select" name="status" defaultValue="">
-                          <option disabled="disabled" value="">Statut*</option>
-                          <option value="student">Élève/étudiant</option>
-                          <option value="teacher">Enseignant</option>
-                          <option value="other">Autre</option>
-                        </select>
+                    <div className="participant__form__bloc">
+                      <label className="participant__input__tall" htmlFor="firstName">
+                        <input value={inputFirstName} onChange={(e) => setInputFirstName(e.target.value)} autoComplete="off" className="form__input" name="firstName" type="text" placeholder="Prénom*" />
                       </label>
-                      <label className="participant__input__small" htmlFor="age">
-                        <input value={inputAge} onChange={(e) => setInputAge(e.target.value)} autoComplete="off" className="form__input" name="age" type="number" placeholder="Age*" />
+                      <label className="participant__input__tall" htmlFor="lastName">
+                        <input value={inputLastName} onChange={(e) => setInputLastName(e.target.value)} autoComplete="off" className="form__input" name="lastName" type="text" placeholder="Nom*" />
                       </label>
+                      <div className="participant__group__inputs">
+                        <label defaultValue="" value={inputStatus} onChange={(e) => setInputStatus(e.target.value)} className="participant__select" htmlFor="status">
+                          <select className="form__select" name="status" defaultValue="">
+                            <option disabled="disabled" value="">Statut*</option>
+                            <option value="student">Élève/étudiant</option>
+                            <option value="teacher">Enseignant</option>
+                            <option value="other">Autre</option>
+                          </select>
+                        </label>
+                        <label className="participant__input__small" htmlFor="age">
+                          <input value={inputAge} onChange={(e) => setInputAge(e.target.value)} autoComplete="off" className="form__input" name="age" type="number" placeholder="Age*" />
+                        </label>
+                      </div>
                     </div>
-                    <label className="participant__input__tall" htmlFor="city">
-                      <input value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville*" />
-                    </label>
-                    <label className="participant__input__tall" htmlFor="email">
-                      <input value={inputEmail} onChange={(e) => setInputEmail(e.target.value)} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                       autoComplete="off" className="form__input" name="email" type="email" placeholder="E-mail*" />
-
-                    </label>
-                    <div className="pagination pagination--firststep">
-                      <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
+                    <div className="participant__form__bloc">
+                      <label className="participant__input__tall" htmlFor="city">
+                        <input value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoComplete="off" className="form__input" name="city" type="text" placeholder="Ville*" />
+                      </label>
+                      <label className="participant__input__tall" htmlFor="email">
+                        <input
+                          value={inputEmail}
+                          onChange={(e) => setInputEmail(e.target.value)}
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                          autoComplete="off"
+                          className="form__input"
+                          name="email"
+                          type="email"
+                          placeholder="E-mail*"
+                        />
+                      </label>
+                      <div className="pagination pagination--firststep">
+                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
+                      </div>
                     </div>
-                    <p className="participant__form__message">
-                      {`*En soumettant ce formulaire, j'accepte que les informations saisies soient utilisées pour permettre à Ciclic Centre-Val de Loire, de me recontacter, pour m’envoyer des informations sur ses actions.
+                  </div>
+                  <p className="participant__form__message">
+                    {`*En soumettant ce formulaire, j'accepte que les informations saisies soient utilisées pour permettre à Ciclic Centre-Val de Loire, de me recontacter, pour m’envoyer des informations sur ses actions.
                       Conformément au Règlement Général sur la Protection des Données (RGPD), nous vous confirmons que vos données personnelles ne seront en aucun cas délivrées à des tiers.
                       Notre base de données est sécurisée et son contenu ne sera jamais cédé, échangé ou revendu.`}
-                    </p>
-                  </div>
+                  </p>
                 </div>
                 <input type="hidden" name="questionsLength" value={`${questions.length}`} />
               </div>
