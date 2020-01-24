@@ -111,6 +111,10 @@
     flex-direction: column;
 }
 
+.wallpage__questions__title {
+    display: none;
+}
+
 /* participation */
 
 .participation {
@@ -172,6 +176,7 @@
     grid-column-gap: 5px;
     grid-row-gap: 5px;
 }
+
 .wallpage__random__image {
     width: 100%;
     height: 100%;
@@ -560,6 +565,93 @@
     .WallPage__presentation__content {
         width: 65%;
     }   
+
+    .wallpage__questions__title {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow: hidden;
+        width: 100%;
+        background: #d1d1c2;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .wallpage__question__space {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #363635;
+        width: 120px;
+    }
+
+    .wallpage__question__icon {
+        font-size: 58px;
+        color: #DDDDCD;
+    }
+
+    .wallpage__questions__wrapper {
+        display: grid;
+        grid-template-rows: auto;
+        grid-column-gap: 5px;
+        grid-row-gap: 5px;
+    }
+
+    .wallpage__question {
+        margin:0;
+        overflow-wrap: break-word;
+        background: #DDDDCD;
+        color: #3f3f3f;
+        border-radius: 5px;
+        padding:30px 30px 20px 20px;
+        font-weight: 700;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wallpage__question__number__wrapper {
+        width: 0; 
+        height: 0; 
+        border-left: 40px solid transparent;
+        border-bottom: 40px solid transparent;
+        border-top: 40px solid #363635;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    
+    .wallpage__question__number {
+        color: #DDDDCD;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 16px;
+    }
+
+    /* GRID 3 */
+    .wallpage__questions__wrapper__3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* GRID 4 */
+    .wallpage__questions__wrapper__4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* GRID 5 */
+    .wallpage__questions__wrapper__5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
 
     .participation__wrapper {
         flex-direction: row;

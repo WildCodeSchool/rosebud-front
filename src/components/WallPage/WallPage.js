@@ -160,53 +160,70 @@ function WallPage({ showModal, modalState, isSubmited }) {
           </div>
         )}
         {!isLoading(loader) && (
-          participants.length > 0 ? (participants.map((participant) => (
-            participant.isApproved ? (
-              <div className="participation__wrapper" key={participant.id}>
-                <div className="participationInfos">
-                  <p className="participationInfos__firstname">
-                    {participant.firstName}
+          <>
+            <div className="wallpage__questions__title">
+              <div className="wallpage__question__space">
+                <i className="fa fa-eye wallpage__question__icon" />
+              </div>
+              <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
+                {questions.map((question, index) => (
+                  <p className="wallpage__question">
+                    <div className="wallpage__question__number__wrapper" />
+                    <div className="wallpage__question__number">{index + 1}</div>
+                    {question.title}
                   </p>
-                  <p className="participationInfos__lastname">
-                    {participant.lastName}
-                  </p>
-                  <p className="participationInfos__age">
-                    {`${participant.age} ans`}
-                  </p>
-                  <p className="participationInfos__city">
-                    {participant.city}
-                  </p>
-                </div>
-                <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
-                  {participant.Answers
-                    .map((answer, index) => answer.ParticipantId === participant.id && (
-                    <img
-                      key={answer.id}
-                      className={`wallpage__random__image wallpage__image__${index + 1}--${participant.Answers.length}`}
-                      src={answer.image_url}
-                      alt="answer path"
-                    />
-                    ))}
-                  <div className="participationAnswers__button__wrapper">
-                    <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
-                      <i className="participationAnswers__button__icon fa fa-eye" />
-                    </button>
+                ))}
+              </div>
+            </div>
+            {participants.length > 0 ? (participants.map((participant) => (
+              participant.isApproved ? (
+                <div className="participation__wrapper" key={participant.id}>
+                  <div className="participationInfos">
+                    <p className="participationInfos__firstname">
+                      {participant.firstName}
+                    </p>
+                    <p className="participationInfos__lastname">
+                      {participant.lastName}
+                    </p>
+                    <p className="participationInfos__age">
+                      {`${participant.age} ans`}
+                    </p>
+                    <p className="participationInfos__city">
+                      {participant.city}
+                    </p>
+                  </div>
+                  <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
+                    {participant.Answers
+                      .map((answer, index) => answer.ParticipantId === participant.id && (
+                        <img
+                          key={answer.id}
+                          className={`wallpage__random__image wallpage__image__${index + 1}--${participant.Answers.length}`}
+                          src={answer.image_url}
+                          alt="answer path"
+                        />
+                      ))}
+                    <div className="participationAnswers__button__wrapper">
+                      <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
+                        <i className="participationAnswers__button__icon fa fa-eye" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="WallPage__notFound">
+                  <i className="fa fa-question-circle-o notFound__icon" />
+                  <p>Aucune participation trouvée.</p>
+                </div>
+              )
+            ))
             ) : (
               <div className="WallPage__notFound">
                 <i className="fa fa-question-circle-o notFound__icon" />
                 <p>Aucune participation trouvée.</p>
               </div>
-            )
-          ))
-          ) : (
-            <div className="WallPage__notFound">
-              <i className="fa fa-question-circle-o notFound__icon" />
-              <p>Aucune participation trouvée.</p>
-            </div>
-          ))}
+            )}
+          </>
+        )}
       </div>
 
       {participants.map((participant) => participant.id === participantId && (
