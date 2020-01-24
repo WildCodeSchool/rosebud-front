@@ -589,11 +589,17 @@
         align-items: center;
         color: #363635;
         width: 120px;
+        position: relative;
     }
 
     .wallpage__question__icon {
-        font-size: 58px;
-        color: #DDDDCD;
+        width: 0; 
+        height: 0; 
+        border-top: 60px solid transparent;
+        border-bottom: 60px solid transparent;
+        border-left: 60px solid #DDDDCD;
+        position: absolute;
+        left: -10px;
     }
 
     .wallpage__questions__wrapper {
