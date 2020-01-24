@@ -435,14 +435,15 @@
     .participant__presentation {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     .participant__presentation__title {
-        width: 35%;
+        width: 40%;
     }
 
     .participant__presentation__content {
-        width: 65%;
+        width: 60%;
     }
 
     .participant__wrapper__form {
@@ -463,6 +464,14 @@
 /* DEVICE DESKTOP */
 
 @media screen and (min-width: 1024px) {
+    .participant__presentation__title {
+        width: 35%;
+    }
+
+    .participant__presentation__content {
+        width: 65%;
+    }
+
     .choice__answer {
         min-width: auto;
     }

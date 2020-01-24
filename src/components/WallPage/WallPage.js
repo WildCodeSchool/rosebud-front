@@ -182,7 +182,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     .map((answer, index) => answer.ParticipantId === participant.id && (
                     <img
                       key={answer.id}
-                      className={`random__image image__${index + 1}--${participant.Answers.length}`}
+                      className={`wallpage__random__image wallpage__image__${index + 1}--${participant.Answers.length}`}
                       src={answer.image_url}
                       alt="answer path"
                     />

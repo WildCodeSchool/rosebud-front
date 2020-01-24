@@ -172,7 +172,7 @@
     grid-column-gap: 5px;
     grid-row-gap: 5px;
 }
-.random__image {
+.wallpage__random__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -182,63 +182,63 @@
 
 /* GRID 3 */
 
-.image__1--3 {
+.wallpage__image__1--3 {
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.image__2--3 {
+.wallpage__image__2--3 {
     grid-column-start: 3;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.image__3--3 {
+.wallpage__image__3--3 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 /* GRID 4 */
 
-.image__1--4 {
+.wallpage__image__1--4 {
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.image__2--4 {
+.wallpage__image__2--4 {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 1;
 }
 
-.image__3--4 {
+.wallpage__image__3--4 {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 3;
 }
-.image__4--4 {
+.wallpage__image__4--4 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 /* GRID 5 */
 
-.image__1--5 {
+.wallpage__image__1--5 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.image__3--5 {
+.wallpage__image__3--5 {
     grid-row-start: 2;
     grid-row-end: 4;
 }
 
-.image__4--5 {
+.wallpage__image__4--5 {
     grid-column-start: 2;
     grid-column-end: 4;
 }
@@ -512,17 +512,15 @@
     .WallPage__presentation {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     .WallPage__presentation__title {
-        width: 35%;
+        width: 40%;
     }
 
     .WallPage__presentation__content {
-        width: 65%;
-    }
-
-    .WallPage__filter {
+        width: 60%;
     }
 
     .WallPage__filter__icon--action {
@@ -552,4 +550,43 @@
         width: 33.33%;
     }
 
+}
+
+@media screen and (min-width: 768px) { 
+    .WallPage__presentation__title {
+        width: 35%;
+    }
+
+    .WallPage__presentation__content {
+        width: 65%;
+    }   
+
+    .participation__wrapper {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    .participationInfos {
+        width: 120px;
+    }
+
+    .participationAnswers {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .wallpage__random__image {
+        cursor: pointer;
+        margin:10px;
+        display: flex;
+        align-items: center;
+        max-height: 200px;
+        position: relative;
+        flex: 1;
+        border-radius: 5px;
+    }
 }
