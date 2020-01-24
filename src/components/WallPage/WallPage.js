@@ -177,7 +177,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     {participant.city}
                   </p>
                 </div>
-                <div className="participationAnswers">
+                <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
                   {participant.Answers
                     .map((answer, index) => answer.ParticipantId === participant.id && (
                     <img
