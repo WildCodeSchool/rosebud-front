@@ -507,3 +507,49 @@
     font-size: 80px;
     margin-bottom: 0;
 }
+
+@media screen and (min-width: 768px) {
+    .WallPage__presentation {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .WallPage__presentation__title {
+        width: 35%;
+    }
+
+    .WallPage__presentation__content {
+        width: 65%;
+    }
+
+    .WallPage__filter {
+    }
+
+    .WallPage__filter__icon--action {
+        display: none;
+    }
+
+    .filters__wrapper {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        flex: 1;
+    }
+
+    .filters__input {
+        height: 50px;
+        line-height: 50px;
+        margin: 0px 5px;
+        flex-direction: row;
+        width: 33.33%;
+    }
+
+    .filters__select {
+        height: 50px;
+        line-height: 50px;
+        margin: 0 0 0 5px;
+        width: 33.33%;
+    }
+
+}

@@ -249,39 +249,42 @@ function ParticipationForm({ onClickSubmit }) {
                       ))}
                     </div>
                   )}
-                  <div className="comment__wrapper">
-                    <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                      <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
-                      <p className="comment__length">
-                        {comment.length}
-                        /400
-                      </p>
-                    </label>
-                    <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
-                    <div className="pagination pagination--steps">
-                      <div className="buttons__wrapper">
-                        <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
-                          <i className="button__steps__icon fa fa-caret-left" />
-                        </button>
-                        <p className="pagination__details">
-                          Question
-                          {index + 1}
-                          /
-                          {questions.length}
+                  <div className="answer__wrapper">
+                    <div className="comment__wrapper">
+                      <label className="comment__answer" htmlFor={`answerComment${index}`}>
+                        <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                        <p className="comment__length">
+                          {comment.length}
+                          /400
                         </p>
-                        {step < questions.length
-                            && (
-                            <button disabled={!questionValidate && 'disabled'} className="button__steps" type="button" onClick={() => changeStep(1)}>
-                              <i className="button__steps__icon fa fa-caret-right" />
-                            </button>
-                            )}
-                        {step === questions.length
-                            && (
-                              <button checkvalidation="true" className="submit__button" type="submit">
-                                <i className="submit__button__icon fa fa-check" />
+                      </label>
+                      <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
+                    </div>
+                  </div>
+                  <div className="pagination pagination--steps">
+                    <div className="buttons__wrapper">
+                      <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
+                        <i className="button__steps__icon fa fa-caret-left" />
+                      </button>
+                      <p className="pagination__details">
+                            Question
+                        {' '}
+                        {index + 1}
+                            /
+                        {questions.length}
+                      </p>
+                      {step < questions.length
+                              && (
+                              <button disabled={!questionValidate && 'disabled'} className="button__steps" type="button" onClick={() => changeStep(1)}>
+                                <i className="button__steps__icon fa fa-caret-right" />
                               </button>
-                            )}
-                      </div>
+                              )}
+                      {step === questions.length
+                              && (
+                                <button checkvalidation="true" className="submit__button" type="submit">
+                                  <i className="submit__button__icon fa fa-check" />
+                                </button>
+                              )}
                     </div>
                   </div>
                 </div>
