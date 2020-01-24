@@ -557,7 +557,7 @@
 
 }
 
-@media screen and (min-width: 768px) { 
+@media screen and (min-width: 1024px) { 
     .WallPage__presentation__title {
         width: 35%;
     }
@@ -593,13 +593,8 @@
     }
 
     .wallpage__question__icon {
-        width: 0; 
-        height: 0; 
-        border-top: 60px solid transparent;
-        border-bottom: 60px solid transparent;
-        border-left: 60px solid #DDDDCD;
-        position: absolute;
-        left: -10px;
+        color: #DDDDCD;
+        font-size: 58px;
     }
 
     .wallpage__questions__wrapper {

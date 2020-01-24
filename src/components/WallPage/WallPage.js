@@ -163,7 +163,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
           <>
             <div className="wallpage__questions__title">
               <div className="wallpage__question__space">
-                <div className="wallpage__question__icon" />
+                <i className="fa fa-comments wallpage__question__icon" />
               </div>
               <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
                 {questions.map((question, index) => (
