@@ -602,6 +602,7 @@
         grid-template-rows: auto;
         grid-column-gap: 5px;
         grid-row-gap: 5px;
+        width: 100%;
     }
 
     .wallpage__question {
@@ -643,16 +644,19 @@
     /* GRID 3 */
     .wallpage__questions__wrapper__3 {
         grid-template-columns: repeat(3, 1fr);
+        width: 100%;
     }
 
     /* GRID 4 */
     .wallpage__questions__wrapper__4 {
         grid-template-columns: repeat(4, 1fr);
+        width: 100%;
     }
 
     /* GRID 5 */
     .wallpage__questions__wrapper__5 {
         grid-template-columns: repeat(5, 1fr);
+        width: 100%;
     }
 
     .participation__wrapper {
