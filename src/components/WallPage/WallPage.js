@@ -93,10 +93,12 @@ function WallPage({ showModal, modalState, isSubmited }) {
         <div className="WallPage__presentation">
           <h2 className="WallPage__presentation__title">
             {questionnaires[0].title}
-            <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
-              <i className="WallPage__presentation__button__icon fa fa-plus-square" />
-              <p className="WallPage__presentation__button__content">Participer</p>
-            </Link>
+            {questions.length > 0 && (
+              <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
+                <i className="WallPage__presentation__button__icon fa fa-plus-square" />
+                <p className="WallPage__presentation__button__content">Participer</p>
+              </Link>
+            )}
           </h2>
           <p className="WallPage__presentation__content">
             {questionnaires[0].presentationText}
