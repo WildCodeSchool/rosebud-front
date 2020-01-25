@@ -161,6 +161,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
         )}
         {!isLoading(loader) && (
           <>
+            {questions.length > 0 && (
             <div className="wallpage__questions__title">
               <div className="wallpage__question__space">
                 <i className="fa fa-comments wallpage__question__icon" />
@@ -175,6 +176,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                 ))}
               </div>
             </div>
+            )}
             {participants.length > 0 ? (participants.map((participant) => (
               participant.isApproved ? (
                 <div className="participation__wrapper" key={participant.id}>
