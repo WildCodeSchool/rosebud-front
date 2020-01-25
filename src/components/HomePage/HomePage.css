@@ -508,7 +508,7 @@
     
     .search__sections {
         display: flex;
-        border-top: 20px solid #dc554f;
+        border-top: 0px solid #dc554f;
     }
 
     .home__search {
