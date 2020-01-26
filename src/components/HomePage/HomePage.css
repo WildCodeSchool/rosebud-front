@@ -508,7 +508,6 @@
     
     .search__sections {
         display: flex;
-        border-top: 0px solid #dc554f;
     }
 
     .home__search {
@@ -553,7 +552,7 @@
     }
     
     .about__us__title {
-        border-radius: 5px;
+        padding-bottom: 10px;
     }
 
     .logo__ciclic__wrapper {

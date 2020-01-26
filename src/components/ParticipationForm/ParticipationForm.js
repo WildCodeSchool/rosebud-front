@@ -91,23 +91,25 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-    if (e.target.files[0].size < sizeAuthorized * 1000000) {
-      if (e.target.files[0].type === 'image/jpeg'
-        || e.target.files[0].type === 'image/png'
-        || e.target.files[0].type === 'image/gif') {
-        setFileTooBig(false);
-        setFileWrongType(false);
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onloadend = () => {
-          const base64data = reader.result;
-          SetImagePreview(base64data);
-        };
+    if (e.target.files.length > 0) {
+      if (e.target.files[0].size < sizeAuthorized * 1000000) {
+        if (e.target.files[0].type === 'image/jpeg'
+          || e.target.files[0].type === 'image/png'
+          || e.target.files[0].type === 'image/gif') {
+          setFileTooBig(false);
+          setFileWrongType(false);
+          const reader = new FileReader();
+          reader.readAsDataURL(e.target.files[0]);
+          reader.onloadend = () => {
+            const base64data = reader.result;
+            SetImagePreview(base64data);
+          };
+        } else {
+          setFileWrongType(true);
+        }
       } else {
-        setFileWrongType(true);
+        setFileTooBig(true);
       }
-    } else {
-      setFileTooBig(true);
     }
   };
 

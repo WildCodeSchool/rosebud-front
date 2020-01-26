@@ -170,11 +170,11 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
               <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
                 {questions.map((question, index) => (
-                  <p className="wallpage__question">
+                  <div className="wallpage__question">
                     <div className="wallpage__question__number__wrapper" />
                     <div className="wallpage__question__number">{index + 1}</div>
                     {question.title}
-                  </p>
+                  </div>
                 ))}
               </div>
             </div>
