@@ -196,13 +196,13 @@ function ParticipationForm({ onClickSubmit }) {
                     <div className="upload__wrapper">
                       <div className="upload__image">
                         <label className="upload__image__button" htmlFor={`answerImage${index}`}>
-                          {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
+                          {!imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
                           <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                         </label>
                       </div>
                       {imagePreview
                     && (
-                    <div className="preview__wrapper">
+                    <div className="preview__wrapper__upload">
                       <img className={!imagePreview[index] ? "image_preview_none" :"image__preview"} src={imagePreview[index]} alt="Preview" />
                     </div>
                     )}
@@ -239,8 +239,8 @@ function ParticipationForm({ onClickSubmit }) {
                   <div className="answer__wrapper">
                     <div className="preview__wrapper">
                       <div className="preview__image">
-                        {(imagePreview || imageSelect) ? (
-                          <img src={(imagePreview || baseURL + imageSelect)} alt="Preview" className="preview__image__content" />
+                        {(imageSelect && !imagePreview) ? (
+                          <img src={(baseURL + imageSelect)} alt="Preview" className="preview__image__content" />
                         ) : (
                           <>
                             <i className="fa fa-camera preview__icon" />
