@@ -242,7 +242,7 @@ function ParticipationForm({ onClickSubmit }) {
                     <div className="preview__wrapper">
                       <div className="preview__image">
                         {(imagePreview || imageSelect) ? (
-                          <img src={baseURL + (imagePreview || imageSelect)} alt="Preview" className="preview__image__content" />
+                          <img src={(imagePreview || baseURL + imageSelect)} alt="Preview" className="preview__image__content" />
                         ) : (
                           <i className="fa fa-camera preview__icon" />
                         )}
