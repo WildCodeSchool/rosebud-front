@@ -84,6 +84,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
     return true;
   };
 
+  const baseURL = process.env.REACT_APP_API_URL || '';
+
   return (
     <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
       {isSubmited && (
@@ -202,7 +204,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                         <img
                           key={answer.id}
                           className={`wallpage__random__image wallpage__image__${index + 1}--${participant.Answers.length}`}
-                          src={answer.image_url}
+                          src={baseURL + answer.image_url}
                           alt="answer path"
                         />
                       ))}
@@ -244,7 +246,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
             <p>{`${participant.firstName} ${participant.lastName}`}</p>
           </div>
           <div className="modal__image__wrapper">
-            <img className="modal__image" src={participant.Answers[modalCount].image_url} alt="answer path" />
+            <img className="modal__image" src={baseURL + participant.Answers[modalCount].image_url} alt="answer path" />
           </div>
           <div className="modal__content__wrapper">
             <p className="modal__comment">{participant.Answers[modalCount].comment}</p>

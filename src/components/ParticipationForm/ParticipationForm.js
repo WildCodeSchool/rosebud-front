@@ -111,6 +111,8 @@ function ParticipationForm({ onClickSubmit }) {
     }
 };
 
+  const baseURL = process.env.REACT_APP_API_URL || '';
+
   return (
     <div className="ParticipationForm">
       <form
@@ -228,7 +230,7 @@ function ParticipationForm({ onClickSubmit }) {
                           <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
                             <div className="choice__check" />
                             <i className="fa fa-check-square choice__check__icon" />
-                            <img className="choice__image" src={image.image_url} alt="choice select" />
+                            <img className="choice__image" src={baseURL + image.image_url} alt="choice select" />
                             <p className="choice__title">
                               <i className="fa fa-caret-right choice__title__icon" />
                               {image.title}
