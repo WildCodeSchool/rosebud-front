@@ -205,7 +205,7 @@ function ParticipationForm({ onClickSubmit }) {
                       {imagePreview
                     && (
                     <div className="preview__wrapper--mobile">
-                      <img className="image__preview" src={baseURL + imagePreview} alt="Preview" />
+                      <img className="image__preview" src={imagePreview} alt="Preview" />
                     </div>
                     )}
                     </div>
