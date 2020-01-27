@@ -76,26 +76,26 @@ function HomePage() {
           <img src={loading} className="loader__image" alt="loader" />
         </div>
       ) : (
-        <div className="random__images__wrapper">
-          {randomImages.map((image, index) => (
-            <img key={image.id} className={`random__image image__${index + 1}`} src={baseURL + image.image_url} alt="random home" />
-          ))}
-          <div className="random__images__button__wrapper">
-            <Link to="/questionnaire/1/participer" className="random__images__button__participate__wrapper">
-              <div className="random__images__button__participate">
-                <i className="random__images__button__icon fa fa-puzzle-piece" />
-                <p className="random__images__button__content">Participer</p>
-              </div>
-            </Link>
-            <Link to="/questionnaire/1" className="random__images__button__consult__wrapper">
-              <div className="random__images__button__consult">
-                <i className="random__images__button__icon fa fa-eye" />
-                <p className="random__images__button__content">Consulter</p>
-              </div>
-            </Link>
+          <div className="random__images__wrapper">
+            {randomImages.map((image, index) => (
+              <img key={image.id} className={`random__image image__${index + 1}`} src={baseURL + image.image_url} alt="random home" />
+            ))}
+            <div className="random__images__button__wrapper">
+              <Link to="/questionnaire/1/participer" className="random__images__button__participate__wrapper">
+                <div className="random__images__button__participate">
+                  <i className="random__images__button__icon fa fa-puzzle-piece" />
+                  <p className="random__images__button__content">Participer</p>
+                </div>
+              </Link>
+              <Link to="/questionnaire/1" className="random__images__button__consult__wrapper">
+                <div className="random__images__button__consult">
+                  <i className="random__images__button__icon fa fa-eye" />
+                  <p className="random__images__button__content">Consulter</p>
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       <section className="home__counters">
         <div className="home__counters__title">
@@ -119,25 +119,14 @@ function HomePage() {
               À propos de Rosebud
             </h2>
             <p className="about__us__content">
-              Rosebud est un jeu créé par des étudiants de la
-              {' '}
-              <strong>Wild Code School</strong>
-              {' '}
-              de Tours pour l&apos;agence Ciclic Centre-Val de Loire
-              {' '}
-              et sa plateforme pédagogique
-              {' '}
-              <strong>Upopi</strong>
-              .
+              {`En${' '}quelques${' '}questions,${' '}`}
+              <strong>{`Rosebud ${' '}`}</strong>
+              {`permet${' '}de${' '}mieux${' '}connaître${' '}les${' '}spectateur·rice·s${' '}d’aujourd’hui,${' '}en leur${' '}permettant${' '}d’évoquer${' '}des${' '}souvenirs${' '}et${' '}des${' '}émotions${' '}de${' '}cinéma${' '}et${' '}de${' '}séries,${' '}autant${' '}que${' '}de${' '}partager${' '}des${' '}images${' '}qui${' '}les${' '}ont${' '}marqué·e·s.`}
               <br />
               <br />
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste deleniti harum, iure incidunt corporis velit id commodi debitis doloribus corrupti dolor tenetur suscipit ipsa. Facilis ipsa nulla asperiores a fuga!Non harum et quia odit assumenda, quasi, quis blanditiis, consequatur minus dolorem atque impedit sint quo! Odio quis et nemo debitis ut facere, in, asperiores minus cupiditate fuga quibusdam quae.
-              <br />
-              <br />
-              <strong>Iste deleniti harum, iure incidunt corporis velit.</strong>
-              <div className="logo__ciclic__wrapper">
-                <img src={logoCiclic} alt="Logo Ciclic" className="logo__ciclic" />
-              </div>
+              {`Rosebud${' '}est${' '}un${' '}jeu${' '}créé${' '}par${' '}des${' '}étudiants${' '}de${' '}la${' '}`}
+              <strong>{`Wild${' '}Code${' '}School`}</strong>
+              {`${' '}de${' '}Tours${' '}pour${' '}l'agence${' '}Ciclic${' '}Centre-Val${' '}de${' '}Loire${' '}et${' '}sa${' '}plateforme${' '}pédagogique${' '}Upopi.`}
             </p>
           </div>
         </section>
@@ -181,24 +170,24 @@ function HomePage() {
                 ))}
               </div>
               {(questionnairesCounter > limit || offset > 0) && (
-              <div className="search__results__pagination">
-                <div className="button__wrapper__homepage">
-                  <button disabled={prevZero && 'disabled'} className="button__page__prev__homepage" type="button" onClick={() => setOffset(offset - limit)}>
-                    <i className="button__steps__icon fa fa-caret-left" />
-                  </button>
-                  <button disabled={nextZero && 'disabled'} className="button__page__next__homepage" type="button" onClick={() => setOffset(offset + limit)}>
-                    <i className="button__steps__icon fa fa-caret-right" />
-                  </button>
+                <div className="search__results__pagination">
+                  <div className="button__wrapper__homepage">
+                    <button disabled={prevZero && 'disabled'} className="button__page__prev__homepage" type="button" onClick={() => setOffset(offset - limit)}>
+                      <i className="button__steps__icon fa fa-caret-left" />
+                    </button>
+                    <button disabled={nextZero && 'disabled'} className="button__page__next__homepage" type="button" onClick={() => setOffset(offset + limit)}>
+                      <i className="button__steps__icon fa fa-caret-right" />
+                    </button>
+                  </div>
                 </div>
-              </div>
               )}
             </div>
           ) : (
-            <div className="HomePage__notFound">
-              <i className="fa fa-question-circle-o notFound__icon" />
-              <p>Aucun questionnaire trouvé.</p>
-            </div>
-          )}
+              <div className="HomePage__notFound">
+                <i className="fa fa-question-circle-o notFound__icon" />
+                <p>Aucun questionnaire trouvé.</p>
+              </div>
+            )}
         </section>
       </div>
     </div>
