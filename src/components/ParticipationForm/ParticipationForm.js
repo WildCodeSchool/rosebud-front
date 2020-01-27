@@ -244,7 +244,7 @@ function ParticipationForm({ onClickSubmit }) {
                         {(imagePreview || imageSelect) ? (
                           <img src={imagePreview || imageSelect} alt="Preview" className="preview__image__content" />
                         ) : (
-                          <i className="fa fa-camera preview__icon" />
+                          <i className="fa fa-camera-retro preview__icon" />
                         )}
                       </div>
                     </div>
