@@ -91,23 +91,25 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-    if (e.target.files[0].size < sizeAuthorized * 1000000) {
-      if (e.target.files[0].type === 'image/jpeg'
-        || e.target.files[0].type === 'image/png'
-        || e.target.files[0].type === 'image/gif') {
-        setFileTooBig(false);
-        setFileWrongType(false);
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onloadend = () => {
-          const base64data = reader.result;
-          SetImagePreview(base64data);
-        };
+    if (e.target.files.length > 0) {
+      if (e.target.files[0].size < sizeAuthorized * 1000000) {
+        if (e.target.files[0].type === 'image/jpeg'
+          || e.target.files[0].type === 'image/png'
+          || e.target.files[0].type === 'image/gif') {
+          setFileTooBig(false);
+          setFileWrongType(false);
+          const reader = new FileReader();
+          reader.readAsDataURL(e.target.files[0]);
+          reader.onloadend = () => {
+            const base64data = reader.result;
+            SetImagePreview(base64data);
+          };
+        } else {
+          setFileWrongType(true);
+        }
       } else {
-        setFileWrongType(true);
+        setFileTooBig(true);
       }
-    } else {
-      setFileTooBig(true);
     }
   };
 
@@ -210,7 +212,7 @@ function ParticipationForm({ onClickSubmit }) {
                     Veuillez chosir un format d&apos;image de type jpeg, png ou gif svp.
                   </p>
                   {question.uploadFormat ? (
-                    <>
+                    <div className="upload__wrapper">
                       <div className="upload__image">
                         <label className="upload__image__button" htmlFor={`answerImage${index}`}>
                           {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
@@ -223,49 +225,68 @@ function ParticipationForm({ onClickSubmit }) {
                       <img className="image__preview" src={imagePreview} alt="Preview" />
                     </div>
                     )}
-                    </>
+                    </div>
                   ) : (
                     <div className="choice__wrapper">
                       {question.Images.map((image, i) => (
-                        <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
-                          <img className="choice__image" src={image.image_url} alt="choice select" />
-                          <p className="choice__title">{image.title}</p>
-                          <input type="radio" name={`answerImageSelect${index}`} id={`answerImageSelect${index}-${i}`} value={image.image_url} onChange={(e) => setImageSelect(e.target.value)} />
-                        </label>
+                        <>
+                          <input
+                            type="radio"
+                            name={`answerImageSelect${index}`}
+                            id={`answerImageSelect${index}-${i}`}
+                            value={image.image_url}
+                            onChange={(e) => setImageSelect(e.target.value)}
+                            className="choice__input"
+                          />
+                          <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
+                            <div className="choice__check" />
+                            <i className="fa fa-check-square choice__check__icon" />
+                            <img className="choice__image" src={image.image_url} alt="choice select" />
+                            <p className="choice__title">
+                              <i className="fa fa-caret-right choice__title__icon" />
+                              {image.title}
+                            </p>
+                          </label>
+                        </>
                       ))}
                     </div>
                   )}
-                  <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                    <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
-                    <p className="comment__length">
-                      {comment.length}
-                      /400
-                    </p>
-                  </label>
-                  <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
+                  <div className="answer__wrapper">
+                    <div className="comment__wrapper">
+                      <label className="comment__answer" htmlFor={`answerComment${index}`}>
+                        <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                        <p className="comment__length">
+                          {comment.length}
+                          /400
+                        </p>
+                      </label>
+                      <input type="hidden" name={`questionId${index}`} value={`${question.id}`} />
+                    </div>
+                  </div>
                   <div className="pagination pagination--steps">
                     <div className="buttons__wrapper">
                       <button className="button__steps" type="button" onClick={() => changeStep(-1)}>
                         <i className="button__steps__icon fa fa-caret-left" />
                       </button>
                       <p className="pagination__details">
-                        Question
+                            Question
+                        {' '}
                         {index + 1}
-                        /
+                            /
                         {questions.length}
                       </p>
                       {step < questions.length
-                          && (
-                          <button disabled={!questionValidate && 'disabled'} className="button__steps" type="button" onClick={() => changeStep(1)}>
-                            <i className="button__steps__icon fa fa-caret-right" />
-                          </button>
-                          )}
+                              && (
+                              <button disabled={!questionValidate && 'disabled'} className="button__steps" type="button" onClick={() => changeStep(1)}>
+                                <i className="button__steps__icon fa fa-caret-right" />
+                              </button>
+                              )}
                       {step === questions.length
-                          && (
-                            <button checkvalidation="true" className="submit__button" type="submit">
-                              <i className="submit__button__icon fa fa-check" />
-                            </button>
-                          )}
+                              && (
+                                <button checkvalidation="true" className="submit__button" type="submit">
+                                  <i className="submit__button__icon fa fa-check" />
+                                </button>
+                              )}
                     </div>
                   </div>
                 </div>
