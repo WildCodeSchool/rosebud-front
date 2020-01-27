@@ -328,6 +328,9 @@
     border-radius: 5px;
     border: 0;
     background: #DDDDCD;
+    border:10px solid #d1d1c2;
+    height: 280px;
+    box-sizing: border-box;
     outline:0;
 }
 
@@ -485,7 +488,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 270px;
+        height: 280px;
         width: 100%;
         border-radius: 5px;
         background: #d1d1c2;
