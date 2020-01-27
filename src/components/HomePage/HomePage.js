@@ -67,8 +67,6 @@ function HomePage() {
     return str;
   };
 
-  const baseURL = process.env.REACT_APP_API_URL || '';
-
   return (
     <div className="HomePage">
       {loader ? (
@@ -78,7 +76,7 @@ function HomePage() {
       ) : (
         <div className="random__images__wrapper">
           {randomImages.map((image, index) => (
-            <img key={image.id} className={`random__image image__${index + 1}`} src={baseURL + image.image_url} alt="random home" />
+            <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url} alt="random home" />
           ))}
           <div className="random__images__button__wrapper">
             <Link to="/questionnaire/1/participer" className="random__images__button__participate__wrapper">
