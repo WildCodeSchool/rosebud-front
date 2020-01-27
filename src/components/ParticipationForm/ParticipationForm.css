@@ -509,6 +509,10 @@
         font-size: 120px;
     }
 
+    .preview__text {
+        color: #747474;
+    }
+
     .comment__wrapper {
         width: 65%;
     }
