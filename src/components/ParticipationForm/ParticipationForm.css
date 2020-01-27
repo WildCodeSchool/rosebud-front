@@ -194,6 +194,10 @@
     border-radius: 5px;
 }
 
+.image_preview_none {
+    display: none;
+}
+
 .FileSizeIsBad {
     display: block;
     background-color: black;

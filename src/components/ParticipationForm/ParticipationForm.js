@@ -10,7 +10,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreview] = useLocalStorage(`image ${step}`, '');
+  const [imagePreview, SetImagePreview] = useState([]);
   const [imageSelect, setImageSelect] = useLocalStorage(`image select ${step}`, '');
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
@@ -26,11 +26,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionValidate, setQuestionValidate] = useState(false);
 
   // Check size and type of image
-  const [fileTooBig, setFileTooBig] = useState(false);
   const [fileWrongType, setFileWrongType] = useState(false);
-
-  // Config
-  const sizeAuthorized = 5;
 
 
   useEffect(() => {
@@ -91,27 +87,29 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-    if (e.target.files.length > 0) {
-      if (e.target.files[0].size < sizeAuthorized * 1000000) {
-        if (e.target.files[0].type === 'image/jpeg'
-          || e.target.files[0].type === 'image/png'
-          || e.target.files[0].type === 'image/gif') {
-          setFileTooBig(false);
-          setFileWrongType(false);
-          const reader = new FileReader();
-          reader.readAsDataURL(e.target.files[0]);
-          reader.onloadend = () => {
-            const base64data = reader.result;
-            SetImagePreview(base64data);
-          };
+    if (e.target.files[0].type === 'image/jpeg'
+      || e.target.files[0].type === 'image/png'
+      || e.target.files[0].type === 'image/gif'
+       ) {
+      setFileWrongType(false);
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = (e) => {
+        if(imagePreview[step - 1] === undefined) {
+          console.log('dans le if')
+          SetImagePreview(imagePreview => [...imagePreview, e.target.result]);
         } else {
-          setFileWrongType(true);
+          console.log('dans le else')
+          let newArray = [...imagePreview];
+          newArray[step - 1] = e.target.result;
+          SetImagePreview(newArray) 
         }
-      } else {
-        setFileTooBig(true);
-      }
+        console.log(imagePreview)
+      };
+    } else {
+      console.log('pas de fichier seleciontté')
     }
-  };
+};
 
   return (
     <div className="ParticipationForm">
@@ -192,17 +190,6 @@ function ParticipationForm({ onClickSubmit }) {
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
-                  <p className={fileTooBig ? 'FileSizeIsBad' : 'FileSizeIsGood'}>
-                    {' '}
-                    OUPSS...
-                    {' '}
-                    <br />
-                    {' '}
-                    Veuillez chosir une image de taille inferieur à
-                    {' '}
-                    {sizeAuthorized}
-                    Mo svp.
-                  </p>
                   <p className={fileWrongType ? 'FileTypeIsBad' : 'FileTypeIsGood'}>
                     {' '}
                     OUPSS...
@@ -222,7 +209,7 @@ function ParticipationForm({ onClickSubmit }) {
                       {imagePreview
                     && (
                     <div className="preview__wrapper">
-                      <img className="image__preview" src={imagePreview} alt="Preview" />
+                      <img className={!imagePreview[index] ? "image_preview_none" :"image__preview"} src={imagePreview[index]} alt="Preview" />
                     </div>
                     )}
                     </div>
