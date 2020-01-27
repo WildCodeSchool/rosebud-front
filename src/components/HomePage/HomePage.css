@@ -558,7 +558,7 @@
     .logo__ciclic__wrapper {
         display: none;
         justify-content: flex-start;
-        margin-top: 20px;
+        margin-top: 30px;
         opacity: 0.8;
     }
     
@@ -566,6 +566,7 @@
         width: 100px;
         height: auto;
     }
+
     .random__images__button__participate__wrapper:hover {
         background-color:#363635 ;
         transition-duration: 0.3s;

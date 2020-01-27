@@ -5,7 +5,7 @@ import api from '../../api';
 import useMetrics from '../../hooks/useMetrics';
 import useRandomImages from '../../hooks/useRandomImages';
 import loading from './loading/loader150px.gif';
-import logoCiclic from './images/logo_ciclic.png';
+import logoCiclic from './images/logo-ciclic.png';
 
 const limit = 2;
 
@@ -76,27 +76,26 @@ function HomePage() {
           <img src={loading} className="loader__image" alt="loader" />
         </div>
       ) : (
-          <div className="random__images__wrapper">
-            {randomImages.map((image, index) => (
-              <img key={image.id} className={`random__image image__${index + 1}`} src={baseURL + image.image_url} alt="random home" />
-            ))}
-            <div className="random__images__button__wrapper">
-              <Link to="/questionnaire/1/participer" className="random__images__button__participate__wrapper">
-                <div className="random__images__button__participate">
-                  <i className="random__images__button__icon fa fa-puzzle-piece" />
-                  <p className="random__images__button__content">Participer</p>
-                </div>
-              </Link>
-              <Link to="/questionnaire/1" className="random__images__button__consult__wrapper">
-                <div className="random__images__button__consult">
-                  <i className="random__images__button__icon fa fa-eye" />
-                  <p className="random__images__button__content">Consulter</p>
-                </div>
-              </Link>
-            </div>
+        <div className="random__images__wrapper">
+          {randomImages.map((image, index) => (
+            <img key={image.id} className={`random__image image__${index + 1}`} src={baseURL + image.image_url} alt="random home" />
+          ))}
+          <div className="random__images__button__wrapper">
+            <Link to="/questionnaire/1/participer" className="random__images__button__participate__wrapper">
+              <div className="random__images__button__participate">
+                <i className="random__images__button__icon fa fa-puzzle-piece" />
+                <p className="random__images__button__content">Participer</p>
+              </div>
+            </Link>
+            <Link to="/questionnaire/1" className="random__images__button__consult__wrapper">
+              <div className="random__images__button__consult">
+                <i className="random__images__button__icon fa fa-eye" />
+                <p className="random__images__button__content">Consulter</p>
+              </div>
+            </Link>
           </div>
-        )}
-
+        </div>
+      )}
       <section className="home__counters">
         <div className="home__counters__title">
           {questionnairesCounter}
@@ -127,6 +126,9 @@ function HomePage() {
               {`Rosebud${' '}est${' '}un${' '}jeu${' '}créé${' '}par${' '}des${' '}étudiants${' '}de${' '}la${' '}`}
               <strong>{`Wild${' '}Code${' '}School`}</strong>
               {`${' '}de${' '}Tours${' '}pour${' '}l'agence${' '}Ciclic${' '}Centre-Val${' '}de${' '}Loire${' '}et${' '}sa${' '}plateforme${' '}pédagogique${' '}Upopi.`}
+              <div className="logo__ciclic__wrapper">
+                <img src={logoCiclic} alt="logo ciclic" className="logo__ciclic" />
+              </div>
             </p>
           </div>
         </section>
@@ -183,11 +185,11 @@ function HomePage() {
               )}
             </div>
           ) : (
-              <div className="HomePage__notFound">
-                <i className="fa fa-question-circle-o notFound__icon" />
-                <p>Aucun questionnaire trouvé.</p>
-              </div>
-            )}
+            <div className="HomePage__notFound">
+              <i className="fa fa-question-circle-o notFound__icon" />
+              <p>Aucun questionnaire trouvé.</p>
+            </div>
+          )}
         </section>
       </div>
     </div>
