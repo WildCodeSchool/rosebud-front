@@ -194,25 +194,6 @@ function ParticipationForm({ onClickSubmit }) {
               {questions.map((question, index) => (
                 <div className={`question ${step === index + 1 ? 'step--show' : 'step--hide'}`} key={question.id}>
                   <h2 className="question__title">{question.title}</h2>
-                  <p className={fileTooBig ? 'FileSizeIsBad' : 'FileSizeIsGood'}>
-                    {' '}
-                    OUPSS...
-                    {' '}
-                    <br />
-                    {' '}
-                    Veuillez chosir une image de taille inferieur à
-                    {' '}
-                    {sizeAuthorized}
-                    Mo svp.
-                  </p>
-                  <p className={fileWrongType ? 'FileTypeIsBad' : 'FileTypeIsGood'}>
-                    {' '}
-                    OUPSS...
-                    {' '}
-                    <br />
-                    {' '}
-                    Veuillez chosir un format d&apos;image de type jpeg, png ou gif svp.
-                  </p>
                   {question.uploadFormat ? (
                     <div className="upload__wrapper">
                       <div className="upload__image">
@@ -223,7 +204,7 @@ function ParticipationForm({ onClickSubmit }) {
                       </div>
                       {imagePreview
                     && (
-                    <div className="preview__wrapper">
+                    <div className="preview__wrapper--mobile">
                       <img className="image__preview" src={imagePreview} alt="Preview" />
                     </div>
                     )}
@@ -253,7 +234,20 @@ function ParticipationForm({ onClickSubmit }) {
                       ))}
                     </div>
                   )}
+                  <h2 className="participant__handing">
+                    <i className="fa fa-caret-down participant__handing__icon" aria-hidden="true" />
+                    Ma réponse
+                  </h2>
                   <div className="answer__wrapper">
+                    <div className="preview__wrapper">
+                      <div className="preview__image">
+                        {(imagePreview || imageSelect) ? (
+                          <img src={imagePreview || imageSelect} alt="Preview" className="preview__image__content" />
+                        ) : (
+                          <i className="fa fa-camera preview__icon" />
+                        )}
+                      </div>
+                    </div>
                     <div className="comment__wrapper">
                       <label className="comment__answer" htmlFor={`answerComment${index}`}>
                         <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
