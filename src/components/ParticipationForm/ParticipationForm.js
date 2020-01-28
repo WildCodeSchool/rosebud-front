@@ -46,7 +46,8 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFormValidate(false);
     }
-    if (imagePreview[step - 1] !== '' && comment !== '') {
+
+    if ((imagePreview[step - 1] && imagePreview[step - 1] !== '') && comment !== '') {
       setQuestionValidate(true);
     } else {
       setQuestionValidate(false);
