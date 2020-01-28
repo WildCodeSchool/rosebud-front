@@ -46,7 +46,7 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFormValidate(false);
     }
-
+    
     if ((imagePreview[step - 1] && imagePreview[step - 1] !== '') && comment !== '') {
       setQuestionValidate(true);
     } else {
@@ -298,7 +298,7 @@ function ParticipationForm({ onClickSubmit }) {
                               )}
                       {step === questions.length
                               && (
-                                <button checkvalidation="true" className="submit__button" type="submit">
+                                <button disabled={!questionValidate && 'disabled'} checkvalidation="true" className="submit__button" type="submit">
                                   <i className="submit__button__icon fa fa-check" />
                                 </button>
                               )}

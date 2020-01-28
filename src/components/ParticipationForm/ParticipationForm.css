@@ -376,6 +376,11 @@
     cursor: pointer;
 }
 
+.submit__button:disabled {
+    opacity: 0.6;
+    cursor:not-allowed;
+}
+
 .submit__button__icon {
     color: #DDDDCD;
 }
