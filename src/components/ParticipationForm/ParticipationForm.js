@@ -188,7 +188,7 @@ function ParticipationForm({ onClickSubmit }) {
                         />
                       </label>
                       <div className="pagination pagination--firststep">
-                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
+                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="submit" onClick={() => changeStep(1)}>Participer*</button>
                       </div>
                     </div>
                   </div>

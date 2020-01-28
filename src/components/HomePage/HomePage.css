@@ -293,6 +293,7 @@
     text-decoration: none;
     color: #363635;
     cursor: pointer;
+    transition: all .2s ease-in-out;
 }
 
 .search__results__item:last-child {
@@ -589,4 +590,8 @@
         transition-duration: 0.3s;
     }
 
+    /* HOVER EFFECT BUTTON */
+     .search__results__item:hover {
+        background-color: #CFCFC7;
+     }
 }

@@ -48,3 +48,6 @@
     padding: 0 20px 20px 20px;
     font-weight: 700;
 }
+.Footer__list__item:hover {
+    transform: scale(1.1);
+}
