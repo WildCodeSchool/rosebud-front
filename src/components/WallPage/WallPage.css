@@ -172,6 +172,45 @@
     font-size: 16px;
 }
 
+    /* FLIP CARD */
+    
+    .flip-card {
+        background-color: transparent;
+        width: auto;
+        height: auto;
+        perspective: 0px; /* Remove this if you don't want the 3D effect */
+      }
+      
+    .flip-card-inner {
+        width: auto;
+        height: 100%;
+        position: relative;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(0deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: relative;
+        width: auto;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+    
+    .flip-card-back {
+        display: none;
+        background-color: #DDDDCD;
+        border: 20px solid #DDDDCD;
+        color: #363635;
+        margin:0;
+        font-size: 14px;
+        border-radius: 5px;
+        transform: rotateY(180deg);
+    }
+
 /* participationAnswers */
 
 .participationAnswers {
@@ -185,6 +224,7 @@
 .wallpage__random__image {
     width: 100%;
     height: 100%;
+    display: flex;
     object-fit: cover;
     filter: grayscale(60%);
     border-radius: 5px;
@@ -192,63 +232,63 @@
 
 /* GRID 3 */
 
-.wallpage__image__1--3 {
+.flip-card__1--3 {
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.wallpage__image__2--3 {
+.flip-card__2--3 {
     grid-column-start: 3;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.wallpage__image__3--3 {
+.flip-card__3--3 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 /* GRID 4 */
 
-.wallpage__image__1--4 {
+.flip-card__1--4 {
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.wallpage__image__2--4 {
+.flip-card__2--4 {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 1;
 }
 
-.wallpage__image__3--4 {
+.flip-card__3--4 {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 3;
 }
-.wallpage__image__4--4 {
+.flip-card__4--4 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 /* GRID 5 */
 
-.wallpage__image__1--5 {
+.flip-card__1--5 {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.wallpage__image__3--5 {
+.flip-card__3--5 {
     grid-row-start: 2;
     grid-row-end: 4;
 }
 
-.wallpage__image__4--5 {
+.flip-card__4--5 {
     grid-column-start: 2;
     grid-column-end: 4;
 }
@@ -565,7 +605,7 @@
     .participationInfos {
         width: 160px;
     }
-
+    
     /* GRID 3 IMAGES */
     .participationAnswers__3 {
         grid-template-columns: repeat(4, 1fr);
@@ -586,21 +626,21 @@
 
     /* GRID 3 IMAGES */
 
-    .wallpage__image__1--3 {
+    .flip-card__1--3 {
         grid-column-start: 1;
         grid-column-end: 1;
         grid-row-start: 1;
         grid-row-end: 1;
     }
 
-    .wallpage__image__2--3 {
+    .flip-card__2--3 {
         grid-column-start: 2;
         grid-column-end: 2;
         grid-row-start: 1;
         grid-row-end: 1;
     }
 
-    .wallpage__image__3--3 {
+    .flip-card__3--3 {
         grid-column-start: 3;
         grid-column-end: 3;
         grid-row-start: 1;
@@ -609,7 +649,7 @@
 
     /* GRID 4 IMAGES */
 
-    .wallpage__image__4--4 {
+    .flip-card__4--4 {
         grid-column-start: 4;
         grid-column-end: 4;
         grid-row-start: 1;
@@ -618,35 +658,35 @@
 
     /* GRID 5 IMAGES */
 
-    .wallpage__image__1--5 {
+    .flip-card__1--5 {
         grid-column-start: 1;
         grid-column-end: 1;
         grid-row-start: 1;
         grid-row-end: 3;
     }
 
-    .wallpage__image__2--5 {
+    .flip-card__2--5 {
         grid-column-start: 2;
         grid-column-end: 4;
         grid-row-start: 1;
         grid-row-end: 1;
     }
 
-    .wallpage__image__3--5 {
+    .flip-card__3--5 {
         grid-column-start: 2;
         grid-column-end: 2;
         grid-row-start: 2;
         grid-row-end: 3;
     }
 
-    .wallpage__image__4--5 {
+    .flip-card__4--5 {
         grid-column-start: 3;
         grid-column-end: 5;
         grid-row-start: 2;
         grid-row-end: 2;
     }
 
-    .wallpage__image__5--5 {
+    .flip-card__5--5 {
         grid-column-start: 4;
         grid-column-end: 6;
         grid-row-start: 1;
@@ -773,7 +813,50 @@
         min-width: 120px;
         max-width: 120px;
     }
+
+    /* FLIP CARD */
+
+    .participationAnswers__3 {
+        width: 100%;
+    }
+
+    .flip-card {
+        background-color: transparent;
+        width: 100%;
+        height: auto;
+        perspective: 1000px; /* Remove this if you don't want the 3D effect */
+      }
+      
+    .flip-card-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
     
+    .flip-card-back {
+        display: flex;
+        background-color: #DDDDCD;
+        border: 20px solid #DDDDCD;
+        color: #363635;
+        margin:0;
+        font-size: 14px;
+        border-radius: 5px;
+        transform: rotateY(180deg);
+    }
+
     /* GRID 3 IMAGES */
 
     .participationAnswers__3 {
@@ -781,21 +864,21 @@
         grid-template-rows: 180px;
     }
 
-    .wallpage__image__1--3 {
+    .flip-card__1--3 {
         grid-column-start: 1;
         grid-column-end: 1;
         grid-row-start: 1;
         grid-row-end: 1;
     }
     
-    .wallpage__image__2--3 {
+    .flip-card__2--3 {
         grid-column-start: 2;
         grid-column-end: 2;
         grid-row-start: 1;
         grid-row-end: 1;
     }
     
-    .wallpage__image__3--3 {
+    .flip-card__3--3 {
         grid-column-start: 3;
         grid-column-end: 3;
         grid-row-start: 1;
@@ -809,28 +892,28 @@
         grid-template-rows: 180px;
     }
 
-    .wallpage__image__1--4 {
+    .flip-card__1--4 {
         grid-column-start: 1;
         grid-column-end: 1;
         grid-row-start: 1;
         grid-row-end: 1;
     }
     
-    .wallpage__image__2--4 {
+    .flip-card__2--4 {
         grid-column-start: 2;
         grid-column-end: 2;
         grid-row-start: 1;
         grid-row-end: 1;
     }
     
-    .wallpage__image__3--4 {
+    .flip-card__3--4 {
         grid-column-start: 3;
         grid-column-end: 3;
         grid-row-start: 1;
         grid-row-end: 1;
     }
 
-    .wallpage__image__4--4 {
+    .flip-card__4--4 {
         grid-column-start: 4;
         grid-column-end: 4;
         grid-row-start: 1;
@@ -844,35 +927,35 @@
         grid-template-rows: 180px;
     }
 
-    .wallpage__image__1--5 {
+    .flip-card__1--5 {
         grid-column-start: 1;
         grid-column-end: 1;
         grid-row-start: 1;
         grid-row-end: 1;
     }
     
-    .wallpage__image__2--5 {
+    .flip-card__2--5 {
         grid-column-start: 2;
         grid-column-end: 2;
         grid-row-start: 1;
         grid-row-end: 1;
     }
     
-    .wallpage__image__3--5 {
+    .flip-card__3--5 {
         grid-column-start: 3;
         grid-column-end: 3;
         grid-row-start: 1;
         grid-row-end: 1;
     }
 
-    .wallpage__image__4--5 {
+    .flip-card__4--5 {
         grid-column-start: 4;
         grid-column-end: 4;
         grid-row-start: 1;
         grid-row-end: 1;
     }
 
-    .wallpage__image__5--5 {
+    .flip-card__5--5 {
         grid-column-start: 5;
         grid-column-end: 5;
         grid-row-start: 1;
