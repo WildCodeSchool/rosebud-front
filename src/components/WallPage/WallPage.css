@@ -813,6 +813,7 @@
         background-color: transparent;
         width: 100%;
         height: auto;
+        border-radius: 5px;
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
       }
       
@@ -823,6 +824,7 @@
         background-color: #DDDDCD;
         transition: transform 0.8s;
         transform-style: preserve-3d;
+        border-radius: 5px;
     }
 
     .flip-card:hover .flip-card-inner {
@@ -835,6 +837,8 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
+        border: 1px solid #DDDDCD;
+        border-radius: 5px;
     }
     
     .flip-card-back {
