@@ -188,7 +188,7 @@ function ParticipationForm({ onClickSubmit }) {
                         />
                       </label>
                       <div className="pagination pagination--firststep">
-                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="submit" onClick={() => changeStep(1)}>Participer*</button>
+                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
                       </div>
                     </div>
                   </div>
@@ -256,7 +256,7 @@ function ParticipationForm({ onClickSubmit }) {
                     <div className="preview__wrapper">
                       <div className="preview__image">
                         {imagePreview[index] ? (
-                          <img src={imagePreview[index]} alt="Preview" className="preview__image__content" />
+                          <img src={baseURL + imagePreview[index]} alt="Preview" className="preview__image__content" />
                         ) : (
                           <>
                             <i className="fa fa-camera preview__icon" />
@@ -267,7 +267,7 @@ function ParticipationForm({ onClickSubmit }) {
                     </div>
                     <div className="comment__wrapper">
                       <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                        <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                        <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire..." />
                         <p className="comment__length">
                           {comment.length}
                           /400
