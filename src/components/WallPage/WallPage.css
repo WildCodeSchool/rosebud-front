@@ -175,7 +175,6 @@
     /* FLIP CARD */
     
     .flip-card {
-        background-color: transparent;
         width: auto;
         height: auto;
         perspective: 0px; /* Remove this if you don't want the 3D effect */
@@ -185,8 +184,6 @@
         width: auto;
         height: 100%;
         position: relative;
-        transition: transform 0.8s;
-        transform-style: preserve-3d;
     }
 
     .flip-card:hover .flip-card-inner {
@@ -197,18 +194,10 @@
         position: relative;
         width: auto;
         height: 100%;
-        backface-visibility: hidden;
     }
     
     .flip-card-back {
         display: none;
-        background-color: #DDDDCD;
-        border: 20px solid #DDDDCD;
-        color: #363635;
-        margin:0;
-        font-size: 14px;
-        border-radius: 5px;
-        transform: rotateY(180deg);
     }
 
 /* participationAnswers */
@@ -831,6 +820,7 @@
         width: 100%;
         height: 100%;
         position: relative;
+        background-color: #DDDDCD;
         transition: transform 0.8s;
         transform-style: preserve-3d;
     }
@@ -841,6 +831,7 @@
 
     .flip-card-front, .flip-card-back {
         position: absolute;
+        background-color: #DDDDCD;
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
@@ -849,12 +840,14 @@
     .flip-card-back {
         display: flex;
         background-color: #DDDDCD;
-        border: 20px solid #DDDDCD;
         color: #363635;
         margin:0;
-        font-size: 14px;
+        border: 20px solid #DDDDCD;
+        position: relative;
+        font-size: 15px;
         border-radius: 5px;
         transform: rotateY(180deg);
+        overflow-y: scroll;
     }
 
     /* GRID 3 IMAGES */
