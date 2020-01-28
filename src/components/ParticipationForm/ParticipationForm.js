@@ -215,6 +215,13 @@ function ParticipationForm({ onClickSubmit }) {
                         )}
                         <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                       </div>
+                      {imagePreview[index] && (
+                      <div className="preview__wrapper--mobile">
+                        <div className="preview__image">
+                          <img src={imagePreview[index]} alt="Preview" className="preview__image__content" />
+                        </div>
+                      </div>
+                      )}
                     </div>
                   ) : (
                     <div className="choice__wrapper">

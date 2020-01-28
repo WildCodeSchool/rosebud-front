@@ -201,12 +201,31 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
                     {participant.Answers
                       .map((answer, index) => answer.ParticipantId === participant.id && (
+<<<<<<< HEAD
                         <img
                           key={answer.id}
                           className={`wallpage__random__image wallpage__image__${index + 1}--${participant.Answers.length}`}
                           src={baseURL + answer.image_url}
                           alt="answer path"
                         />
+=======
+                        <div className={`flip-card flip-card__${index + 1}--${participant.Answers.length}`}>
+                          <div className="flip-card-inner">
+                            <div className="flip-card-front">
+                              <img
+                                key={answer.id}
+                                className="wallpage__random__image"
+                                src={baseURL + answer.image_url}
+                                alt="answer path"
+                              />
+                            </div>
+                            <p className="flip-card-back">
+                              <i className="fa fa-quote-left answer__quote__left" />
+                              {answer.comment}
+                            </p>
+                          </div>
+                        </div>
+>>>>>>> dev
                       ))}
                     <div className="participationAnswers__button__wrapper">
                       <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>

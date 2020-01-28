@@ -190,7 +190,27 @@
     flex-direction: column;
     align-items: center;
     background: #d1d1c2;
-    padding:20px;
+    padding:0px;
+}
+
+.preview__image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 280px;
+    width: 100%;
+    border-radius: 5px;
+    background: #d1d1c2;
+    overflow: hidden;
+    border: 10px solid #DDDDCD;
+    padding: 20px;
+}
+
+.preview__image__content {
+    width: auto;
+    height: 100%;
+    border-radius: 5px;
 }
 
 .choice__wrapper {
@@ -458,6 +478,7 @@
         width: 100%;
         border-radius: 5px;
         background: #d1d1c2;
+        padding: 0;
         overflow: hidden;
         border: 10px solid #DDDDCD;
     }
