@@ -231,7 +231,7 @@ function ParticipationForm({ onClickSubmit }) {
                             type="radio"
                             name={`answerImageSelect${index}`}
                             id={`answerImageSelect${index}-${i}`}
-                            value={image.image_url}
+                            value={baseURL + image.image_url}
                             onChange={(e) => getImagePreview(e)}
                             className="choice__input"
                           />
@@ -256,7 +256,7 @@ function ParticipationForm({ onClickSubmit }) {
                     <div className="preview__wrapper">
                       <div className="preview__image">
                         {imagePreview[index] ? (
-                          <img src={baseURL + imagePreview[index]} alt="Preview" className="preview__image__content" />
+                          <img src={imagePreview[index]} alt="Preview" className="preview__image__content" />
                         ) : (
                           <>
                             <i className="fa fa-camera preview__icon" />
