@@ -10,8 +10,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreview] = useLocalStorage(`image ${step}`, '');
-  const [imageSelect, setImageSelect] = useLocalStorage(`image select ${step}`, '');
+  const [imagePreview, SetImagePreview] = useState([]);
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -26,11 +25,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionValidate, setQuestionValidate] = useState(false);
 
   // Check size and type of image
-  const [fileTooBig, setFileTooBig] = useState(false);
   const [fileWrongType, setFileWrongType] = useState(false);
-
-  // Config
-  const sizeAuthorized = 5;
 
 
   useEffect(() => {
@@ -51,14 +46,13 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFormValidate(false);
     }
-    if ((imagePreview !== '' || imageSelect !== '') && comment !== '') {
+    if (imagePreview[step - 1] !== '' && comment !== '') {
       setQuestionValidate(true);
     } else {
       setQuestionValidate(false);
     }
   }, [comment,
     imagePreview,
-    imageSelect,
     inputAge,
     inputCity,
     inputEmail,
@@ -91,26 +85,41 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-    if (e.target.files.length > 0) {
-      if (e.target.files[0].size < sizeAuthorized * 1000000) {
+    if (e.target.files) {
+      if (e.target.files.length !== 0) {
         if (e.target.files[0].type === 'image/jpeg'
           || e.target.files[0].type === 'image/png'
-          || e.target.files[0].type === 'image/gif') {
-          setFileTooBig(false);
+          || e.target.files[0].type === 'image/gif'
+        ) {
           setFileWrongType(false);
           const reader = new FileReader();
           reader.readAsDataURL(e.target.files[0]);
-          reader.onloadend = () => {
-            const base64data = reader.result;
-            SetImagePreview(base64data);
+          reader.onloadend = (event) => {
+            if (imagePreview[step - 1] === undefined) {
+              SetImagePreview(() => [...imagePreview, event.target.result]);
+            } else {
+              const newArray = [...imagePreview];
+              newArray[step - 1] = event.target.result;
+              SetImagePreview(newArray);
+            }
           };
         } else {
-          setFileWrongType(true);
+          console.log('Pas de fichier sélectionné');
         }
-      } else {
-        setFileTooBig(true);
       }
+    } else if (imagePreview[step - 1] === undefined) {
+      SetImagePreview(() => [...imagePreview, e.target.value]);
+    } else {
+      const newArray = [...imagePreview];
+      newArray[step - 1] = e.target.value;
+      SetImagePreview(newArray);
     }
+  };
+
+  const deleteImagePreview = () => {
+    const newArray = [...imagePreview];
+    newArray[step - 1] = '';
+    SetImagePreview(newArray);
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -197,17 +206,15 @@ function ParticipationForm({ onClickSubmit }) {
                   {question.uploadFormat ? (
                     <div className="upload__wrapper">
                       <div className="upload__image">
-                        <label className="upload__image__button" htmlFor={`answerImage${index}`}>
-                          {imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                          <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
-                        </label>
+                        {!imagePreview[index] ? (
+                          <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                            {'Ajouter une image'}
+                          </label>
+                        ) : (
+                          <button type="button" className="upload__image__button" onClick={deleteImagePreview}>Supprimer l'image</button>
+                        )}
+                        <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                       </div>
-                      {imagePreview
-                    && (
-                    <div className="preview__wrapper--mobile">
-                      <img className="image__preview" src={imagePreview} alt="Preview" />
-                    </div>
-                    )}
                     </div>
                   ) : (
                     <div className="choice__wrapper">
@@ -218,7 +225,7 @@ function ParticipationForm({ onClickSubmit }) {
                             name={`answerImageSelect${index}`}
                             id={`answerImageSelect${index}-${i}`}
                             value={image.image_url}
-                            onChange={(e) => setImageSelect(e.target.value)}
+                            onChange={(e) => getImagePreview(e)}
                             className="choice__input"
                           />
                           <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
@@ -241,8 +248,8 @@ function ParticipationForm({ onClickSubmit }) {
                   <div className="answer__wrapper">
                     <div className="preview__wrapper">
                       <div className="preview__image">
-                        {(imagePreview || imageSelect) ? (
-                          <img src={(imagePreview || baseURL + imageSelect)} alt="Preview" className="preview__image__content" />
+                        {imagePreview[index] ? (
+                          <img src={imagePreview[index]} alt="Preview" className="preview__image__content" />
                         ) : (
                           <>
                             <i className="fa fa-camera preview__icon" />
