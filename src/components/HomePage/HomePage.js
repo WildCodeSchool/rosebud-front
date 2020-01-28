@@ -55,7 +55,7 @@ function HomePage() {
   const textTruncate = (str, length, ending) => {
     let lengthText = length;
     if (lengthText !== null) {
-      lengthText = 80;
+      lengthText = 120;
     }
     let endingText = ending;
     if (endingText !== null) {
