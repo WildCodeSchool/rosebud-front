@@ -11,7 +11,6 @@ function ParticipationForm({ onClickSubmit }) {
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
   const [imagePreview, SetImagePreview] = useState([]);
-  const [imageSelect, setImageSelect] = useLocalStorage(`image select ${step}`, '');
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -47,14 +46,13 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFormValidate(false);
     }
-    if ((imagePreview !== '' || imageSelect !== '') && comment !== '') {
+    if (imagePreview[step - 1] !== '' && comment !== '') {
       setQuestionValidate(true);
     } else {
       setQuestionValidate(false);
     }
   }, [comment,
     imagePreview,
-    imageSelect,
     inputAge,
     inputCity,
     inputEmail,
@@ -87,28 +85,41 @@ function ParticipationForm({ onClickSubmit }) {
   };
 
   const getImagePreview = (e) => {
-    if (e.target.files[0].type === 'image/jpeg'
-      || e.target.files[0].type === 'image/png'
-      || e.target.files[0].type === 'image/gif'
-    ) {
-      setFileWrongType(false);
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onloadend = (e) => {
-        if (imagePreview[step - 1] === undefined) {
-          console.log('dans le if');
-          SetImagePreview((imagePreview) => [...imagePreview, e.target.result]);
+    if (e.target.files) {
+      if (e.target.files.length !== 0) {
+        if (e.target.files[0].type === 'image/jpeg'
+          || e.target.files[0].type === 'image/png'
+          || e.target.files[0].type === 'image/gif'
+        ) {
+          setFileWrongType(false);
+          const reader = new FileReader();
+          reader.readAsDataURL(e.target.files[0]);
+          reader.onloadend = (event) => {
+            if (imagePreview[step - 1] === undefined) {
+              SetImagePreview(() => [...imagePreview, event.target.result]);
+            } else {
+              const newArray = [...imagePreview];
+              newArray[step - 1] = event.target.result;
+              SetImagePreview(newArray);
+            }
+          };
         } else {
-          console.log('dans le else');
-          const newArray = [...imagePreview];
-          newArray[step - 1] = e.target.result;
-          SetImagePreview(newArray);
+          console.log('Pas de fichier sélectionné');
         }
-        console.log(imagePreview);
-      };
+      }
+    } else if (imagePreview[step - 1] === undefined) {
+      SetImagePreview(() => [...imagePreview, e.target.value]);
     } else {
-      console.log('pas de fichier seleciontté');
+      const newArray = [...imagePreview];
+      newArray[step - 1] = e.target.value;
+      SetImagePreview(newArray);
     }
+  };
+
+  const deleteImagePreview = () => {
+    const newArray = [...imagePreview];
+    newArray[step - 1] = '';
+    SetImagePreview(newArray);
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -195,10 +206,14 @@ function ParticipationForm({ onClickSubmit }) {
                   {question.uploadFormat ? (
                     <div className="upload__wrapper">
                       <div className="upload__image">
-                        <label className="upload__image__button" htmlFor={`answerImage${index}`}>
-                          {!imagePreview ? 'Modifier l\'image' : 'Choisir une image'}
-                          <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
-                        </label>
+                        {!imagePreview[index] ? (
+                          <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                            {'Ajouter une image'}
+                          </label>
+                        ) : (
+                          <button type="button" className="upload__image__button" onClick={deleteImagePreview}>Supprimer l'image</button>
+                        )}
+                        <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                       </div>
                     </div>
                   ) : (
@@ -210,7 +225,7 @@ function ParticipationForm({ onClickSubmit }) {
                             name={`answerImageSelect${index}`}
                             id={`answerImageSelect${index}-${i}`}
                             value={image.image_url}
-                            onChange={(e) => setImageSelect(e.target.value)}
+                            onChange={(e) => getImagePreview(e)}
                             className="choice__input"
                           />
                           <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
@@ -233,8 +248,8 @@ function ParticipationForm({ onClickSubmit }) {
                   <div className="answer__wrapper">
                     <div className="preview__wrapper">
                       <div className="preview__image">
-                        {(imageSelect || imagePreview[index]) ? (
-                          <img src={(imageSelect || imagePreview[index])} alt="Preview" className="preview__image__content" />
+                        {imagePreview[index] ? (
+                          <img src={imagePreview[index]} alt="Preview" className="preview__image__content" />
                         ) : (
                           <>
                             <i className="fa fa-camera preview__icon" />
