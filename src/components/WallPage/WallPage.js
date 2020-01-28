@@ -212,6 +212,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                               />
                             </div>
                             <p className="flip-card-back">
+                              <i className="fa fa-quote-left answer__quote__left" />
                               {answer.comment}
                             </p>
                           </div>
