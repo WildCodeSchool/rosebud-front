@@ -10,7 +10,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreview] = useState([]);
+  const [imagePreview, setImagePreview] = useState([]);
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -96,11 +96,11 @@ function ParticipationForm({ onClickSubmit }) {
           reader.readAsDataURL(e.target.files[0]);
           reader.onloadend = (event) => {
             if (imagePreview[step - 1] === undefined) {
-              SetImagePreview(() => [...imagePreview, event.target.result]);
+              setImagePreview(() => [...imagePreview, event.target.result]);
             } else {
               const newArray = [...imagePreview];
               newArray[step - 1] = event.target.result;
-              SetImagePreview(newArray);
+              setImagePreview(newArray);
             }
           };
         } else {
@@ -108,18 +108,19 @@ function ParticipationForm({ onClickSubmit }) {
         }
       }
     } else if (imagePreview[step - 1] === undefined) {
-      SetImagePreview(() => [...imagePreview, e.target.value]);
+      const newImagePreviewSelect = e.target.value;
+      setImagePreview(() => [...imagePreview, newImagePreviewSelect]);
     } else {
       const newArray = [...imagePreview];
       newArray[step - 1] = e.target.value;
-      SetImagePreview(newArray);
+      setImagePreview(newArray);
     }
   };
 
   const deleteImagePreview = () => {
     const newArray = [...imagePreview];
     newArray[step - 1] = '';
-    SetImagePreview(newArray);
+    setImagePreview(newArray);
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -232,7 +233,7 @@ function ParticipationForm({ onClickSubmit }) {
                             name={`answerImageSelect${index}`}
                             id={`answerImageSelect${index}-${i}`}
                             value={baseURL + image.image_url}
-                            onChange={(e) => getImagePreview(e)}
+                            onChange={getImagePreview}
                             className="choice__input"
                           />
                           <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
