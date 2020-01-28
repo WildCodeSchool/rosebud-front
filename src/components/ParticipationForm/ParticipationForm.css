@@ -193,45 +193,6 @@
     padding:20px;
 }
 
-.image__preview {
-    width: 100%;
-    border-radius: 5px;
-}
-
-.image_preview_none {
-    display: none;
-}
-
-.FileSizeIsBad {
-    display: block;
-    background-color: black;
-    font-size: 15px;
-    color: #F05D58;
-    font-weight: 700;
-    line-height: 1.5;
-    text-align: center;
-    padding: 8px;
-}
-
-.FileSizeIsGood{
-    display: none;
-}
-
-.FileTypeIsBad {
-    display: block;
-    background-color: black;
-    font-size: 15px;
-    color: #F05D58;
-    font-weight: 700;
-    line-height: 1.5;
-    text-align: center;
-    padding: 8px;
-}
-
-.FileTypeIsGood{
-    display: none;
-}
-
 .choice__wrapper {
     display: flex;
     flex-direction: row;
@@ -249,6 +210,7 @@
     margin:10px;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex: 1;
     min-width: 300px;
     background: #363635;

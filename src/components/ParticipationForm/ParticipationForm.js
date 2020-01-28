@@ -90,26 +90,26 @@ function ParticipationForm({ onClickSubmit }) {
     if (e.target.files[0].type === 'image/jpeg'
       || e.target.files[0].type === 'image/png'
       || e.target.files[0].type === 'image/gif'
-       ) {
+    ) {
       setFileWrongType(false);
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = (e) => {
-        if(imagePreview[step - 1] === undefined) {
-          console.log('dans le if')
-          SetImagePreview(imagePreview => [...imagePreview, e.target.result]);
+        if (imagePreview[step - 1] === undefined) {
+          console.log('dans le if');
+          SetImagePreview((imagePreview) => [...imagePreview, e.target.result]);
         } else {
-          console.log('dans le else')
-          let newArray = [...imagePreview];
+          console.log('dans le else');
+          const newArray = [...imagePreview];
           newArray[step - 1] = e.target.result;
-          SetImagePreview(newArray) 
+          SetImagePreview(newArray);
         }
-        console.log(imagePreview)
+        console.log(imagePreview);
       };
     } else {
-      console.log('pas de fichier seleciontté')
+      console.log('pas de fichier seleciontté');
     }
-};
+  };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
 
@@ -200,12 +200,6 @@ function ParticipationForm({ onClickSubmit }) {
                           <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                         </label>
                       </div>
-                      {imagePreview
-                    && (
-                    <div className="preview__wrapper__upload">
-                      <img className={!imagePreview[index] ? "image_preview_none" :"image__preview"} src={imagePreview[index]} alt="Preview" />
-                    </div>
-                    )}
                     </div>
                   ) : (
                     <div className="choice__wrapper">
@@ -239,8 +233,8 @@ function ParticipationForm({ onClickSubmit }) {
                   <div className="answer__wrapper">
                     <div className="preview__wrapper">
                       <div className="preview__image">
-                        {(imageSelect && !imagePreview) ? (
-                          <img src={(baseURL + imageSelect)} alt="Preview" className="preview__image__content" />
+                        {(imageSelect || imagePreview[index]) ? (
+                          <img src={(imageSelect || imagePreview[index])} alt="Preview" className="preview__image__content" />
                         ) : (
                           <>
                             <i className="fa fa-camera preview__icon" />
