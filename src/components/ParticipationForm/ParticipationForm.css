@@ -177,6 +177,11 @@
     cursor: pointer;
 }
 
+.upload__button__icon {
+    margin-right: 15px;
+    color: #DDDDCD;
+}
+
 .form__input__file {
     display: none;
 }

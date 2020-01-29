@@ -24,10 +24,6 @@ function ParticipationForm({ onClickSubmit }) {
   // Question
   const [questionValidate, setQuestionValidate] = useState(false);
 
-  // Check size and type of image
-  const [fileWrongType, setFileWrongType] = useState(false);
-
-
   useEffect(() => {
     const fetchQuestions = async () => {
       const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/questions`);
@@ -67,7 +63,6 @@ function ParticipationForm({ onClickSubmit }) {
     e.preventDefault();
     const data = new FormData(e.target);
     api.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
-    console.log(...data);
     onClickSubmit(questionnaireId);
     localStorage.clear();
   };
@@ -92,7 +87,6 @@ function ParticipationForm({ onClickSubmit }) {
           || e.target.files[0].type === 'image/png'
           || e.target.files[0].type === 'image/gif'
         ) {
-          setFileWrongType(false);
           const reader = new FileReader();
           reader.readAsDataURL(e.target.files[0]);
           reader.onloadend = (event) => {
@@ -210,10 +204,14 @@ function ParticipationForm({ onClickSubmit }) {
                       <div className="upload__image">
                         {!imagePreview[index] ? (
                           <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                            <i className="upload__button__icon fa fa-plus-square" />
                             {'Ajouter une image'}
                           </label>
                         ) : (
-                          <button type="button" className="upload__image__button" onClick={deleteImagePreview}>Supprimer l'image</button>
+                          <button type="button" className="upload__image__button" onClick={deleteImagePreview}>
+                            <i className="upload__button__icon fa fa-trash-o" />
+                            {'Supprimer l\'image'}
+                          </button>
                         )}
                         <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                       </div>
