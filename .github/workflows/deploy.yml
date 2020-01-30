@@ -13,7 +13,7 @@ jobs:
       - name: Deploy
         run: |
           npm install
-          REACT_APP_API_URL=http://api.rosebud.website npm run build
+          REACT_APP_API_URL=//api.rosebud.website npm run build
           sshpass -p ${{secrets.SSH_PASS}} \
           rsync -e "ssh -o StrictHostKeyChecking=no" \
           -av --delete ./build/ \
