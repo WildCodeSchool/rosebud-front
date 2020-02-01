@@ -1,16 +1,17 @@
 import React from 'react';
 import api from '../api';
 
-const useRandomImages = (limit) => {
+const useRandomImages = (limit, QuestionnaireId) => {
   const [images, setImages] = React.useState([]);
 
   React.useEffect(() => {
     const fetchImages = async () => {
-      const result = await api.get(`/api/v1/questionnaires/answers?limit=${limit}`);
+      const result = await api
+        .get(`/api/v1/questionnaires/answers/questionnaire/${QuestionnaireId}?limit=${limit}`);
       setImages(result.data);
     };
     fetchImages();
-  }, [limit]);
+  }, [QuestionnaireId, limit]);
 
   return images;
 };
