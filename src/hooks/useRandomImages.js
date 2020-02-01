@@ -6,7 +6,7 @@ const useRandomImages = (limit, QuestionnaireId) => {
 
   React.useEffect(() => {
     const fetchImages = async () => {
-      const result = await api.get(`/api/v1/questionnaires/${QuestionnaireId}/answers?limit=${limit}`);
+      const result = await api.get(`/api/v1/questionnaires/${QuestionnaireId}?limit=${limit}`);
       setImages(result.data);
     };
     fetchImages();
