@@ -207,7 +207,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                               <img
                                 key={answer.id}
                                 className="wallpage__random__image"
-                                src={baseURL + answer.image_url}
+                                src={answer.image_url.includes(baseURL) ? answer.image_url : baseURL + answer.image_url}
                                 alt="answer path"
                               />
                             </div>

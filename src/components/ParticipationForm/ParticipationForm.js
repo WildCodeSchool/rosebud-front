@@ -10,7 +10,7 @@ function ParticipationForm({ onClickSubmit }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [step, setStep] = useState(0);
-  const [imagePreview, SetImagePreview] = useState([]);
+  const [imagePreview, setImagePreview] = useState([]);
   const [comment, setComment] = useLocalStorage(`comment ${step}`, '');
   const { questionnaireId } = useParams();
   // Form
@@ -23,10 +23,6 @@ function ParticipationForm({ onClickSubmit }) {
   const [formValidate, setFormValidate] = useState(false);
   // Question
   const [questionValidate, setQuestionValidate] = useState(false);
-
-  // Check size and type of image
-  const [fileWrongType, setFileWrongType] = useState(false);
-
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -46,7 +42,8 @@ function ParticipationForm({ onClickSubmit }) {
     } else {
       setFormValidate(false);
     }
-    if (imagePreview[step - 1] !== '' && comment !== '') {
+
+    if ((imagePreview[step - 1] && imagePreview[step - 1] !== '') && comment !== '') {
       setQuestionValidate(true);
     } else {
       setQuestionValidate(false);
@@ -66,7 +63,6 @@ function ParticipationForm({ onClickSubmit }) {
     e.preventDefault();
     const data = new FormData(e.target);
     api.post(`/api/v1/questionnaires/${questionnaireId}/participations`, data);
-    console.log(...data);
     onClickSubmit(questionnaireId);
     localStorage.clear();
   };
@@ -91,16 +87,15 @@ function ParticipationForm({ onClickSubmit }) {
           || e.target.files[0].type === 'image/png'
           || e.target.files[0].type === 'image/gif'
         ) {
-          setFileWrongType(false);
           const reader = new FileReader();
           reader.readAsDataURL(e.target.files[0]);
           reader.onloadend = (event) => {
             if (imagePreview[step - 1] === undefined) {
-              SetImagePreview(() => [...imagePreview, event.target.result]);
+              setImagePreview(() => [...imagePreview, event.target.result]);
             } else {
               const newArray = [...imagePreview];
               newArray[step - 1] = event.target.result;
-              SetImagePreview(newArray);
+              setImagePreview(newArray);
             }
           };
         } else {
@@ -108,18 +103,19 @@ function ParticipationForm({ onClickSubmit }) {
         }
       }
     } else if (imagePreview[step - 1] === undefined) {
-      SetImagePreview(() => [...imagePreview, e.target.value]);
+      const newImagePreviewSelect = e.target.value;
+      setImagePreview(() => [...imagePreview, newImagePreviewSelect]);
     } else {
       const newArray = [...imagePreview];
       newArray[step - 1] = e.target.value;
-      SetImagePreview(newArray);
+      setImagePreview(newArray);
     }
   };
 
   const deleteImagePreview = () => {
     const newArray = [...imagePreview];
     newArray[step - 1] = '';
-    SetImagePreview(newArray);
+    setImagePreview(newArray);
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -188,7 +184,7 @@ function ParticipationForm({ onClickSubmit }) {
                         />
                       </label>
                       <div className="pagination pagination--firststep">
-                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="submit" onClick={() => changeStep(1)}>Participer*</button>
+                        <button disabled={!formValidate && 'disabled'} className="participant__button" type="button" onClick={() => changeStep(1)}>Participer*</button>
                       </div>
                     </div>
                   </div>
@@ -208,10 +204,14 @@ function ParticipationForm({ onClickSubmit }) {
                       <div className="upload__image">
                         {!imagePreview[index] ? (
                           <label className="upload__image__button" htmlFor={`answerImage${index}`}>
+                            <i className="upload__button__icon fa fa-plus-square" />
                             {'Ajouter une image'}
                           </label>
                         ) : (
-                          <button type="button" className="upload__image__button" onClick={deleteImagePreview}>Supprimer l'image</button>
+                          <button type="button" className="upload__image__button" onClick={deleteImagePreview}>
+                            <i className="upload__button__icon fa fa-trash-o" />
+                            {'Supprimer l\'image'}
+                          </button>
                         )}
                         <input accept="image/*" required="required" className="form__input__file" name={`answerImage${index}`} id={`answerImage${index}`} type="file" onChange={getImagePreview} />
                       </div>
@@ -231,8 +231,8 @@ function ParticipationForm({ onClickSubmit }) {
                             type="radio"
                             name={`answerImageSelect${index}`}
                             id={`answerImageSelect${index}-${i}`}
-                            value={image.image_url}
-                            onChange={(e) => getImagePreview(e)}
+                            value={baseURL + image.image_url}
+                            onChange={getImagePreview}
                             className="choice__input"
                           />
                           <label htmlFor={`answerImageSelect${index}-${i}`} className="choice__answer" key={image.id}>
@@ -267,7 +267,7 @@ function ParticipationForm({ onClickSubmit }) {
                     </div>
                     <div className="comment__wrapper">
                       <label className="comment__answer" htmlFor={`answerComment${index}`}>
-                        <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire.." />
+                        <textarea onChange={(e) => setComment(e.target.value)} maxLength="400" required="required" className="textarea__answer" name={`answerComment${index}`} rows="10" placeholder="Commentaire..." />
                         <p className="comment__length">
                           {comment.length}
                           /400
@@ -296,7 +296,7 @@ function ParticipationForm({ onClickSubmit }) {
                               )}
                       {step === questions.length
                               && (
-                                <button checkvalidation="true" className="submit__button" type="submit">
+                                <button disabled={!questionValidate && 'disabled'} checkvalidation="true" className="submit__button" type="submit">
                                   <i className="submit__button__icon fa fa-check" />
                                 </button>
                               )}

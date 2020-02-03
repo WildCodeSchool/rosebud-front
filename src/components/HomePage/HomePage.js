@@ -8,6 +8,7 @@ import loading from './loading/loader150px.gif';
 import logoCiclic from './images/logo-ciclic.png';
 
 const limit = 2;
+const defaultQuestionnaireId = 1;
 
 function HomePage() {
   const [linkToParticipate, setLinkToParticipate] = useState(false);
@@ -17,7 +18,7 @@ function HomePage() {
   const questionnairesCounter = useMetrics('questionnaires');
   const participantsCounter = useMetrics('participants');
   const answersCounter = useMetrics('answers');
-  const randomImages = useRandomImages(11);
+  const randomImages = useRandomImages(11, defaultQuestionnaireId);
   // Loader
   const [loader, setLoader] = useState(true);
   // prèc, next questionnaire
@@ -55,7 +56,7 @@ function HomePage() {
   const textTruncate = (str, length, ending) => {
     let lengthText = length;
     if (lengthText !== null) {
-      lengthText = 80;
+      lengthText = 120;
     }
     let endingText = ending;
     if (endingText !== null) {
@@ -78,16 +79,16 @@ function HomePage() {
       ) : (
         <div className="random__images__wrapper">
           {randomImages.map((image, index) => (
-            <img key={image.id} className={`random__image image__${index + 1}`} src={baseURL + image.image_url} alt="random home" />
+            <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url.includes(baseURL) ? image.image_url : baseURL + image.image_url} alt="random home" />
           ))}
           <div className="random__images__button__wrapper">
-            <Link to="/questionnaire/1/participer" className="random__images__button__participate__wrapper">
+            <Link to={`/questionnaire/${defaultQuestionnaireId}/participer`} className="random__images__button__participate__wrapper">
               <div className="random__images__button__participate">
                 <i className="random__images__button__icon fa fa-puzzle-piece" />
                 <p className="random__images__button__content">Participer</p>
               </div>
             </Link>
-            <Link to="/questionnaire/1" className="random__images__button__consult__wrapper">
+            <Link to={`/questionnaire/${defaultQuestionnaireId}`} className="random__images__button__consult__wrapper">
               <div className="random__images__button__consult">
                 <i className="random__images__button__icon fa fa-eye" />
                 <p className="random__images__button__content">Consulter</p>

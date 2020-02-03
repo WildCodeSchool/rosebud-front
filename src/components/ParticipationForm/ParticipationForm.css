@@ -177,6 +177,11 @@
     cursor: pointer;
 }
 
+.upload__button__icon {
+    margin-right: 13px;
+    color: #DDDDCD;
+}
+
 .form__input__file {
     display: none;
 }
@@ -376,6 +381,11 @@
     cursor: pointer;
 }
 
+.submit__button:disabled {
+    opacity: 0.6;
+    cursor:not-allowed;
+}
+
 .submit__button__icon {
     color: #DDDDCD;
 }
@@ -498,6 +508,8 @@
 
     .preview__text {
         color: #747474;
+        padding: 0 20px;
+        text-align: center;
     }
 
     .comment__wrapper {
