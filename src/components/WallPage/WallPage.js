@@ -14,6 +14,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [questions, setQuestions] = useState([]);
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
+  const [participantsCounter, setParticipantsCounter] = useState(0);
   const [loader, setLoader] = useState(true);
   // REQ PARAMS
   const { questionnaireId } = useParams();
@@ -24,45 +25,42 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [nameFilter, setNameFilter] = useState(null);
   // Pagination
   const [offset, setOffset] = useState(0);
-  const [prevZero, setPrevZero] = useState(false);
-  const [nextZero, setNextZero] = useState(false);
-  const [participantsCount, setParticipantsCount] = useState(0);
 
   useEffect(() => {
     const fetchParticipations = async () => {
       const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
-      setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
-      setParticipants(result.data.participants);
+      setQuestionnaires(result.data.questionnaires);
+      if (participants.length === 0) {
+        setParticipants(result.data.participants);
+      }
       setTimeout(() => {
         setLoader(false);
       }, 1800);
+
+      window.onscroll = () => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+          if (participants.length !== participantsCounter) {
+            setOffset(offset + limit);
+            setParticipants(participants.concat(result.data.participants));
+          }
+        }
+      };
     };
     fetchParticipations();
 
-    const fetchParticipantsCount = async () => {
+    const fetchParticipantsCounter = async () => {
       const result = await api.get(`/api/v1/metrics/participants/${questionnaireId}`);
-      setParticipantsCount(result.data);
+      setParticipantsCounter(result.data);
     };
-    fetchParticipantsCount();
-
-    if (offset === 0) {
-      setPrevZero(true);
-    } else {
-      setPrevZero(false);
-    }
-
-    if ((participants.length % limit === 1) || (offset + limit === participantsCount)) {
-      setNextZero(true);
-    } else {
-      setNextZero(false);
-    }
+    fetchParticipantsCounter();
   }, [cityFilter,
     loader,
     nameFilter,
     offset,
+    participants,
     participants.length,
-    participantsCount,
+    participantsCounter,
     questionnaireId,
     questionnaires.length,
     statusFilter]);
@@ -86,10 +84,18 @@ function WallPage({ showModal, modalState, isSubmited }) {
 
   const baseURL = process.env.REACT_APP_API_URL || '';
 
+  const handleScroll = (e) => {
+    const element = e.target;
+    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+      setOffset(offset + limit);
+      setParticipants(participants.concat(participants));
+    }
+  };
+
   return (
     questionnaires.length > 0 && (
       questionnaires[0].isOnline ? (
-        <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
+        <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'} onScroll={(e) => handleScroll(e)}>
           {isSubmited && (
             <p className="Submit__message">Merci pour votre participation !</p>
           )}
@@ -126,7 +132,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   value={nameFilter}
                   onChange={(e) => {
                     setNameFilter(e.target.value);
-                    setOffset(0);
                   }}
                 />
                 <input
@@ -136,7 +141,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   placeholder="Ville"
                   onChange={(e) => {
                     setCityFilter(e.target.value);
-                    setOffset(0);
                   }}
                 />
                 <label className="filters__select" htmlFor="status">
@@ -146,7 +150,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     value={statusFilter}
                     onChange={(e) => {
                       setStatusFilter(e.target.value);
-                      setOffset(0);
                     }}
                   >
                     <option disabled="disabled" value="">Statut</option>
@@ -160,6 +163,22 @@ function WallPage({ showModal, modalState, isSubmited }) {
           </div>
 
           <div className="participation">
+            {questions.length > 0 && (
+              <div className="wallpage__questions__title">
+                <div className="wallpage__question__space">
+                  <i className="fa fa-comments wallpage__question__icon" />
+                </div>
+                <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
+                  {questions.map((question, index) => (
+                    <div className="wallpage__question">
+                      <div className="wallpage__question__number__wrapper" />
+                      <div className="wallpage__question__number">{index + 1}</div>
+                      {question.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {isLoading(loader) && (
               <div className="loader__wrapper__wallpage">
                 <img src={loading} className="loader__image" alt="loader" />
@@ -167,22 +186,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
             )}
             {!isLoading(loader) && (
               <>
-                {questions.length > 0 && (
-                  <div className="wallpage__questions__title">
-                    <div className="wallpage__question__space">
-                      <i className="fa fa-comments wallpage__question__icon" />
-                    </div>
-                    <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
-                      {questions.map((question, index) => (
-                        <div className="wallpage__question">
-                          <div className="wallpage__question__number__wrapper" />
-                          <div className="wallpage__question__number">{index + 1}</div>
-                          {question.title}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
                 {participants.length > 0 ? (participants.map((participant) => (
                   participant.isApproved ? (
                     <div className="participation__wrapper" key={participant.id}>
@@ -286,34 +289,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
             </div>
           ))}
-          {(participantsCount > limit || offset > 0) && (
-            <div className="results__pagination">
-              <div className="button__wrapper__wallpage">
-                <button
-                  disabled={prevZero && 'disabled'}
-                  className="button__page__prev"
-                  type="button"
-                  onClick={() => {
-                    setOffset(offset - limit);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <i className="button__steps__icon fa fa-caret-left" />
-                </button>
-                <button
-                  disabled={nextZero && 'disabled'}
-                  className="button__page__next"
-                  type="button"
-                  onClick={() => {
-                    setOffset(offset + limit);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <i className="button__steps__icon fa fa-caret-right" />
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       ) : (
         <Redirect to="/" />

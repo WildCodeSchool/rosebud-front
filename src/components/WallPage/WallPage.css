@@ -117,6 +117,10 @@
 
 /* participation */
 
+.loader__image {
+    max-width: 80px;
+}
+
 .participation {
     padding:20px;
     background: #DDDDCD;
