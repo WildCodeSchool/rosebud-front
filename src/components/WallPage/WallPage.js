@@ -3,14 +3,16 @@ import './WallPage.css';
 import { Link, useParams } from 'react-router-dom';
 import api from '../../api';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
 import loading from './loading/loader150px.gif';
 
 // Limit per page /!\ ONLY ODD NUMBER /!\
-const limit = 7;
+
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [participants, setParticipants] = useState([]);
+  const [loadMoreParticipants, setLoadMoreParticipants] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
@@ -27,6 +29,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [prevZero, setPrevZero] = useState(false);
   const [nextZero, setNextZero] = useState(false);
   const [participantsCount, setParticipantsCount] = useState(0);
+  const limit = 7;
 
   useEffect(() => {
     const fetchParticipations = async () => {
@@ -34,6 +37,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
       setParticipants(result.data.participants);
+      console.log('longueur', result.data.participants.length)
       setTimeout(() => {
         setLoader(false);
       }, 1800);
@@ -60,9 +64,9 @@ function WallPage({ showModal, modalState, isSubmited }) {
   }, [cityFilter,
     loader,
     nameFilter,
-    offset,
-    participants.length,
-    participantsCount,
+    //offset,
+   //participants.length,
+   participantsCount,
     questionnaireId,
     questionnaires.length,
     statusFilter]);
@@ -82,6 +86,18 @@ function WallPage({ showModal, modalState, isSubmited }) {
       return false;
     }
     return true;
+  };
+
+  const fetchImages = async () => {
+    setOffset(offset + limit)
+    console.log("offset",offset)
+    console.log('limit', limit)
+    await api
+      .get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`)
+      .then(res =>
+        setParticipants( participants.concat(res.data.participants))
+        
+      );
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -157,6 +173,12 @@ function WallPage({ showModal, modalState, isSubmited }) {
         )}
       </div>
 
+      <InfiniteScroll
+          dataLength={participants.length}
+          next={fetchImages}
+          hasMore={true}
+          loader={participants.length < offset ? <h4>Finish...</h4> : <h4>Loading...</h4> }
+      >
       <div className="participation">
         {isLoading(loader) && (
           <div className="loader__wrapper__wallpage">
@@ -172,7 +194,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
               <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
                 {questions.map((question, index) => (
-                  <div className="wallpage__question">
+                  <div key={question.id} className="wallpage__question">
                     <div className="wallpage__question__number__wrapper" />
                     <div className="wallpage__question__number">{index + 1}</div>
                     {question.title}
@@ -181,6 +203,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
             </div>
             )}
+            
             {participants.length > 0 ? (participants.map((participant) => (
               participant.isApproved ? (
                 <div className="participation__wrapper" key={participant.id}>
@@ -201,7 +224,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
                     {participant.Answers
                       .map((answer, index) => answer.ParticipantId === participant.id && (
-                        <div className={`flip-card flip-card__${index + 1}--${participant.Answers.length}`}>
+                        <div key={answer.id} className={`flip-card flip-card__${index + 1}--${participant.Answers.length}`}>
                           <div className="flip-card-inner">
                             <div className="flip-card-front">
                               <img
@@ -231,9 +254,9 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   <p>Aucune participation trouvée.</p>
                 </div>
               )
-            ))
-            ) : (
-              <div className="WallPage__notFound">
+              ))
+              ) : (
+                <div className="WallPage__notFound">
                 <i className="fa fa-question-circle-o notFound__icon" />
                 <p>Aucune participation trouvée.</p>
               </div>
@@ -241,7 +264,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
           </>
         )}
       </div>
-
+      
       {participants.map((participant) => participant.id === participantId && (
       <div className={modalState ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
         <div className="modal__wrapper">
@@ -264,7 +287,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
               <div className="modal__pagination__wrapper__button">
                 {modalCount > 0
                 && (
-                <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount - 1)}>
+                  <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount - 1)}>
                   <i className="fa fa-caret-left" />
                 </button>
                 )}
@@ -272,7 +295,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
               <div className="modal__pagination__wrapper__button">
                 {modalCount + 1 < participant.Answers.length
                 && (
-                <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount + 1)}>
+                  <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount + 1)}>
                   <i className="fa fa-caret-right" />
                 </button>
                 )}
@@ -280,8 +303,10 @@ function WallPage({ showModal, modalState, isSubmited }) {
             </div>
           </div>
         </div>
+
       </div>
       ))}
+      </InfiniteScroll>
       {(participantsCount > limit || offset > 0) && (
         <div className="results__pagination">
           <div className="button__wrapper__wallpage">
