@@ -3,10 +3,11 @@ import './WallPage.css';
 import { Link, useParams, Redirect } from 'react-router-dom';
 import api from '../../api';
 
+import InfiniteScroll from "react-infinite-scroll-component";
 import loading from './loading/loader150px.gif';
 
 // Limit per page /!\ ONLY ODD NUMBER /!\
-const limit = 7;
+const limit = 3;
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
@@ -33,11 +34,13 @@ function WallPage({ showModal, modalState, isSubmited }) {
       const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
-      setParticipants(result.data.participants);
+      //setParticipants(result.data.participants);
+      console.log('dans le useeffect')
       setTimeout(() => {
         setLoader(false);
       }, 1800);
     };
+    fetchImages()
     fetchParticipations();
 
     const fetchParticipantsCount = async () => {
@@ -60,11 +63,11 @@ function WallPage({ showModal, modalState, isSubmited }) {
   }, [cityFilter,
     loader,
     nameFilter,
-    offset,
-    participants.length,
-    participantsCount,
-    questionnaireId,
-    questionnaires.length,
+    //offset,
+    //participants.length,
+    //participantsCount,
+    //questionnaireId,
+    //questionnaires.length,
     statusFilter]);
 
   const displayModal = (id) => {
@@ -82,6 +85,18 @@ function WallPage({ showModal, modalState, isSubmited }) {
       return false;
     }
     return true;
+  };
+
+  const fetchImages = async () => {
+
+    console.log('fetchimages')
+    await api
+    .get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`)
+    .then(res =>
+      setParticipants(participants.concat(res.data.participants))
+      
+      );
+    setOffset(offset + limit)
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -158,7 +173,12 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
             )}
           </div>
-
+          
+          <InfiniteScroll
+          dataLength={participants.length}
+          next={fetchImages}
+          hasMore={true}
+          >
           <div className="participation">
             {isLoading(loader) && (
               <div className="loader__wrapper__wallpage">
@@ -286,6 +306,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
             </div>
           ))}
+
+          </InfiniteScroll>
           {(participantsCount > limit || offset > 0) && (
             <div className="results__pagination">
               <div className="button__wrapper__wallpage">
