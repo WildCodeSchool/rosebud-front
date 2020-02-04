@@ -38,14 +38,14 @@ function WallPage({ showModal, modalState, isSubmited }) {
         setLoader(false);
       }, 1800);
 
-      window.onscroll = () => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
-          if (participants.length !== participantsCounter) {
+      if (participants.length !== participantsCounter) {
+        window.onscroll = () => {
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
             setOffset(offset + limit);
             setParticipants(participants.concat(result.data.participants));
           }
-        }
-      };
+        };
+      }
     };
     fetchParticipations();
 
