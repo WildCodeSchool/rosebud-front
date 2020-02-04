@@ -84,18 +84,10 @@ function WallPage({ showModal, modalState, isSubmited }) {
 
   const baseURL = process.env.REACT_APP_API_URL || '';
 
-  const handleScroll = (e) => {
-    const element = e.target;
-    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-      setOffset(offset + limit);
-      setParticipants(participants.concat(participants));
-    }
-  };
-
   return (
     questionnaires.length > 0 && (
       questionnaires[0].isOnline ? (
-        <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'} onScroll={(e) => handleScroll(e)}>
+        <div className={modalState ? 'WallPage WallPage--fixe' : 'WallPage'}>
           {isSubmited && (
             <p className="Submit__message">Merci pour votre participation !</p>
           )}
@@ -132,6 +124,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   value={nameFilter}
                   onChange={(e) => {
                     setNameFilter(e.target.value);
+                    setParticipants([]);
+                    setLoader(true);
                   }}
                 />
                 <input
@@ -141,6 +135,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   placeholder="Ville"
                   onChange={(e) => {
                     setCityFilter(e.target.value);
+                    setParticipants([]);
+                    setLoader(true);
                   }}
                 />
                 <label className="filters__select" htmlFor="status">
@@ -150,6 +146,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     value={statusFilter}
                     onChange={(e) => {
                       setStatusFilter(e.target.value);
+                      setParticipants([]);
+                      setLoader(true);
                     }}
                   >
                     <option disabled="disabled" value="">Statut</option>
