@@ -12,7 +12,6 @@ import loading from './loading/loader150px.gif';
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
   const [participants, setParticipants] = useState([]);
-  const [loadMoreParticipants, setLoadMoreParticipants] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [participantId, setParticipantId] = useState(null);
   const [modalCount, setModalCount] = useState(0);
@@ -29,20 +28,26 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [prevZero, setPrevZero] = useState(false);
   const [nextZero, setNextZero] = useState(false);
   const [participantsCount, setParticipantsCount] = useState(0);
-  const limit = 7;
+  
+  // Limit de participations par page
+  const limit = 9;
+
 
   useEffect(() => {
-    const fetchParticipations = async () => {
-      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
-      setQuestionnaires(result.data.questionnaires);
-      setQuestions(result.data.questions);
-      setParticipants(result.data.participants);
-      console.log('longueur', result.data.participants.length)
-      setTimeout(() => {
-        setLoader(false);
-      }, 1800);
-    };
-    fetchParticipations();
+
+        const fetchParticipations = async () => {
+          const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
+          setQuestionnaires(result.data.questionnaires);
+          setQuestions(result.data.questions);
+          //setParticipants(result.data.participants)
+          console.log('dans le useEffect')
+          setTimeout(() => {
+            setLoader(false);
+          }, 1800);
+        };
+        fetchImages()
+        fetchParticipations();
+
 
     const fetchParticipantsCount = async () => {
       const result = await api.get(`/api/v1/metrics/participants/${questionnaireId}`);
@@ -61,15 +66,17 @@ function WallPage({ showModal, modalState, isSubmited }) {
     } else {
       setNextZero(false);
     }
-  }, [cityFilter,
+  }, [
+    cityFilter,
     loader,
     nameFilter,
     //offset,
-   //participants.length,
-   participantsCount,
-    questionnaireId,
-    questionnaires.length,
-    statusFilter]);
+    //participants.length,
+    //participantsCount,
+    //questionnaireId,
+    //questionnaires.length,
+    statusFilter
+  ]);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -89,15 +96,13 @@ function WallPage({ showModal, modalState, isSubmited }) {
   };
 
   const fetchImages = async () => {
-    setOffset(offset + limit)
-    console.log("offset",offset)
-    console.log('limit', limit)
     await api
-      .get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`)
-      .then(res =>
-        setParticipants( participants.concat(res.data.participants))
-        
+    .get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`)
+    .then(res =>
+      setParticipants( participants.concat(res.data.participants))
+      
       );
+    setOffset(offset + limit)
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -177,7 +182,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
           dataLength={participants.length}
           next={fetchImages}
           hasMore={true}
-          loader={participants.length < offset ? <h4>Finish...</h4> : <h4>Loading...</h4> }
       >
       <div className="participation">
         {isLoading(loader) && (
