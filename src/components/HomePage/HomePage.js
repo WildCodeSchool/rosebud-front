@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import api from '../../api';
 import useMetrics from '../../hooks/useMetrics';
 import useRandomImages from '../../hooks/useRandomImages';
-import loading from './loading/loader150px.gif';
 import logoCiclic from './images/logo-ciclic.png';
 
 const limit = 2;
@@ -19,8 +18,6 @@ function HomePage() {
   const participantsCounter = useMetrics('participants');
   const answersCounter = useMetrics('answers');
   const randomImages = useRandomImages(11, defaultQuestionnaireId);
-  // Loader
-  const [loader, setLoader] = useState(true);
   // prèc, next questionnaire
   const [offset, setOffset] = useState(0);
   const [prevZero, setPrevZero] = useState(false);
@@ -30,9 +27,6 @@ function HomePage() {
     const fetchQuestionnaires = async () => {
       const result = await api.get(`/api/v1/questionnaires?offset=${offset}&limit=${limit}&query=${querySearch}`);
       setQuestionnaires(result.data);
-      setTimeout(() => {
-        setLoader(false);
-      }, 2000);
     };
     fetchQuestionnaires();
 
@@ -72,31 +66,25 @@ function HomePage() {
 
   return (
     <div className="HomePage">
-      {loader ? (
-        <div className="loader__wrapper">
-          <img src={loading} className="loader__image" alt="loader" />
+      <div className="random__images__wrapper">
+        {randomImages.map((image, index) => (
+          <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url.includes(baseURL) ? image.image_url : baseURL + image.image_url} alt="random home" />
+        ))}
+        <div className="random__images__button__wrapper">
+          <Link to={`/questionnaire/${defaultQuestionnaireId}/participer`} className="random__images__button__participate__wrapper">
+            <div className="random__images__button__participate">
+              <i className="random__images__button__icon fa fa-puzzle-piece" />
+              <p className="random__images__button__content">Participer</p>
+            </div>
+          </Link>
+          <Link to={`/questionnaire/${defaultQuestionnaireId}`} className="random__images__button__consult__wrapper">
+            <div className="random__images__button__consult">
+              <i className="random__images__button__icon fa fa-eye" />
+              <p className="random__images__button__content">Consulter</p>
+            </div>
+          </Link>
         </div>
-      ) : (
-        <div className="random__images__wrapper">
-          {randomImages.map((image, index) => (
-            <img key={image.id} className={`random__image image__${index + 1}`} src={image.image_url.includes(baseURL) ? image.image_url : baseURL + image.image_url} alt="random home" />
-          ))}
-          <div className="random__images__button__wrapper">
-            <Link to={`/questionnaire/${defaultQuestionnaireId}/participer`} className="random__images__button__participate__wrapper">
-              <div className="random__images__button__participate">
-                <i className="random__images__button__icon fa fa-puzzle-piece" />
-                <p className="random__images__button__content">Participer</p>
-              </div>
-            </Link>
-            <Link to={`/questionnaire/${defaultQuestionnaireId}`} className="random__images__button__consult__wrapper">
-              <div className="random__images__button__consult">
-                <i className="random__images__button__icon fa fa-eye" />
-                <p className="random__images__button__content">Consulter</p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      )}
+      </div>
       <section className="home__counters">
         <div className="home__counters__title">
           {questionnairesCounter}
