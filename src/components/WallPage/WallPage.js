@@ -31,27 +31,29 @@ function WallPage({ showModal, modalState, isSubmited }) {
       const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestions(result.data.questions);
       setQuestionnaires(result.data.questionnaires);
-      if (participants.length === 0) {
+      if (participants.length === 0 && participantsCounter === 0) {
         setParticipants(result.data.participants);
       }
       setTimeout(() => {
         setLoader(false);
       }, 1800);
 
-      if (participants.length !== participantsCounter) {
-        window.onscroll = () => {
-          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+      window.onscroll = () => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+          if (participants.length < participantsCounter) {
             setOffset(offset + limit);
             setParticipants(participants.concat(result.data.participants));
           }
-        };
-      }
+        }
+      };
     };
     fetchParticipations();
 
     const fetchParticipantsCounter = async () => {
-      const result = await api.get(`/api/v1/metrics/participants/${questionnaireId}`);
-      setParticipantsCounter(result.data);
+      if (questionnaireId) {
+        const result = await api.get(`/api/v1/metrics/participants/${questionnaireId}`);
+        setParticipantsCounter(result.data);
+      }
     };
     fetchParticipantsCounter();
   }, [cityFilter,
@@ -64,6 +66,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
     questionnaireId,
     questionnaires.length,
     statusFilter]);
+
+  console.log(participants.length, participantsCounter, nameFilter);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -125,6 +129,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   onChange={(e) => {
                     setNameFilter(e.target.value);
                     setParticipants([]);
+                    setParticipantsCounter(offset);
                     setLoader(true);
                   }}
                 />
@@ -136,6 +141,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   onChange={(e) => {
                     setCityFilter(e.target.value);
                     setParticipants([]);
+                    setParticipantsCounter(offset);
                     setLoader(true);
                   }}
                 />
@@ -147,6 +153,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     onChange={(e) => {
                       setStatusFilter(e.target.value);
                       setParticipants([]);
+                      setParticipantsCounter(offset);
                       setLoader(true);
                     }}
                   >
