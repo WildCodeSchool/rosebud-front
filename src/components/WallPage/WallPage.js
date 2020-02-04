@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './WallPage.css';
 import { Link, useParams, Redirect } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import api from '../../api';
 
-import InfiniteScroll from "react-infinite-scroll-component";
 import loading from './loading/loader150px.gif';
 
 // Limit per page /!\ ONLY ODD NUMBER /!\
@@ -25,50 +25,18 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [nameFilter, setNameFilter] = useState(null);
   // Pagination
   const [offset, setOffset] = useState(0);
-  const [prevZero, setPrevZero] = useState(false);
-  const [nextZero, setNextZero] = useState(false);
-  const [participantsCount, setParticipantsCount] = useState(0);
 
   useEffect(() => {
     const fetchParticipations = async () => {
-      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
+      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=0${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestionnaires(result.data.questionnaires);
       setQuestions(result.data.questions);
-      //setParticipants(result.data.participants);
-      console.log('dans le useeffect')
       setTimeout(() => {
         setLoader(false);
       }, 1800);
     };
-    fetchImages()
     fetchParticipations();
-
-    const fetchParticipantsCount = async () => {
-      const result = await api.get(`/api/v1/metrics/participants/${questionnaireId}`);
-      setParticipantsCount(result.data);
-    };
-    fetchParticipantsCount();
-
-    if (offset === 0) {
-      setPrevZero(true);
-    } else {
-      setPrevZero(false);
-    }
-
-    if ((participants.length % limit === 1) || (offset + limit === participantsCount)) {
-      setNextZero(true);
-    } else {
-      setNextZero(false);
-    }
-  }, [cityFilter,
-    loader,
-    nameFilter,
-    //offset,
-    //participants.length,
-    //participantsCount,
-    //questionnaireId,
-    //questionnaires.length,
-    statusFilter]);
+  }, [cityFilter, loader, nameFilter, statusFilter, questionnaireId, participants]);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -88,15 +56,10 @@ function WallPage({ showModal, modalState, isSubmited }) {
   };
 
   const fetchImages = async () => {
-
-    console.log('fetchimages')
     await api
-    .get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`)
-    .then(res =>
-      setParticipants(participants.concat(res.data.participants))
-      
-      );
-    setOffset(offset + limit)
+      .get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`)
+      .then((result) => setParticipants(participants.concat(result.data.participants)));
+    setOffset(offset + limit);
   };
 
   const baseURL = process.env.REACT_APP_API_URL || '';
@@ -173,169 +136,138 @@ function WallPage({ showModal, modalState, isSubmited }) {
               </div>
             )}
           </div>
-          
           <InfiniteScroll
-          dataLength={participants.length}
-          next={fetchImages}
-          hasMore={true}
+            dataLength={participants.length}
+            next={fetchImages}
+            hasMore
           >
-          <div className="participation">
-            {isLoading(loader) && (
-              <div className="loader__wrapper__wallpage">
-                <img src={loading} className="loader__image" alt="loader" />
-              </div>
-            )}
-            {!isLoading(loader) && (
-              <>
-                {questions.length > 0 && (
-                  <div className="wallpage__questions__title">
-                    <div className="wallpage__question__space">
-                      <i className="fa fa-comments wallpage__question__icon" />
-                    </div>
-                    <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
-                      {questions.map((question, index) => (
-                        <div className="wallpage__question">
-                          <div className="wallpage__question__number__wrapper" />
-                          <div className="wallpage__question__number">{index + 1}</div>
-                          {question.title}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {participants.length > 0 ? (participants.map((participant) => (
-                  participant.isApproved ? (
-                    <div className="participation__wrapper" key={participant.id}>
-                      <div className="participationInfos">
-                        <p className="participationInfos__firstname">
-                          {participant.firstName}
-                        </p>
-                        <p className="participationInfos__lastname">
-                          {participant.lastName}
-                        </p>
-                        <p className="participationInfos__age">
-                          {`${participant.age} ans`}
-                        </p>
-                        <p className="participationInfos__city">
-                          {participant.city}
-                        </p>
+            <div className="participation">
+              {isLoading(loader) && (
+                <div className="loader__wrapper__wallpage">
+                  <img src={loading} className="loader__image" alt="loader" />
+                </div>
+              )}
+              {!isLoading(loader) && (
+                <>
+                  {questions.length > 0 && (
+                    <div className="wallpage__questions__title">
+                      <div className="wallpage__question__space">
+                        <i className="fa fa-comments wallpage__question__icon" />
                       </div>
-                      <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
-                        {participant.Answers
-                          .map((answer, index) => answer.ParticipantId === participant.id && (
-                            <div className={`flip-card flip-card__${index + 1}--${participant.Answers.length}`}>
-                              <div className="flip-card-inner">
-                                <div className="flip-card-front">
-                                  <img
-                                    key={answer.id}
-                                    className="wallpage__random__image"
-                                    src={answer.image_url.includes(baseURL)
-                                      ? answer.image_url
-                                      : baseURL + answer.image_url}
-                                    alt="answer path"
-                                  />
+                      <div className={`wallpage__questions__wrapper wallpage__questions__wrapper__${questions.length}`}>
+                        {questions.map((question, index) => (
+                          <div className="wallpage__question">
+                            <div className="wallpage__question__number__wrapper" />
+                            <div className="wallpage__question__number">{index + 1}</div>
+                            {question.title}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {participants.length > 0 ? (participants.map((participant) => (
+                    participant.isApproved ? (
+                      <div className="participation__wrapper" key={participant.id}>
+                        <div className="participationInfos">
+                          <p className="participationInfos__firstname">
+                            {participant.firstName}
+                          </p>
+                          <p className="participationInfos__lastname">
+                            {participant.lastName}
+                          </p>
+                          <p className="participationInfos__age">
+                            {`${participant.age} ans`}
+                          </p>
+                          <p className="participationInfos__city">
+                            {participant.city}
+                          </p>
+                        </div>
+                        <div className={`participationAnswers participationAnswers__${participant.Answers.length}`}>
+                          {participant.Answers
+                            .map((answer, index) => answer.ParticipantId === participant.id && (
+                              <div className={`flip-card flip-card__${index + 1}--${participant.Answers.length}`}>
+                                <div className="flip-card-inner">
+                                  <div className="flip-card-front">
+                                    <img
+                                      key={answer.id}
+                                      className="wallpage__random__image"
+                                      src={answer.image_url.includes(baseURL)
+                                        ? answer.image_url
+                                        : baseURL + answer.image_url}
+                                      alt="answer path"
+                                    />
+                                  </div>
+                                  <p className="flip-card-back">
+                                    <i className="fa fa-quote-left answer__quote__left" />
+                                    {answer.comment}
+                                  </p>
                                 </div>
-                                <p className="flip-card-back">
-                                  <i className="fa fa-quote-left answer__quote__left" />
-                                  {answer.comment}
-                                </p>
                               </div>
-                            </div>
-                          ))}
-                        <div className="participationAnswers__button__wrapper">
-                          <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
-                            <i className="participationAnswers__button__icon fa fa-eye" />
-                          </button>
+                            ))}
+                          <div className="participationAnswers__button__wrapper">
+                            <button type="button" className="participationAnswers__button" onClick={() => displayModal(participant.id)}>
+                              <i className="participationAnswers__button__icon fa fa-eye" />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="WallPage__notFound">
+                        <i className="fa fa-question-circle-o notFound__icon" />
+                        <p>Aucune participation trouvée.</p>
+                      </div>
+                    )
+                  ))
                   ) : (
                     <div className="WallPage__notFound">
                       <i className="fa fa-question-circle-o notFound__icon" />
                       <p>Aucune participation trouvée.</p>
                     </div>
-                  )
-                ))
-                ) : (
-                  <div className="WallPage__notFound">
-                    <i className="fa fa-question-circle-o notFound__icon" />
-                    <p>Aucune participation trouvée.</p>
+                  )}
+                </>
+              )}
+            </div>
+            {participants.map((participant) => participant.id === participantId && (
+              <div className={modalState ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
+                <div className="modal__wrapper">
+                  <button type="button" className="modal__closed__button" onClick={closeModal}>
+                    <i className="modal__closed__button__icon fa fa-times-circle" />
+                  </button>
+                  <div className="modal__question">
+                    <p>{questions[modalCount].title}</p>
                   </div>
-                )}
-              </>
-            )}
-          </div>
-
-          {participants.map((participant) => participant.id === participantId && (
-            <div className={modalState ? 'modal modal--open' : 'modal'} key={participantId + modalCount}>
-              <div className="modal__wrapper">
-                <button type="button" className="modal__closed__button" onClick={closeModal}>
-                  <i className="modal__closed__button__icon fa fa-times-circle" />
-                </button>
-                <div className="modal__question">
-                  <p>{questions[modalCount].title}</p>
-                </div>
-                <div className="modal__participantInfos">
-                  <i className="modal__participantInfos__icon fa fa-user-circle" />
-                  <p>{`${participant.firstName} ${participant.lastName}`}</p>
-                </div>
-                <div className="modal__image__wrapper">
-                  <img className="modal__image" src={baseURL + participant.Answers[modalCount].image_url} alt="answer path" />
-                </div>
-                <div className="modal__content__wrapper">
-                  <p className="modal__comment">{participant.Answers[modalCount].comment}</p>
-                  <div className="modal__pagination">
-                    <div className="modal__pagination__wrapper__button">
-                      {modalCount > 0
-                        && (
-                          <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount - 1)}>
-                            <i className="fa fa-caret-left" />
-                          </button>
-                        )}
-                    </div>
-                    <div className="modal__pagination__wrapper__button">
-                      {modalCount + 1 < participant.Answers.length
-                        && (
-                          <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount + 1)}>
-                            <i className="fa fa-caret-right" />
-                          </button>
-                        )}
+                  <div className="modal__participantInfos">
+                    <i className="modal__participantInfos__icon fa fa-user-circle" />
+                    <p>{`${participant.firstName} ${participant.lastName}`}</p>
+                  </div>
+                  <div className="modal__image__wrapper">
+                    <img className="modal__image" src={baseURL + participant.Answers[modalCount].image_url} alt="answer path" />
+                  </div>
+                  <div className="modal__content__wrapper">
+                    <p className="modal__comment">{participant.Answers[modalCount].comment}</p>
+                    <div className="modal__pagination">
+                      <div className="modal__pagination__wrapper__button">
+                        {modalCount > 0
+                          && (
+                            <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount - 1)}>
+                              <i className="fa fa-caret-left" />
+                            </button>
+                          )}
+                      </div>
+                      <div className="modal__pagination__wrapper__button">
+                        {modalCount + 1 < participant.Answers.length
+                          && (
+                            <button type="button" className="modal__pagination__button" onClick={() => setModalCount(modalCount + 1)}>
+                              <i className="fa fa-caret-right" />
+                            </button>
+                          )}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-
+            ))}
           </InfiniteScroll>
-          {(participantsCount > limit || offset > 0) && (
-            <div className="results__pagination">
-              <div className="button__wrapper__wallpage">
-                <button
-                  disabled={prevZero && 'disabled'}
-                  className="button__page__prev"
-                  type="button"
-                  onClick={() => {
-                    setOffset(offset - limit);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <i className="button__steps__icon fa fa-caret-left" />
-                </button>
-                <button
-                  disabled={nextZero && 'disabled'}
-                  className="button__page__next"
-                  type="button"
-                  onClick={() => {
-                    setOffset(offset + limit);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <i className="button__steps__icon fa fa-caret-right" />
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       ) : (
         <Redirect to="/" />
