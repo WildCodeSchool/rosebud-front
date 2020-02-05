@@ -5,7 +5,7 @@ import api from '../../api';
 
 import loading from './loading/loader150px.gif';
 
-const itemPerScroll = 5;
+const itemPerScroll = 7;
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
@@ -27,9 +27,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
 
   useEffect(() => {
     const fetchParticipations = async () => {
-      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${participantsCounter - limit <= 0 ? 0 : participantsCounter - limit}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
+      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=0${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestions(result.data.questions);
-      setQuestionnaires(result.data.questionnaires);
       setParticipants(result.data.participants);
       setTimeout(() => {
         setLoader(false);
@@ -44,6 +43,14 @@ function WallPage({ showModal, modalState, isSubmited }) {
       }
     };
     fetchParticipantsCounter();
+
+    const fetchQuestionnaire = async () => {
+      if (questionnaireId) {
+        const result = await api.get(`/api/v1/questionnaires/${questionnaireId}`);
+        setQuestionnaires(result.data);
+      }
+    };
+    fetchQuestionnaire();
   }, [cityFilter,
     limit,
     loader,
