@@ -6,7 +6,8 @@ import api from '../../api';
 import loading from './loading/loader150px.gif';
 
 // Limit per page /!\ ONLY ODD NUMBER /!\
-const limit = 7;
+
+const limitPerPage = 5;
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
@@ -24,28 +25,17 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [cityFilter, setCityFilter] = useState(null);
   const [nameFilter, setNameFilter] = useState(null);
   // Pagination
-  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(limitPerPage);
 
   useEffect(() => {
     const fetchParticipations = async () => {
-      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${offset}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
+      const result = await api.get(`/api/v1/questionnaires/${questionnaireId}/participations?limit=${limit}&offset=${participantsCounter - limit <= 0 ? 0 : participantsCounter - limit}${statusFilter ? `&status=${statusFilter}` : '&status=all'}${cityFilter ? `&city=${cityFilter}` : '&city=all'}${nameFilter ? `&name=${nameFilter}` : '&name=all'}`);
       setQuestions(result.data.questions);
       setQuestionnaires(result.data.questionnaires);
-      if (participants.length === 0 && participantsCounter === 0) {
-        setParticipants(result.data.participants);
-      }
+      setParticipants(result.data.participants);
       setTimeout(() => {
         setLoader(false);
       }, 1800);
-
-      window.onscroll = () => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
-          if (participants.length < participantsCounter) {
-            setOffset(offset + limit);
-            setParticipants(participants.concat(result.data.participants));
-          }
-        }
-      };
     };
     fetchParticipations();
 
@@ -57,17 +47,25 @@ function WallPage({ showModal, modalState, isSubmited }) {
     };
     fetchParticipantsCounter();
   }, [cityFilter,
+    limit,
     loader,
     nameFilter,
-    offset,
-    participants,
     participants.length,
     participantsCounter,
     questionnaireId,
     questionnaires.length,
     statusFilter]);
 
-  console.log(participants.length, participantsCounter, nameFilter);
+
+  window.onscroll = () => {
+    if (participants.length < participantsCounter) {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+        setLimit(participants.length + limitPerPage);
+      }
+    }
+  };
+
+  console.log(participants.length, participantsCounter, limit, nameFilter, cityFilter, statusFilter);
 
   const displayModal = (id) => {
     setParticipantId(id);
@@ -129,7 +127,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   onChange={(e) => {
                     setNameFilter(e.target.value);
                     setParticipants([]);
-                    setParticipantsCounter(offset);
+                    setParticipantsCounter(0);
+                    setLimit(limitPerPage);
                     setLoader(true);
                   }}
                 />
@@ -141,7 +140,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   onChange={(e) => {
                     setCityFilter(e.target.value);
                     setParticipants([]);
-                    setParticipantsCounter(offset);
+                    setParticipantsCounter(0);
+                    setLimit(limitPerPage);
                     setLoader(true);
                   }}
                 />
@@ -153,7 +153,8 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     onChange={(e) => {
                       setStatusFilter(e.target.value);
                       setParticipants([]);
-                      setParticipantsCounter(offset);
+                      setParticipantsCounter(0);
+                      setLimit(limitPerPage);
                       setLoader(true);
                     }}
                   >
