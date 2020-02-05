@@ -6,8 +6,8 @@ import logo from './images/logo.png';
 function Header() {
   return (
     <div className="Header">
+      <h1 className="mark-ref">Œuvre participative sur les images qui nous animent</h1>
       <Link to="/">
-        <h1 className="mark-ref"> </h1>
         <img className="Header__logo" src={logo} alt="Rosebud" />
       </Link>
     </div>
