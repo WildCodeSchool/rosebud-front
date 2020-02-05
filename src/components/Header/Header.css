@@ -10,3 +10,8 @@
     width: 100%;
     max-width: 240px;
 }
+
+.mark-ref {
+    font-size: 0px;
+    color: transparent;
+}

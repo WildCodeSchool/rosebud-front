@@ -134,9 +134,9 @@ function ParticipationForm({ onClickSubmit }) {
                   <div className={`participant ${step < 1 ? 'step--show' : 'step--hide'}`}>
                     {questionnaires.length > 0 && (
                     <div className="participant__presentation">
-                      <h2 className="participant__presentation__title">
+                      <h1 className="participant__presentation__title">
                         {questionnaires[0].title}
-                      </h2>
+                      </h1>
                       <p className="participant__presentation__content">
                         {questionnaires[0].participationText}
                       </p>
