@@ -95,7 +95,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
           )}
           {questionnaires.length > 0 && (
             <div className="WallPage__presentation">
-              <h1 className="WallPage__presentation__title">
+              <h2 className="WallPage__presentation__title">
                 {questionnaires[0].title}
                 {questions.length > 0 && (
                   <Link to={`/questionnaire/${questionnaireId}/participer`} className="WallPage__presentation__button">
@@ -103,7 +103,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     <p className="WallPage__presentation__button__content">Participer</p>
                   </Link>
                 )}
-              </h1>
+              </h2>
               <p className="WallPage__presentation__content">
                 {questionnaires[0].presentationText}
               </p>
