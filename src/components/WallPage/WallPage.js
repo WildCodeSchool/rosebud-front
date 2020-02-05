@@ -5,9 +5,7 @@ import api from '../../api';
 
 import loading from './loading/loader150px.gif';
 
-// Limit per page /!\ ONLY ODD NUMBER /!\
-
-const limitPerPage = 5;
+const itemPerScroll = 5;
 
 function WallPage({ showModal, modalState, isSubmited }) {
   const [questionnaires, setQuestionnaires] = useState([]);
@@ -25,7 +23,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
   const [cityFilter, setCityFilter] = useState(null);
   const [nameFilter, setNameFilter] = useState(null);
   // Pagination
-  const [limit, setLimit] = useState(limitPerPage);
+  const [limit, setLimit] = useState(itemPerScroll);
 
   useEffect(() => {
     const fetchParticipations = async () => {
@@ -60,7 +58,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
   window.onscroll = () => {
     if (participants.length < participantsCounter) {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
-        setLimit(participants.length + limitPerPage);
+        setLimit(participants.length + itemPerScroll);
       }
     }
   };
@@ -128,7 +126,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     setNameFilter(e.target.value);
                     setParticipants([]);
                     setParticipantsCounter(0);
-                    setLimit(limitPerPage);
+                    setLimit(itemPerScroll);
                     setLoader(true);
                   }}
                 />
@@ -141,7 +139,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                     setCityFilter(e.target.value);
                     setParticipants([]);
                     setParticipantsCounter(0);
-                    setLimit(limitPerPage);
+                    setLimit(itemPerScroll);
                     setLoader(true);
                   }}
                 />
@@ -154,7 +152,7 @@ function WallPage({ showModal, modalState, isSubmited }) {
                       setStatusFilter(e.target.value);
                       setParticipants([]);
                       setParticipantsCounter(0);
-                      setLimit(limitPerPage);
+                      setLimit(itemPerScroll);
                       setLoader(true);
                     }}
                   >
