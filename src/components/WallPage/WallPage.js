@@ -70,8 +70,6 @@ function WallPage({ showModal, modalState, isSubmited }) {
     }
   };
 
-  console.log(participants.length, participantsCounter, limit, nameFilter, cityFilter, statusFilter);
-
   const displayModal = (id) => {
     setParticipantId(id);
     showModal(true);
