@@ -54,7 +54,7 @@ function HomePage() {
     }
     let endingText = ending;
     if (endingText !== null) {
-      endingText = '...';
+      endingText = '…';
     }
     if (str.length > lengthText) {
       return str.substring(0, lengthText - endingText.length) + endingText;
@@ -126,7 +126,7 @@ function HomePage() {
             <input
               type="text"
               value={querySearch || ''}
-              placeholder="Rechercher un questionnaire..."
+              placeholder="Rechercher un questionnaire…"
               className="home__search__input"
               onChange={(e) => {
                 setQuerySearch(e.target.value);
