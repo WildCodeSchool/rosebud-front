@@ -272,7 +272,13 @@ function WallPage({ showModal, modalState, isSubmited }) {
                   <p>{`${participant.firstName} ${participant.lastName}`}</p>
                 </div>
                 <div className="modal__image__wrapper">
-                  <img className="modal__image" src={baseURL + participant.Answers[modalCount].image_url} alt="answer path" />
+                  <img
+                    className="modal__image"
+                    src={participant.Answers[modalCount].image_url.includes(baseURL)
+                      ? participant.Answers[modalCount].image_url
+                      : baseURL + participant.Answers[modalCount].image_url}
+                    alt="answer path"
+                  />
                 </div>
                 <div className="modal__content__wrapper">
                   <p className="modal__comment">{participant.Answers[modalCount].comment}</p>
